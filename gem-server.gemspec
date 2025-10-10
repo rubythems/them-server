@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
 
   spec.summary = "💎 A Federated Server of Ruby Gems"
   spec.description = "💎 A Federated Server of Ruby Gems"
-  spec.homepage = "https://github.com/kettle-rb/gem-server"
+  spec.homepage = "https://github.com/galtzo-floss/gem-server"
   spec.licenses = ["MIT"]
   spec.required_ruby_version = ">= 3.2.0"
 
@@ -62,8 +62,14 @@ Gem::Specification.new do |spec|
   spec.files = Dir[
     # Executables and tasks
     "exe/*",
+    "bin/*",
     "lib/**/*.rb",
     "lib/**/*.rake",
+    # Config and app
+    "config/**/*.rb",
+    "app/**/*.rb",
+    "db/**/*.rb",
+    "config.ru",
     # Signatures
     "sig/**/*.rbs",
   ]
@@ -99,7 +105,13 @@ Gem::Specification.new do |spec|
   spec.executables = []
 
   # Utilities
+  spec.add_dependency("hanami", "~> 2.2", ">= 2.2.1")                   # Full-stack web framework
+  spec.add_dependency("rack", "~> 3.0")                                 # Rack web server interface
+  spec.add_dependency("rack-protection", "~> 4.0")                      # Security middleware
+  spec.add_dependency("rackup", "~> 2.1")                               # Rackup command is separate dependency in rack >= v3
+  spec.add_dependency("rom-sql", "~> 3.0")                              # Database toolkit
   spec.add_dependency("version_gem", "~> 1.1", ">= 1.1.9")              # ruby >= 2.2.0
+  spec.add_dependency("ed25519", ">= 1.3")                               # signing & verification for federation
 
   # NOTE: It is preferable to list development dependencies in the gemspec due to increased
   #       visibility and discoverability.

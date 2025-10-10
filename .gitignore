@@ -37,7 +37,7 @@ Appraisal.*.gemfile.lock
 .byebug_history
 
 # direnv - brew install direnv
-.env.local
+.env*.local
 
 # OS Detritus
 .DS_Store
@@ -47,3 +47,10 @@ Appraisal.*.gemfile.lock
 
 # Sentinels
 .floss_funding.*.lock
+
+log/*
+public/
+node_modules/
+db/*.sqlite
+spec/examples.txt
+db/*.db

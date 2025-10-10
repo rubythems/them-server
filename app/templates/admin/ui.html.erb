@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Gem::Server Admin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif; margin: 2rem; }
+    table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
+    th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: left; }
+    th { background: #f5f5f5; }
+    .metrics { display: flex; gap: 1rem; }
+    .metric { background: #f8f8ff; border: 1px solid #eee; padding: 0.5rem 0.75rem; border-radius: 6px; }
+    form { display: inline; }
+    .on { color: #1a7f37; font-weight: 600; }
+    .off { color: #b42318; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <h1>Gem::Server Admin</h1>
+  <p>This minimal UI lets you see known servers and toggle subscription state.</p>
+
+  <div class="metrics">
+    <div class="metric">Known servers: <strong><%= metrics[:known_servers_total] %></strong></div>
+    <div class="metric">Subscribed: <strong><%= metrics[:known_servers_subscribed] %></strong></div>
+    <div class="metric">Federated gems: <strong><%= metrics[:federated_gems_total] %></strong></div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Base URL</th>
+        <th>Subscribed</th>
+        <th>Public Key</th>
+        <th>Last Announced</th>
+        <th>Last Seen</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% known.each do |srv| %>
+        <tr>
+          <td><%= srv[:base_url] %></td>
+          <td><span class="<%= srv[:subscribed] ? 'on' : 'off' %>"><%= srv[:subscribed] ? 'on' : 'off' %></span></td>
+          <td style="max-width: 320px; overflow-wrap: anywhere"><code><%= srv[:public_key_b64] %></code></td>
+          <td><%= srv[:last_announced_at] %></td>
+          <td><%= srv[:last_seen_at] %></td>
+          <td>
+            <form method="post" action="/admin/known_servers/toggle">
+              <input type="hidden" name="base_url" value="<%= srv[:base_url] %>">
+              <input type="hidden" name="subscribed" value="<%= !srv[:subscribed] %>">
+              <button type="submit">Toggle</button>
+            </form>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <p style="margin-top: 1rem">
+    API JSON: <a href="/admin/known_servers">/admin/known_servers</a> •
+    <a href="/admin/federation/metrics">/admin/federation/metrics</a>
+  </p>
+</body>
+</html>

@@ -1,6 +1,42 @@
 {
-  "spec/gem/server_spec.rb:4003808946": [
-    [9, 12, 5, "RSpec/ExpectActual: Provide the actual value you are testing to `expect(...)`.", 170962968],
-    [9, 22, 2, "RSpec/BeEq: Prefer `be` over `eq`.", 5860785]
+  "app/actions/gems/create.rb:3226710203": [
+    [182, 50, 15, "Style/IfWithBooleanLiteralBranches: Remove redundant ternary operator with boolean literal branches.", 562381739]
+  ],
+  "config/database.rb:4080113718": [
+    [10, 18, 3, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 193449827],
+    [10, 34, 3, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 193449827],
+    [10, 42, 3, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 193449827],
+    [15, 11, 3, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 193449827]
+  ],
+  "spec/e2e/gem_push_spec.rb:262554920": [
+    [9, 16, 14, "RSpec/DescribeClass: The first argument to describe should be the class or module being tested.", 4004177254],
+    [32, 3, 12, "RSpec/BeforeAfterAll: Beware of using `before(:all)` as it may cause state to leak between tests. If you are using `rspec-rails`, and `use_transactional_fixtures` is enabled, then records created in `before(:all)` are not automatically rolled back.", 86334566],
+    [44, 3, 11, "RSpec/BeforeAfterAll: Beware of using `after(:all)` as it may cause state to leak between tests. If you are using `rspec-rails`, and `use_transactional_fixtures` is enabled, then records created in `after(:all)` are not automatically rolled back.", 2059152091],
+    [73, 5, 18, "ThreadSafety/DirChdir: Avoid using `Dir.chdir` due to its process-wide effect.", 3416111016],
+    [127, 5, 18, "ThreadSafety/DirChdir: Avoid using `Dir.chdir` due to its process-wide effect.", 3416111016]
+  ],
+  "spec/gem/server/actions/gems/create_spec.rb:2596067122": [
+    [64, 13, 15, "RSpec/ContextWording: Context description should match /^when\\b/, /^with\\b/, or /^without\\b/.", 2840264402],
+    [77, 33, 2, "RSpec/BeEq: Prefer `be` over `eq`.", 5860785],
+    [85, 13, 21, "RSpec/ContextWording: Context description should match /^when\\b/, /^with\\b/, or /^without\\b/.", 1262620339],
+    [117, 13, 22, "RSpec/ContextWording: Context description should match /^when\\b/, /^with\\b/, or /^without\\b/.", 2835595275],
+    [118, 7, 15, "RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.", 2724003130],
+    [176, 13, 25, "RSpec/ContextWording: Context description should match /^when\\b/, /^with\\b/, or /^without\\b/.", 3059770298]
+  ],
+  "spec/gem/server/actions/gems/yank_spec.rb:3049721269": [
+    [70, 33, 2, "RSpec/BeEq: Prefer `be` over `eq`.", 5860785],
+    [88, 13, 22, "RSpec/ContextWording: Context description should match /^when\\b/, /^with\\b/, or /^without\\b/.", 2835595275],
+    [90, 7, 28, "RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.", 1938774898],
+    [143, 33, 2, "RSpec/BeEq: Prefer `be` over `eq`.", 5860785],
+    [192, 33, 2, "RSpec/BeEq: Prefer `be` over `eq`.", 5860785]
+  ],
+  "spec/gem/server_spec.rb:475044081": [
+    [12, 23, 11, "RSpec/DescribedClass: Use `described_class` instead of `Gem::Server`.", 1774056175]
+  ],
+  "spec/gem/version_spec.rb:4192720890": [
+    [3, 1, 35, "RSpec/SpecFilePathFormat: Spec path should end with `gem/server/version*_spec.rb`.", 4173372705]
+  ],
+  "spec/support/requests.rb:194965783": [
+    [5, 22, 12, "RSpec/ContextWording: Context description should match /^when\\b/, /^with\\b/, or /^without\\b/.", 179097960]
   ]
 }

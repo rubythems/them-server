@@ -12,9 +12,9 @@ authors:
     orcid: 'https://orcid.org/0009-0008-8519-441X'
 identifiers:
   - type: url
-    value: 'https://github.com/kettle-rb/gem-server'
+    value: 'https://github.com/galtzo-floss/gem-server'
     description: gem-server
-repository-code: 'https://github.com/kettle-rb/gem-server'
+repository-code: 'https://github.com/galtzo-floss/gem-server'
 abstract: >-
   gem-server
 license: See license file

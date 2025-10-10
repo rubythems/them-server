@@ -87,6 +87,52 @@ Git hooks and commit message helpers (exe/kettle-commit-msg)
 
 For a quick starting point, this repository’s `.envrc` shows sane defaults, and `.env.local` can override them locally.
 
+## Database and Federation Rake Tasks
+
+This project provides Rake tasks for managing the local SQLite database and for simple federation administration.
+
+- Database
+  - db:migrate — Run Sequel migrations
+  - db:version — Print current migration version
+  - db:rollback[steps] — Roll back a number of steps (default 1)
+  - db:seed — Seed the database (idempotent); seeds add a couple of localhost peers for demo
+  - db:reset — Delete the SQLite DB, migrate, and seed
+
+- Federation
+  - federation:list_known — List known servers
+  - federation:seed_known[base_url,public_key_b64] — Upsert a known server
+  - federation:announce[to_base_url,my_base_url] — Send a signed announce to a peer
+  - federation:subscribe[to_base_url,my_base_url] — Send a signed subscribe to a peer
+
+Examples:
+```bash
+bundle exec rake db:migrate
+bundle exec rake db:version
+bundle exec rake federation:list_known
+bundle exec rake federation:seed_known['https://peer.example','BASE64_PUBLIC_KEY']
+```
+
+Environment variables:
+- GEM_SERVER_DB: Override the SQLite DB path (default: db/gem_server.db). Useful to run multiple local servers side-by-side.
+- FEDERATION_BASE_URL: Base URL advertised for this server in federation payloads.
+- FEDERATION_BROADCAST: If set to "1", successful gem pushes are broadcast to subscribed peers.
+- FEDERATION_PRIVATE_KEY_B64 and FEDERATION_PUBLIC_KEY_B64: Optional Ed25519 keypair for stable identity.
+
+### Demo: Run Two Local Servers
+
+A minimal script is provided to spin up two local servers on different ports with separate DBs and wire them via federation.
+
+```bash
+bin/demo_federation.sh
+```
+
+Tip: After the script finishes, you can inspect peers on both servers:
+
+```bash
+curl http://localhost:9292/admin/known_servers | jq .
+curl http://localhost:9393/admin/known_servers | jq .
+```
+
 ## Appraisals
 
 From time to time the [appraisal2][🚎appraisal2] gemfiles in `gemfiles/` will need to be updated.
@@ -158,7 +204,7 @@ Your picture could be here!
 
 Made with [contributors-img][🖐contrib-rocks].
 
-Also see GitLab Contributors: [https://gitlab.com/kettle-rb/gem-server/-/graphs/main][🚎contributors-gl]
+Also see GitLab Contributors: [https://gitlab.com/galtzo-floss/gem-server/-/graphs/main][🚎contributors-gl]
 
 ## For Maintainers
 
@@ -207,15 +253,15 @@ NOTE: To build without signing the gem set `SKIP_GEM_SIGNING` to any value in th
 13. Run `bundle exec rake release` which will create a git tag for the version,
     push git commits and tags, and push the `.gem` file to the gem host configured in the gemspec.
 
-[📜src-gl]: https://gitlab.com/kettle-rb/gem-server/
-[📜src-cb]: https://codeberg.org/kettle-rb/gem-server
-[📜src-gh]: https://github.com/kettle-rb/gem-server
-[🧪build]: https://github.com/kettle-rb/gem-server/actions
-[🤝conduct]: https://gitlab.com/kettle-rb/gem-server/-/blob/main/CODE_OF_CONDUCT.md
+[📜src-gl]: https://gitlab.com/galtzo-floss/gem-server/
+[📜src-cb]: https://codeberg.org/galtzo-floss/gem-server
+[📜src-gh]: https://github.com/galtzo-floss/gem-server
+[🧪build]: https://github.com/galtzo-floss/gem-server/actions
+[🤝conduct]: https://gitlab.com/galtzo-floss/gem-server/-/blob/main/CODE_OF_CONDUCT.md
 [🖐contrib-rocks]: https://contrib.rocks
-[🖐contributors]: https://github.com/kettle-rb/gem-server/graphs/contributors
-[🚎contributors-gl]: https://gitlab.com/kettle-rb/gem-server/-/graphs/main
-[🖐contributors-img]: https://contrib.rocks/image?repo=kettle-rb/gem-server
+[🖐contributors]: https://github.com/galtzo-floss/gem-server/graphs/contributors
+[🚎contributors-gl]: https://gitlab.com/galtzo-floss/gem-server/-/graphs/main
+[🖐contributors-img]: https://contrib.rocks/image?repo=galtzo-floss/gem-server
 [💎gem-coop]: https://gem.coop
 [🔒️rubygems-security-guide]: https://guides.rubygems.org/security/#building-gems
 [🔒️rubygems-checksums-pr]: https://github.com/rubygems/rubygems/pull/6022

@@ -3,6 +3,14 @@
 # External RSpec & related config
 require "kettle/test/rspec"
 
+require "pathname"
+SPEC_ROOT = Pathname(__dir__).realpath.freeze
+
+ENV["HANAMI_ENV"] ||= "test"
+require "hanami/prepare"
+
+SPEC_ROOT.glob("support/**/*.rb").each { |f| require f }
+
 # Internal ENV config
 require_relative "config/debug"
 require_relative "config/vcr"
@@ -24,6 +32,9 @@ end
 # this library
 require "gem/server"
 
+# Load database configuration
+require_relative "../config/database"
+
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = ".rspec_status"
@@ -33,5 +44,29 @@ RSpec.configure do |config|
 
   config.expect_with :rspec do |c|
     c.syntax = :expect
+  end
+
+  # Database cleanup
+  config.before(:suite) do
+    # Create test database
+    Gem::Server::Database.migrate
+  end
+
+  config.before do |example|
+    # Skip database cleanup for E2E tests that manage their own database state
+    # Check both the type metadata and if the example is tagged with :skip_db_cleanup
+    next if example.metadata[:type] == :e2e || example.metadata[:skip_db_cleanup]
+
+    # Clean database before each test
+    db = Gem::Server::Database.db
+    # Federation tables first (FKs)
+    db[:federated_gems].delete if db.table_exists?(:federated_gems)
+    db[:known_servers].delete if db.table_exists?(:known_servers)
+    # Existing tables
+    db[:gem_owners].delete
+    db[:scope_owners].delete
+    db[:gems].delete
+    db[:owners].delete
+    db[:scopes].delete
   end
 end
