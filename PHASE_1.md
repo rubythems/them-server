@@ -13,8 +13,8 @@ This phase focuses on building the core gem server functionality, including supp
 ## Steps
 
 ### 1. Set Up Project Structure and Dependencies
-- Choose a web framework (e.g., Sinatra for lightweight, or Rails for full-featured).
-- Add necessary gems: sinatra, rack, json, sqlite3 or postgresql for storage, bcrypt for hashing, etc.
+- Use Hanami as the web framework.
+- Add necessary gems: hanami, rack, json, sqlite3 for storage, bcrypt for hashing, etc.
 - Initialize database schema for scopes, gems, owners, permissions.
 - Set up basic server configuration and routing.
 
