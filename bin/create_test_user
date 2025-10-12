@@ -1,0 +1,52 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# Script to create a test user for the authentication system
+
+require_relative "../config/database"
+require "bcrypt"
+require "securerandom"
+
+db = Gem::Server::Database.db
+
+puts "Creating test owner with login credentials..."
+
+# Create or update a test owner
+email = "test@example.com"
+name = "test-owner"
+password = "password123"
+
+# Check if owner exists
+existing_owner = db[:owners].where(email: email).or(name: name).first
+
+if existing_owner
+  puts "Updating existing owner: #{existing_owner[:name]}"
+  db[:owners].where(id: existing_owner[:id]).update(
+    email: email,
+    password_digest: BCrypt::Password.create(password),
+    updated_at: Time.now
+  )
+  owner_id = existing_owner[:id]
+else
+  puts "Creating new owner: #{name}"
+  owner_id = db[:owners].insert(
+    name: name,
+    email: email,
+    password_digest: BCrypt::Password.create(password),
+    api_key: SecureRandom.hex(32),
+    created_at: Time.now,
+    updated_at: Time.now
+  )
+end
+
+owner = db[:owners].where(id: owner_id).first
+
+puts "\n✅ Test owner created successfully!"
+puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+puts "📧 Email:    #{owner[:email]}"
+puts "👤 Name:     #{owner[:name]}"
+puts "🔑 Password: #{password}"
+puts "🔐 API Key:  #{owner[:api_key]}"
+puts "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+puts "\nYou can now log in at: http://localhost:2300/auth/login"
+puts ""

@@ -105,13 +105,16 @@ Gem::Specification.new do |spec|
   spec.executables = []
 
   # Utilities
-  spec.add_dependency("hanami", "~> 2.2", ">= 2.2.1")                   # Full-stack web framework
-  spec.add_dependency("rack", "~> 3.0")                                 # Rack web server interface
-  spec.add_dependency("rack-protection", "~> 4.0")                      # Security middleware
-  spec.add_dependency("rackup", "~> 2.1")                               # Rackup command is separate dependency in rack >= v3
-  spec.add_dependency("rom-sql", "~> 3.0")                              # Database toolkit
+  spec.add_dependency("ed25519", "~> 1.4")                              # ruby >= 3.0.0, signing & verification for federation
+  spec.add_dependency("hanami", "~> 2.2", ">= 2.2.1")                   # ruby >= 3.1.0, Full-stack web framework
+  spec.add_dependency("hanami-utils", "~> 2.2")                         # ruby >= 3.1.0, Hanami utilities including inflector
+  spec.add_dependency("oauth2", "~> 2.0", ">= 2.0.17")                  # ruby >= 2.2.0, OAuth2 client for federation
+  spec.add_dependency("omniauth-identity", "~> 3.1", ">= 3.1.4")        # ruby >= 2.4.0, OmniAuth strategy for Identity (username/password)
+  spec.add_dependency("rack", "~> 3.2", ">= 3.2.3")                     # ruby >= 2.4.0, Rack web server interface
+  spec.add_dependency("rack-protection", "~> 4.0")                      # ruby >= 2.7.8, Security middleware
+  spec.add_dependency("rackup", "~> 2.1")                               # ruby >= 2.5.0, Rackup command is separate dependency in rack >= v3
+  spec.add_dependency("rom-sql", "~> 3.0")                              # ruby >= 3.1.0, Database toolkit
   spec.add_dependency("version_gem", "~> 1.1", ">= 1.1.9")              # ruby >= 2.2.0
-  spec.add_dependency("ed25519", ">= 1.3")                               # signing & verification for federation
 
   # NOTE: It is preferable to list development dependencies in the gemspec due to increased
   #       visibility and discoverability.

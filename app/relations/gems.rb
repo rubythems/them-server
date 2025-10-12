@@ -4,13 +4,7 @@ module Gem
   module Server
     module Relations
       class Gems < ROM::Relation[:sql]
-        schema(:gems, infer: true) do
-          associations do
-            belongs_to :scope
-            has_many :gem_owners
-            has_many :owners, through: :gem_owners
-          end
-        end
+        schema(:gems, infer: true)
 
         def by_name(name)
           where(name: name)

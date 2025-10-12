@@ -5,6 +5,7 @@ require "tempfile"
 require "gem/server/scope_resolver"
 require_relative "../../../config/database"
 require "gem/server/federation_broadcaster"
+require "gem/server/authenticator"
 
 module Gem
   module Server
@@ -77,20 +78,34 @@ module Gem
             scope = resolver.scope(create: true)  # Create scopes during push
             db = Database.db
 
-            # Authentication: prefer headers; in multipart, also allow explicit params
-            api_key = extract_api_key_from_headers(request.env)
-            if !api_key && multipart_params
+            # Authentication: Use unified OAuth2-enabled authenticator
+            auth_result = Gem::Server::Authenticator.authenticate(request.env)
+
+            # Allow multipart form fallback for backwards compatibility
+            if !auth_result[:authenticated] && multipart_params
               api_key = (multipart_params["rubygems_api_key"] || multipart_params["api_key"]).to_s.strip
-              api_key = nil if api_key.empty?
+              unless api_key.empty?
+                auth_result = {
+                  authenticated: true,
+                  scheme: :form_param,
+                  user: api_key,
+                  token: api_key,
+                  scopes: [],
+                  token_info: nil,
+                }
+              end
             end
 
-            unless api_key
+            unless auth_result[:authenticated]
               response.headers["content-type"] = "text/plain; charset=utf-8"
-              response.body = "API key required"
+              response.headers["WWW-Authenticate"] = 'Bearer realm="gem-server"' if Gem::Server::OAuth2Config.enabled?
+              response.body = Gem::Server::OAuth2Config.enabled? ? "API key or OAuth2 token required" : "API key required"
               response.status = 401
               return
             end
 
+            # Look up owner by API key/token
+            api_key = auth_result[:token]
             owner = db[:owners].where(api_key: api_key).first
             unless owner
               response.headers["content-type"] = "text/plain; charset=utf-8"
@@ -178,44 +193,6 @@ module Gem
 
           private
 
-          def extract_api_key_from_headers(env)
-            # Accept common headers from curl and RubyGems clients
-            raw = env["HTTP_AUTHORIZATION"].to_s
-            x_key = env["HTTP_X_API_KEY"].to_s.strip
-            rg_key = env["HTTP_RUBYGEMS_API_KEY"].to_s.strip
-            x_rg_key = env["HTTP_X_RUBYGEMS_API_KEY"].to_s.strip
-
-            return x_key unless x_key.empty?
-            return rg_key unless rg_key.empty?
-            return x_rg_key unless x_rg_key.empty?
-            return if raw.empty?
-
-            auth = raw.strip
-            # Basic <base64(username:password)>
-            if (m = auth.match(/^Basic\s+(.+)$/i))
-              require "base64"
-              begin
-                decoded = Base64.decode64(m[1].strip)
-                decoded = decoded.to_s
-                decoded = decoded.include?(":") ? decoded.split(":", 2).first : decoded
-                decoded = decoded.to_s.strip
-                return decoded unless decoded.empty?
-              rescue StandardError
-                # ignore and continue
-              end
-            elsif (m = auth.match(/^RubyGems\s+(.+)$/i))
-              key = m[1].to_s.strip
-              return key unless key.empty?
-            elsif (m = auth.match(/^Bearer\s+(.+)$/i))
-              key = m[1].to_s.strip
-              return key unless key.empty?
-            else
-              # If there's no scheme and no spaces, treat the header as the key
-              return auth unless auth.include?(" ")
-            end
-
-            nil
-          end
 
           def io_empty?(io, content_length)
             # If this is the rack input stream, rely on Content-Length

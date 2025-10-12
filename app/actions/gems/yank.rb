@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-require "json"
-require "gem/server/scope_resolver"
 require_relative "../../../config/database"
+require "gem/server/authenticator"
 
 module Gem
   module Server
@@ -27,18 +26,22 @@ module Gem
             scope = resolver.scope(create: false)
             db = Database.db
 
-            # Auth via headers
-            api_key = extract_api_key_from_headers(request.env)
-            unless api_key
-              response.headers["Content-Type"] = "text/plain; charset=utf-8"
-              response.body = "API key required"
+            # Authentication: Use unified OAuth2-enabled authenticator
+            auth_result = Gem::Server::Authenticator.authenticate(request.env)
+
+            unless auth_result[:authenticated]
+              response.headers["content-type"] = "text/plain; charset=utf-8"
+              response.headers["WWW-Authenticate"] = 'Bearer realm="gem-server"' if Gem::Server::OAuth2Config.enabled?
+              response.body = Gem::Server::OAuth2Config.enabled? ? "API key or OAuth2 token required" : "API key required"
               response.status = 401
               return
             end
 
+            # Look up owner by API key/token
+            api_key = auth_result[:token]
             owner = db[:owners].where(api_key: api_key).first
             unless owner
-              response.headers["Content-Type"] = "text/plain; charset=utf-8"
+              response.headers["content-type"] = "text/plain; charset=utf-8"
               response.body = "Invalid API key"
               response.status = 401
               return
@@ -80,34 +83,6 @@ module Gem
             response.headers["Content-Type"] = "text/plain; charset=utf-8"
             response.body = "Gem yanked"
             response.status = 200
-          end
-
-          private
-
-          def extract_api_key_from_headers(env)
-            auth = env["HTTP_AUTHORIZATION"]
-            x_key = env["HTTP_X_API_KEY"].to_s.strip
-            return x_key unless x_key.empty?
-
-            return if auth.to_s.strip.empty?
-
-            if (m = auth.match(/^Basic\s+(.+)$/i))
-              require "base64"
-              begin
-                decoded = Base64.decode64(m[1])
-                return decoded.split(":").first
-              rescue StandardError
-                return
-              end
-            elsif (m = auth.match(/^RubyGems\s+(.+)$/i))
-              return m[1].to_s.strip
-            elsif (m = auth.match(/^Bearer\s+(.+)$/i))
-              return m[1].to_s.strip
-            else
-              return auth.strip unless auth.strip.include?(" ")
-            end
-
-            nil
           end
         end
       end

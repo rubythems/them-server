@@ -4,14 +4,7 @@ module Gem
   module Server
     module Relations
       class Owners < ROM::Relation[:sql]
-        schema(:owners, infer: true) do
-          associations do
-            has_many :gem_owners
-            has_many :gems, through: :gem_owners
-            has_many :scope_owners
-            has_many :scopes, through: :scope_owners
-          end
-        end
+        schema(:owners, infer: true)
 
         def by_name(name)
           where(name: name)
@@ -19,6 +12,10 @@ module Gem
 
         def by_api_key(api_key)
           where(api_key: api_key)
+        end
+
+        def by_email(email)
+          where(email: email)
         end
       end
     end

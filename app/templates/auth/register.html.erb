@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= page_title %></title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      padding: 40px;
+      max-width: 400px;
+      width: 100%;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 10px;
+      font-size: 28px;
+    }
+    p.subtitle {
+      color: #666;
+      margin-bottom: 30px;
+    }
+    .error {
+      background: #fee;
+      color: #c33;
+      padding: 12px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      border-left: 4px solid #c33;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+      font-weight: 500;
+    }
+    input[type="email"],
+    input[type="password"],
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+    }
+    input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+    button {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+    }
+    .link-group {
+      margin-top: 20px;
+      text-align: center;
+    }
+    .link-group a {
+      color: #667eea;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .link-group a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>💎 Register</h1>
+    <p class="subtitle">Create your gem owner account</p>
+
+    <% if error %>
+      <div class="error">
+        <% if error == "registration_failed" %>
+          Registration failed. Email may already be in use.
+        <% else %>
+          An error occurred. Please try again.
+        <% end %>
+      </div>
+    <% end %>
+
+    <form action="/auth/identity/register" method="post">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required autofocus>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required minlength="8">
+      </div>
+
+      <div class="form-group">
+        <label for="password_confirmation">Confirm Password</label>
+        <input type="password" id="password_confirmation" name="password_confirmation" required minlength="8">
+      </div>
+
+      <button type="submit">Register</button>
+    </form>
+
+    <div class="link-group">
+      <a href="/auth/login">Already have an account? Log in</a>
+    </div>
+  </div>
+</body>
+</html>
+

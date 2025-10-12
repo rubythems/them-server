@@ -4,12 +4,7 @@ module Gem
   module Server
     module Relations
       class GemOwners < ROM::Relation[:sql]
-        schema(:gem_owners, infer: true) do
-          associations do
-            belongs_to :gem
-            belongs_to :owner
-          end
-        end
+        schema(:gem_owners, infer: true)
 
         def by_gem(gem_id)
           where(gem_id: gem_id)

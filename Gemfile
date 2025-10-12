@@ -16,6 +16,12 @@ gem "puma"
 gem "rake"
 gem "sqlite3"
 
+# Authentication
+gem "omniauth", "~> 2.1"
+gem "omniauth-identity", "~> 3.0"
+gem "bcrypt", "~> 3.1"
+gem "rack-session", "~> 2.0"
+
 group :development do
   gem "hanami-webconsole", "~> 2.2"
 end
