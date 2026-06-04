@@ -5,7 +5,7 @@
   "app/actions/gems/create.rb:3941528809": [
     [204, 50, 15, "Style/IfWithBooleanLiteralBranches: Remove redundant ternary operator with boolean literal branches.", 562381739]
   ],
-  "config/database.rb:1052641455": [
+  "config/database.rb:3813515984": [
     [20, 18, 3, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 193449827],
     [20, 51, 3, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 193449827],
     [20, 59, 3, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 193449827],
