@@ -30,6 +30,9 @@ Please file a bug if you notice a violation of semantic versioning.
 
 ### Fixed
 
+- Restored the app-specific Rackup binstub and Rake tasks after the template
+  refresh.
+
 ### Security
 
 ## [0.1.0] - 2025-10-10
