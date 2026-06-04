@@ -2,10 +2,12 @@
 
 require "dry/types"
 
-module ThemServer
-  Types = Dry.Types
+module Gem
+  module Server
+    Types = Dry.Types
 
-  module Types
-    # Define your custom types here
+    module Types
+      # Define your custom types here
+    end
   end
 end

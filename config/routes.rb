@@ -3,15 +3,8 @@
 module Gem
   module Server
     class Routes < Hanami::Routes
-      slice :main, at: "/" do
-        use Gem::Server::AuthenticationApp
-
-        root to: "home.show"
-
-        get "/auth/dashboard", to: "auth.dashboard"
-
-        get "/account", to: "account.show"
-      end
+      root to: "gems.show"
+      get "/auth/dashboard", to: "auth.dashboard"
 
       # Federation endpoints
       post "/federation/announce", to: "federation.announce"

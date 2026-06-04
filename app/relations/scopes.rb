@@ -3,7 +3,7 @@
 module Gem
   module Server
     module Relations
-      class Scopes < ROM::Relation[:sql]
+      class Scopes < Gem::Server::DB::Relation
         schema(:scopes, infer: true)
 
         def by_name(name)

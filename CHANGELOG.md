@@ -32,6 +32,13 @@ Please file a bug if you notice a violation of semantic versioning.
 
 - Restored the app-specific Rackup binstub and Rake tasks after the template
   refresh.
+- Fixed Hanami route boot by removing the missing `:main` slice mount.
+- Fixed Rack boot by loading the actual authentication app.
+- Fixed authentication app boot by not starting an undefined Hanami mail
+  provider.
+- Aligned generated Hanami DB and type namespaces with `Gem::Server`.
+- Configured the Hanami DB provider and legacy DB helper to share Hanami-style
+  test database URL handling, including parallel worker suffixes.
 
 ### Security
 

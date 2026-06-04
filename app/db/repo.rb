@@ -2,9 +2,11 @@
 
 require "hanami/db/repo"
 
-module ThemServer
-  module DB
-    class Repo < Hanami::DB::Repo
+module Gem
+  module Server
+    module DB
+      class Repo < Hanami::DB::Repo
+      end
     end
   end
 end

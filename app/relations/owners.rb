@@ -3,7 +3,7 @@
 module Gem
   module Server
     module Relations
-      class Owners < ROM::Relation[:sql]
+      class Owners < Gem::Server::DB::Relation
         schema(:owners, infer: true)
 
         def by_name(name)

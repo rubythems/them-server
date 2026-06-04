@@ -3,7 +3,7 @@
 require "securerandom"
 require "rack/session/cookie"
 require "hanami/boot"
-require_relative "lib/them_server/auth_app"
+require_relative "app/authentication_app"
 
 # Shared session for Hanami and Rodauth
 use Rack::Session::Cookie,

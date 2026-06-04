@@ -15,9 +15,6 @@ module Gem
     # @see config/routes.rb
     # @see https://rodauth.jeremyevans.net
     class AuthenticationApp < Roda
-      # Start the mail provider for Rodauth's email deliveries.
-      Hanami.app.start :mail
-
       # Activate this Roda app (which includes the Rodauth features configured below) as a middleware,
       # so we can include it in Hanami's routes.
       #
