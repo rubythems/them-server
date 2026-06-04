@@ -143,8 +143,6 @@ Gem::Specification.new do |spec|
   # Tasks
   spec.add_development_dependency("rake", "~> 13.0")                                # ruby >= 2.2.0
 
-  # Debugging
-  spec.add_development_dependency("debug", "~> 1.11")                              # ruby >= 2.7.0
   spec.add_development_dependency("dotenv", "~> 3.2")                              # ruby >= 3.1.0
   spec.add_development_dependency("require_bench", "~> 1.0", ">= 1.0.4")            # ruby >= 2.2.0
 
