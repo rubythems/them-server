@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/gem-server.iml" filepath="$PROJECT_DIR$/.idea/gem-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/them-server.iml" filepath="$PROJECT_DIR$/.idea/them-server.iml" />
     </modules>
   </component>
 </project>

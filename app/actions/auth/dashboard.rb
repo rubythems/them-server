@@ -45,7 +45,7 @@ module Gem
                            owner: owner,
                            gems: owned_gems,
                            user_name: owner[:name],
-                           user_email: owner[:email]
+                           user_email: request.session[:user_email]
           end
         end
       end

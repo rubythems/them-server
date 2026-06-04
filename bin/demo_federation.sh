@@ -11,7 +11,7 @@ cd "$ROOT_DIR"
 bundle check >/dev/null 2>&1 || bundle install
 
 # Prepare server 1
-export GEM_SERVER_DB="$ROOT_DIR/db/gem_server_1.db"
+export GEM_SERVER_DB="$ROOT_DIR/config/db/them_server_1.db"
 bundle exec rake db:reset
 export FEDERATION_BASE_URL="http://localhost:9292"
 # Seed known servers in server 1 DB
@@ -24,7 +24,7 @@ HANAMI_PORT=9292 HANAMI_ENV=development GEM_SERVER_DB="$GEM_SERVER_DB" \
 echo "Server 1 running on http://localhost:9292 using DB $GEM_SERVER_DB"
 
 # Prepare server 2
-export GEM_SERVER_DB="$ROOT_DIR/db/gem_server_2.db"
+export GEM_SERVER_DB="$ROOT_DIR/config/db/them_server_2.db"
 bundle exec rake db:reset
 export FEDERATION_BASE_URL="http://localhost:9393"
 # Seed known servers in server 2 DB
@@ -52,4 +52,3 @@ ruby -e 'require "gem/server/federation_client"; Gem::Server::FederationClient.n
 echo "Federation demo complete. Try hitting /admin/known_servers on each server."
 echo "  curl http://localhost:9292/admin/known_servers"
 echo "  curl http://localhost:9393/admin/known_servers"
-

@@ -1,0 +1,21 @@
+<h1>Login</h1>
+<% if flash && flash[:notice] %>
+  <p class="notice"><%= flash[:notice] %></p>
+<% end %>
+<% if flash && flash[:error] %>
+  <p class="error"><%= flash[:error] %></p>
+<% end %>
+<form action="/auth/login" method="post">
+  <label>Email</label>
+  <input type="email" name="login" value="<%= defined?(rodauth) ? rodauth.param('login') : '' %>" required>
+  <% if defined?(rodauth) && (e = rodauth.field_error('login')) %>
+    <p class="error"><%= e %></p>
+  <% end %>
+  <label>Password</label>
+  <input type="password" name="password" required>
+  <% if defined?(rodauth) && (e = rodauth.field_error('password')) %>
+    <p class="error"><%= e %></p>
+  <% end %>
+  <button type="submit">Login</button>
+</form>
+<p><a href="/auth/create-account">Create account</a></p>

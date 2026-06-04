@@ -163,7 +163,7 @@ Response:
 When OAuth2 is enabled, 401 responses include proper WWW-Authenticate headers:
 
 ```
-WWW-Authenticate: Bearer realm="gem-server"
+WWW-Authenticate: Bearer realm="them-server"
 ```
 
 This allows OAuth2-aware clients to automatically request new tokens.
@@ -200,11 +200,11 @@ RSpec.describe "OAuth2 authentication" do
     ENV['OAUTH2_PROVIDER_URL'] = 'https://oauth.example.com'
     ENV['OAUTH2_CLIENT_ID'] = 'test-client'
     ENV['OAUTH2_CLIENT_SECRET'] = 'test-secret'
-    
+
     result = Gem::Server::Authenticator.authenticate({
       'HTTP_AUTHORIZATION' => 'Bearer valid-token'
     })
-    
+
     expect(result[:authenticated]).to be true
     expect(result[:scheme]).to eq(:oauth2)
   end
@@ -260,4 +260,3 @@ OAuth2 is opt-in and backwards compatible:
 4. Eventually deprecate API keys if desired
 
 The gem server will accept both authentication methods simultaneously.
-

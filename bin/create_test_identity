@@ -1,0 +1,78 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# Script to create a test identity for authentication testing
+
+require_relative "../config/database"
+require "bcrypt"
+
+db = Gem::Server::Database.db
+
+puts "Creating Test Identity..."
+puts "=" * 60
+
+# First, ensure we have a test owner
+test_owner = db[:owners].where(name: "test-owner").first
+
+unless test_owner
+  puts "\nCreating test owner..."
+  owner_id = db[:owners].insert(
+    name: "test-owner",
+    api_key: "test-api-key-123",
+    created_at: Time.now,
+    updated_at: Time.now
+  )
+  test_owner = db[:owners].where(id: owner_id).first
+  puts "✓ Created owner: #{test_owner[:name]}"
+else
+  puts "✓ Test owner already exists: #{test_owner[:name]}"
+end
+
+# Check if identity already exists
+existing_identity = db[:identities].where(email: "test@example.com").first
+
+if existing_identity
+  puts "\n⚠ Identity with email 'test@example.com' already exists"
+  puts "  - Email: #{existing_identity[:email]}"
+  puts "  - Owner ID: #{existing_identity[:owner_id]}"
+
+  print "\nUpdate password? (y/n): "
+  response = gets.chomp.downcase
+
+  if response == "y"
+    password_hash = BCrypt::Password.create("password123")
+    db[:identities].where(id: existing_identity[:id]).update(
+      password_digest: password_hash,
+      updated_at: Time.now
+    )
+    puts "✓ Password updated for test@example.com"
+  else
+    puts "No changes made."
+  end
+else
+  # Create new identity
+  puts "\nCreating test identity..."
+  password_hash = BCrypt::Password.create("password123")
+
+  identity_id = db[:identities].insert(
+    owner_id: test_owner[:id],
+    email: "test@example.com",
+    password_digest: password_hash,
+    created_at: Time.now,
+    updated_at: Time.now
+  )
+
+  puts "✓ Created identity:"
+  puts "  - ID: #{identity_id}"
+  puts "  - Email: test@example.com"
+  puts "  - Password: password123"
+  puts "  - Owner: #{test_owner[:name]} (ID: #{test_owner[:id]})"
+end
+
+puts "\n" + "=" * 60
+puts "Test Identity Setup Complete!"
+puts "\nYou can now test authentication with:"
+puts "  Email: test@example.com"
+puts "  Password: password123"
+puts ""
+

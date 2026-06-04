@@ -1,5 +1,5 @@
 {
-  "name": "gem_server",
+  "name": "them_server",
   "private": true,
   "type": "module",
   "dependencies": {

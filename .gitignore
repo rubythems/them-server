@@ -51,6 +51,6 @@ Appraisal.*.gemfile.lock
 log/*
 public/
 node_modules/
-db/*.sqlite
+config/db/*.sqlite
+config/db/*.db
 spec/examples.txt
-db/*.db

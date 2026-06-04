@@ -1,71 +1,31 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
-# Test script to verify the authentication system is working
-puts "Testing Authentication System Components..."
+
+puts "Testing Rodauth Authentication..."
 puts "=" * 60
-# Test 1: Check if Identity model loads
-puts "\n1. Testing Identity Model..."
+
+require "net/http"
+require "uri"
+
+host = ENV.fetch("HOST", "127.0.0.1")
+port = ENV.fetch("PORT", "9292")
+base = "http://#{host}:#{port}"
+
 begin
-  require_relative "../config/database"
-  require_relative "../lib/gem_server/omniauth_identity_rom_adapter"
-  # Initialize ROM container first
-  rom_container = Gem::Server::Database.rom
-  # Now load the repository and model
-  require_relative "../app/repos/owner_repository"
-  require_relative "../app/models/identity"
-  puts "   ✓ Identity model loaded successfully"
-  puts "   ✓ Auth key: #{Gem::Server::Models::Identity.auth_key}"
-rescue => e
-  puts "   ✗ Error loading Identity model: #{e.message}"
-  puts "   Stack trace:"
-  puts e.backtrace.first(5).join("\n")
-  exit 1
-end
-# Test 2: Check database migration
-puts "\n2. Checking Database Schema..."
-db = Gem::Server::Database.db
-schema = db.schema(:owners)
-columns = schema.map { |col| col[0] }
-if columns.include?(:email) && columns.include?(:password_digest)
-  puts "   ✓ Database has email and password_digest columns"
-else
-  puts "   ✗ Missing required columns. Run: bundle exec rake db:migrate"
-  exit 1
-end
-# Test 3: Check if test user exists
-puts "\n3. Checking for Test User..."
-test_user = db[:owners].where(email: "test@example.com").first
-if test_user
-  puts "   ✓ Test user exists:"
-  puts "     - Email: #{test_user[:email]}"
-  puts "     - Name: #{test_user[:name]}"
-  puts "     - Has password: #{!test_user[:password_digest].nil?}"
-else
-  puts "   ℹ No test user found. Create one with:"
-  puts "     bundle exec ruby bin/create_test_user"
-end
-# Test 4: Test authentication
-puts "\n4. Testing Authentication..."
-if test_user && test_user[:password_digest]
-  identity = Gem::Server::Models::Identity.authenticate(
-    email: "test@example.com",
-    password: "password123"
-  )
-  if identity
-    puts "   ✓ Authentication successful"
-    puts "     - User ID: #{identity.uid}"
-    puts "     - Email: #{identity.email}"
+  uri = URI.parse("#{base}/auth/login")
+  res = Net::HTTP.get_response(uri)
+  if res.is_a?(Net::HTTPSuccess) || res.is_a?(Net::HTTPRedirection)
+    puts "\n\u2713 Rodauth login page accessible at #{uri}"
   else
-    puts "   ✗ Authentication failed"
+    puts "\n\u2717 Failed to load login page (status #{res.code})"
   end
+rescue => e
+  puts "\n\u2717 Error fetching login page: #{e.message}"
 end
-# Test 5: Check routes
-puts "\n5. Authentication Routes:"
-puts "   - Login:      http://localhost:9292/auth/login"
-puts "   - Register:   http://localhost:9292/auth/register"
-puts "   - Dashboard:  http://localhost:9292/auth/dashboard"
-puts "   - Logout:     http://localhost:9292/auth/logout"
-puts "\n" + "=" * 60
-puts "Authentication System Test Complete!"
-puts "\nTo start the server: bin/rackup"
-puts ""
+
+puts "\nRoutes to try:"
+puts "  - Login:      #{base}/auth/login"
+puts "  - Create:     #{base}/auth/create-account"
+puts "  - Dashboard:  #{base}/auth/dashboard (after login)"
+puts "  - Logout:     #{base}/auth/logout"
+puts "\nDone."

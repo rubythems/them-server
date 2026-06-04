@@ -1,17 +1,3 @@
-| 📍 NOTE                                                                                                                                                     |
-|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| RubyGems.org was [recently compromised][draper-security] in a [hostile takeover][draper-takeover] about which [many lies][draper-lies] have been told.      |
-| I'm in the process of adding warnings to some important gems because I [don't condone the theft][draper-theft] of the bundler and rubygems-update projects. |
-| Once publishing to [gem.coop][gem-coop] is available I will stop publishing to RubyGems.org.                                                                |
-| Please see [here][gem-coop] and [here][martin-ann] for more info on what comes next.                                                                        |
-
-[draper-security]: https://joel.drapper.me/p/ruby-central-security-measures/
-[draper-takeover]: https://joel.drapper.me/p/ruby-central-takeover/
-[draper-lies]: https://joel.drapper.me/p/ruby-central-fact-check/
-[draper-theft]: https://joel.drapper.me/p/ruby-central/
-[gem-coop]: https://gem.coop
-[martin-ann]: https://martinemde.com/2025/10/05/announcing-gem-coop.html
-
 [![Galtzo FLOSS Logo by Aboling0, CC BY-SA 4.0][🖼️galtzo-i]][🖼️galtzo-discord] [![ruby-lang Logo, Yukihiro Matsumoto, Ruby Visual Identity Team, CC BY-SA 2.5][🖼️ruby-lang-i]][🖼️ruby-lang]
 
 [🖼️galtzo-i]: https://logos.galtzo.com/assets/images/galtzo-floss/avatar-192px.svg
@@ -33,29 +19,27 @@
 
 ## 🌻 Synopsis
 
-
-
 ## 💡 Info you can shake a stick at
 
 | Tokens to Remember      | [![Gem name][⛳️name-img]][⛳️gem-name] [![Gem namespace][⛳️namespace-img]][⛳️gem-namespace]                                                                                                                                                                                                                                                                          |
-|-------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Works with JRuby        | ![JRuby 9.1 Compat][💎jruby-9.1i] ![JRuby 9.2 Compat][💎jruby-9.2i] ![JRuby 9.3 Compat][💎jruby-9.3i] <br/> [![JRuby 9.4 Compat][💎jruby-9.4i]][🚎10-j-wf] [![JRuby 10.0 Compat][💎jruby-c-i]][🚎11-c-wf] [![JRuby HEAD Compat][💎jruby-headi]][🚎3-hd-wf]                                                                                                          |
 | Works with Truffle Ruby | ![Truffle Ruby 22.3 Compat][💎truby-22.3i] ![Truffle Ruby 23.0 Compat][💎truby-23.0i] <br/> [![Truffle Ruby 23.1 Compat][💎truby-23.1i]][🚎9-t-wf] [![Truffle Ruby 24.1 Compat][💎truby-c-i]][🚎11-c-wf]                                                                                                                                                            |
-| Works with MRI Ruby 3   | [![Ruby 3.2 Compat][💎ruby-3.2i]][🚎6-s-wf] [![Ruby 3.3 Compat][💎ruby-3.3i]][🚎6-s-wf] [![Ruby 3.4 Compat][💎ruby-c-i]][🚎11-c-wf] [![Ruby HEAD Compat][💎ruby-headi]][🚎3-hd-wf]                                                                                         |
-| Support & Community     | [![Join Me on Daily.dev's RubyFriends][✉️ruby-friends-img]][✉️ruby-friends] [![Live Chat on Discord][✉️discord-invite-img-ftb]][✉️discord-invite] [![Get help from me on Upwork][👨🏼‍🏫expsup-upwork-img]][👨🏼‍🏫expsup-upwork] [![Get help from me on Codementor][👨🏼‍🏫expsup-codementor-img]][👨🏼‍🏫expsup-codementor]                                       |
+| Works with MRI Ruby 3   | [![Ruby 3.2 Compat][💎ruby-3.2i]][🚎6-s-wf] [![Ruby 3.3 Compat][💎ruby-3.3i]][🚎6-s-wf] [![Ruby 3.4 Compat][💎ruby-c-i]][🚎11-c-wf] [![Ruby HEAD Compat][💎ruby-headi]][🚎3-hd-wf]                                                                                                                                                                                  |
+| Support & Community     | [![Join Me on Daily.dev's RubyFriends][✉️ruby-friends-img]][✉️ruby-friends] [![Live Chat on Discord][✉️discord-invite-img-ftb]][✉️discord-invite] [![Get help from me on Upwork][👨🏼‍🏫expsup-upwork-img]][👨🏼‍🏫expsup-upwork] [![Get help from me on Codementor][👨🏼‍🏫expsup-codementor-img]][👨🏼‍🏫expsup-codementor]                                                           |
 | Source                  | [![Source on GitLab.com][📜src-gl-img]][📜src-gl] [![Source on CodeBerg.org][📜src-cb-img]][📜src-cb] [![Source on Github.com][📜src-gh-img]][📜src-gh] [![The best SHA: dQw4w9WgXcQ!][🧮kloc-img]][🧮kloc]                                                                                                                                                         |
 | Documentation           | [![Current release on RubyDoc.info][📜docs-cr-rd-img]][🚎yard-current] [![YARD on Galtzo.com][📜docs-head-rd-img]][🚎yard-head] [![Maintainer Blog][🚂maint-blog-img]][🚂maint-blog] [![GitLab Wiki][📜gl-wiki-img]][📜gl-wiki] [![GitHub Wiki][📜gh-wiki-img]][📜gh-wiki]                                                                                          |
 | Compliance              | [![License: MIT][📄license-img]][📄license-ref] [![Compatible with Apache Software Projects: Verified by SkyWalking Eyes][📄license-compat-img]][📄license-compat] [![📄ilo-declaration-img]][📄ilo-declaration] [![Security Policy][🔐security-img]][🔐security] [![Contributor Covenant 2.1][🪇conduct-img]][🪇conduct] [![SemVer 2.0.0][📌semver-img]][📌semver] |
 | Style                   | [![Enforced Code Style Linter][💎rlts-img]][💎rlts] [![Keep-A-Changelog 1.0.0][📗keep-changelog-img]][📗keep-changelog] [![Gitmoji Commits][📌gitmoji-img]][📌gitmoji] [![Compatibility appraised by: appraisal2][💎appraisal2-img]][💎appraisal2]                                                                                                                  |
-| Maintainer 🎖️          | [![Follow Me on LinkedIn][💖🖇linkedin-img]][💖🖇linkedin] [![Follow Me on Ruby.Social][💖🐘ruby-mast-img]][💖🐘ruby-mast] [![Follow Me on Bluesky][💖🦋bluesky-img]][💖🦋bluesky] [![Contact Maintainer][🚂maint-contact-img]][🚂maint-contact] [![My technical writing][💖💁🏼‍♂️devto-img]][💖💁🏼‍♂️devto]                                                      |
-| `...` 💖                | [![Find Me on WellFound:][💖✌️wellfound-img]][💖✌️wellfound] [![Find Me on CrunchBase][💖💲crunchbase-img]][💖💲crunchbase] [![My LinkTree][💖🌳linktree-img]][💖🌳linktree] [![More About Me][💖💁🏼‍♂️aboutme-img]][💖💁🏼‍♂️aboutme] [🧊][💖🧊berg] [🐙][💖🐙hub]  [🛖][💖🛖hut] [🧪][💖🧪lab]                                                                   |
+| Maintainer 🎖️           | [![Follow Me on LinkedIn][💖🖇linkedin-img]][💖🖇linkedin] [![Follow Me on Ruby.Social][💖🐘ruby-mast-img]][💖🐘ruby-mast] [![Follow Me on Bluesky][💖🦋bluesky-img]][💖🦋bluesky] [![Contact Maintainer][🚂maint-contact-img]][🚂maint-contact] [![My technical writing][💖💁🏼‍♂️devto-img]][💖💁🏼‍♂️devto]                                                                |
+| `...` 💖                | [![Find Me on WellFound:][💖✌️wellfound-img]][💖✌️wellfound] [![Find Me on CrunchBase][💖💲crunchbase-img]][💖💲crunchbase] [![My LinkTree][💖🌳linktree-img]][💖🌳linktree] [![More About Me][💖💁🏼‍♂️aboutme-img]][💖💁🏼‍♂️aboutme] [🧊][💖🧊berg] [🐙][💖🐙hub] [🛖][💖🛖hut] [🧪][💖🧪lab]                                                                              |
 
 ### Compatibility
 
 Compatible with MRI Ruby 3.2.0+, and concordant releases of JRuby, and TruffleRuby.
 
-| 🚚 _Amazing_ test matrix was brought to you by | 🔎 appraisal2 🔎 and the color 💚 green 💚             |
-|------------------------------------------------|--------------------------------------------------------|
+| 🚚 _Amazing_ test matrix was brought to you by | 🔎 appraisal2 🔎 and the color 💚 green 💚               |
+| ---------------------------------------------- | -------------------------------------------------------- |
 | 👟 Check it out!                               | ✨ [github.com/appraisal-rb/appraisal2][💎appraisal2] ✨ |
 
 ### Federated DVCS
@@ -63,18 +47,18 @@ Compatible with MRI Ruby 3.2.0+, and concordant releases of JRuby, and TruffleRu
 <details>
   <summary>Find this repo on federated forges (Coming soon!)</summary>
 
-| Federated [DVCS][💎d-in-dvcs] Repository        | Status                                                                | Issues                    | PRs                      | Wiki                      | CI                       | Discussions                  |
-|-------------------------------------------------|-----------------------------------------------------------------------|---------------------------|--------------------------|---------------------------|--------------------------|------------------------------|
-| 🧪 [galtzo-floss/gem-server on GitLab][📜src-gl]   | The Truth                                                             | [💚][🤝gl-issues]         | [💚][🤝gl-pulls]         | [💚][📜gl-wiki]           | 🐭 Tiny Matrix           | ➖                            |
-| 🧊 [galtzo-floss/gem-server on CodeBerg][📜src-cb] | An Ethical Mirror ([Donate][🤝cb-donate])                             | [💚][🤝cb-issues]         | [💚][🤝cb-pulls]         | ➖                         | ⭕️ No Matrix             | ➖                            |
-| 🐙 [galtzo-floss/gem-server on GitHub][📜src-gh]   | Another Mirror                                                        | [💚][🤝gh-issues]         | [💚][🤝gh-pulls]         | [💚][📜gh-wiki]           | 💯 Full Matrix           | [💚][gh-discussions]         |
-| 🎮️ [Discord Server][✉️discord-invite]          | [![Live Chat on Discord][✉️discord-invite-img-ftb]][✉️discord-invite] | [Let's][✉️discord-invite] | [talk][✉️discord-invite] | [about][✉️discord-invite] | [this][✉️discord-invite] | [library!][✉️discord-invite] |
+| Federated [DVCS][💎d-in-dvcs] Repository            | Status                                                                | Issues                    | PRs                      | Wiki                      | CI                       | Discussions                  |
+| --------------------------------------------------- | --------------------------------------------------------------------- | ------------------------- | ------------------------ | ------------------------- | ------------------------ | ---------------------------- |
+| 🧪 [galtzo-floss/them-server on GitLab][📜src-gl]   | The Truth                                                             | [💚][🤝gl-issues]         | [💚][🤝gl-pulls]         | [💚][📜gl-wiki]           | 🐭 Tiny Matrix           | ➖                           |
+| 🧊 [galtzo-floss/them-server on CodeBerg][📜src-cb] | An Ethical Mirror ([Donate][🤝cb-donate])                             | [💚][🤝cb-issues]         | [💚][🤝cb-pulls]         | ➖                        | ⭕️ No Matrix             | ➖                           |
+| 🐙 [galtzo-floss/them-server on GitHub][📜src-gh]   | Another Mirror                                                        | [💚][🤝gh-issues]         | [💚][🤝gh-pulls]         | [💚][📜gh-wiki]           | 💯 Full Matrix           | [💚][gh-discussions]         |
+| 🎮️ [Discord Server][✉️discord-invite]               | [![Live Chat on Discord][✉️discord-invite-img-ftb]][✉️discord-invite] | [Let's][✉️discord-invite] | [talk][✉️discord-invite] | [about][✉️discord-invite] | [this][✉️discord-invite] | [library!][✉️discord-invite] |
 
 </details>
 
-[gh-discussions]: https://github.com/galtzo-floss/gem-server/discussions
+[gh-discussions]: https://github.com/galtzo-floss/them-server/discussions
 
-### Enterprise Support [![Tidelift](https://tidelift.com/badges/package/rubygems/gem-server)](https://tidelift.com/subscription/pkg/rubygems-gem-server?utm_source=rubygems-gem-server&utm_medium=referral&utm_campaign=readme)
+### Enterprise Support [![Tidelift](https://tidelift.com/badges/package/rubygems/them-server)](https://tidelift.com/subscription/pkg/rubygems-them-server?utm_source=rubygems-them-server&utm_medium=referral&utm_campaign=readme)
 
 Available as part of the Tidelift Subscription.
 
@@ -87,7 +71,7 @@ The maintainers of this and thousands of other packages are working with Tidelif
 
 - 💡Subscribe for support guarantees covering _all_ your FLOSS dependencies
 - 💡Tidelift is part of [Sonar][🏙️entsup-tidelift-sonar]
-- 💡Tidelift pays maintainers to maintain the software you depend on!<br/>📊`@`Pointy Haired Boss: An [enterprise support][🏙️entsup-tidelift] subscription is "[never gonna let you down][🧮kloc]", and *supports* open source maintainers
+- 💡Tidelift pays maintainers to maintain the software you depend on!<br/>📊`@`Pointy Haired Boss: An [enterprise support][🏙️entsup-tidelift] subscription is "[never gonna let you down][🧮kloc]", and _supports_ open source maintainers
 
 Alternatively:
 
@@ -102,13 +86,13 @@ Alternatively:
 Install the gem and add to the application's Gemfile by executing:
 
 ```console
-bundle add gem-server
+bundle add them-server
 ```
 
 If bundler is not being used to manage dependencies, install the gem by executing:
 
 ```console
-gem install gem-server
+gem install them-server
 ```
 
 ### 🔒 Secure Installation
@@ -126,10 +110,10 @@ Add my public key (if you haven’t already, expires 2045-04-29) as a trusted ce
 gem cert --add <(curl -Ls https://raw.github.com/galtzo-floss/certs/main/pboling.pem)
 ```
 
-You only need to do that once.  Then proceed to install with:
+You only need to do that once. Then proceed to install with:
 
 ```console
-gem install gem-server -P HighSecurity
+gem install them-server -P HighSecurity
 ```
 
 The `HighSecurity` trust profile will verify signed gems, and not allow the installation of unsigned dependencies.
@@ -148,8 +132,6 @@ NOTE: Be prepared to track down certs for signed gems and add them the same way 
 
 ## ⚙️ Configuration
 
-
-
 ## 🔧 Basic Usage
 
 Run a single server locally
@@ -167,6 +149,7 @@ bundle exec rackup -p 2300 -E development --host 0.0.0.0
 ```
 
 Browse or manage
+
 - List gems in root: http://localhost:2300/
 - Download scoped or root gems via GET as implemented in Phase 1
 - Admin UI: http://localhost:2300/admin (HTML)
@@ -176,22 +159,29 @@ Browse or manage
   - Metrics: GET /admin/federation/metrics
 
 Federation basics
+
 - Announce yourself to a peer (signed):
+
 ```bash
 # my_base_url can be provided via ENV FEDERATION_BASE_URL too
 bundle exec rake federation:announce['http://peer.example']
 ```
+
 - Subscribe to a peer (signed):
+
 ```bash
 bundle exec rake federation:subscribe['http://peer.example']
 ```
+
 - Broadcast a stubbed gem record to all subscribed peers:
+
 ```bash
 # Temporarily enables FEDERATION_BROADCAST=1; does not modify your real gems
 bundle exec rake federation:broadcast_stub['demo','0.1.0','scope/subscope']
 ```
 
 Two-server local demo (no containers)
+
 ```bash
 # This starts two rack servers on :9292 and :9393 with separate DBs, wires them via federation,
 # and prints their known server lists at the end.
@@ -199,6 +189,7 @@ bin/demo_federation.sh
 ```
 
 Container demo (docker-compose)
+
 ```bash
 # Build and spin up two servers and a small wiring helper
 docker compose up --build
@@ -209,7 +200,8 @@ curl http://localhost:9393/admin/known_servers | jq .
 ```
 
 Environment controls
-- GEM_SERVER_DB: path to the SQLite DB (default: db/gem_server.db). Set to run multiple instances side-by-side.
+
+- GEM_SERVER_DB: path to the SQLite DB (default: config/db/them_server.db). Set to run multiple instances side-by-side.
 - FEDERATION_BASE_URL: the base URL this server advertises in federation payloads.
 - FEDERATION_BROADCAST: set to "1" to broadcast new gem pushes to subscribed peers.
 - FEDERATION_PRIVATE_KEY_B64/FEDERATION_PUBLIC_KEY_B64: optional Ed25519 keypair to use a stable identity.
@@ -234,7 +226,7 @@ You can support the development of galtzo-floss tools via
 and [Tidelift][🏙️entsup-tidelift].
 
 | 📍 NOTE                                                                                                                                                                                                              |
-|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | If doing a sponsorship in the form of donation is problematic for your company <br/> from an accounting standpoint, we'd recommend the use of Tidelift, <br/> where you can get a support-like subscription instead. |
 
 ### Open Collective for Individuals
@@ -244,7 +236,9 @@ Support us with a monthly donation and help us continue our activities. [[Become
 NOTE: [kettle-readme-backers][kettle-readme-backers] updates this list every day, automatically.
 
 <!-- OPENCOLLECTIVE-INDIVIDUALS:START -->
+
 No backers yet. Be the first!
+
 <!-- OPENCOLLECTIVE-INDIVIDUALS:END -->
 
 ### Open Collective for Organizations
@@ -254,17 +248,19 @@ Become a sponsor and get your logo on our README on GitHub with a link to your s
 NOTE: [kettle-readme-backers][kettle-readme-backers] updates this list every day, automatically.
 
 <!-- OPENCOLLECTIVE-ORGANIZATIONS:START -->
+
 No sponsors yet. Be the first!
+
 <!-- OPENCOLLECTIVE-ORGANIZATIONS:END -->
 
-[kettle-readme-backers]: https://github.com/galtzo-floss/gem-server/blob/main/exe/kettle-readme-backers
+[kettle-readme-backers]: https://github.com/galtzo-floss/them-server/blob/main/exe/kettle-readme-backers
 
 ### Another way to support open-source
 
 > How wonderful it is that nobody need wait a single moment before starting to improve the world.<br/>
->—Anne Frank
+> —Anne Frank
 
-I’m driven by a passion to foster a thriving open-source community – a space where people can tackle complex problems, no matter how small.  Revitalizing libraries that have fallen into disrepair, and building new libraries focused on solving real-world challenges, are my passions — totaling 79 hours of FLOSS coding over just the past seven days, a pretty regular week for me.  I was recently affected by layoffs, and the tech jobs market is unwelcoming. I’m reaching out here because your support would significantly aid my efforts to provide for my family, and my farm (11 🐔 chickens, 2 🐶 dogs, 3 🐰 rabbits, 8 🐈‍ cats).
+I’m driven by a passion to foster a thriving open-source community – a space where people can tackle complex problems, no matter how small. Revitalizing libraries that have fallen into disrepair, and building new libraries focused on solving real-world challenges, are my passions — totaling 79 hours of FLOSS coding over just the past seven days, a pretty regular week for me. I was recently affected by layoffs, and the tech jobs market is unwelcoming. I’m reaching out here because your support would significantly aid my efforts to provide for my family, and my farm (11 🐔 chickens, 2 🐶 dogs, 3 🐰 rabbits, 8 🐈‍ cats).
 
 If you work at a company that uses my work, please encourage them to support me as a corporate sponsor. My work on gems you use might show up in `bundle fund`.
 
@@ -311,16 +307,16 @@ chat rooms and mailing lists agrees to follow the [![Contributor Covenant 2.1][�
 
 Made with [contributors-img][🖐contrib-rocks].
 
-Also see GitLab Contributors: [https://gitlab.com/galtzo-floss/gem-server/-/graphs/main][🚎contributors-gl]
+Also see GitLab Contributors: [https://gitlab.com/galtzo-floss/them-server/-/graphs/main][🚎contributors-gl]
 
 <details>
     <summary>⭐️ Star History</summary>
 
-<a href="https://star-history.com/#galtzo-floss/gem-server&Date">
+<a href="https://star-history.com/#galtzo-floss/them-server&Date">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=galtzo-floss/gem-server&type=Date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=galtzo-floss/gem-server&type=Date" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=galtzo-floss/gem-server&type=Date" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=galtzo-floss/them-server&type=Date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=galtzo-floss/them-server&type=Date" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=galtzo-floss/them-server&type=Date" />
  </picture>
 </a>
 
@@ -335,7 +331,7 @@ a new version should be immediately released that restores compatibility.
 Breaking changes to the public API will only be introduced with new major versions.
 
 > dropping support for a platform is both obviously and objectively a breaking change <br/>
->—Jordan Harband ([@ljharb](https://github.com/ljharb), maintainer of SemVer) [in SemVer issue 716][📌semver-breaking]
+> —Jordan Harband ([@ljharb](https://github.com/ljharb), maintainer of SemVer) [in SemVer issue 716][📌semver-breaking]
 
 I understand that policy doesn't work universally ("exceptions to every rule!"),
 but it is the policy here.
@@ -345,14 +341,14 @@ the [Pessimistic Version Constraint][📌pvc] with two digits of precision.
 For example:
 
 ```ruby
-spec.add_dependency("gem-server", "~> 1.0")
+spec.add_dependency("them-server", "~> 1.0")
 ```
 
 <details>
 <summary>📌 Is "Platform Support" part of the public API? More details inside.</summary>
 
 SemVer should, IMO, but doesn't explicitly, say that dropping support for specific Platforms
-is a *breaking change* to an API.
+is a _breaking change_ to an API.
 It is obvious to many, but not all, and since the spec is silent, the bike shedding is endless.
 
 To get a better understanding of how SemVer is intended to work over a project's lifetime,
@@ -380,7 +376,7 @@ See [LICENSE.txt][📄license] for the official [Copyright Notice][📄copyright
             <picture>
               <img src="https://logos.galtzo.com/assets/images/galtzo-floss/avatar-128px-blank.svg" alt="Galtzo.com Logo (Wordless) by Aboling0, CC BY-SA 4.0" width="24">
             </picture>
-        </a>, and gem-server contributors.
+        </a>, and them-server contributors.
     </li>
 </ul>
 
@@ -399,7 +395,7 @@ To join the community or get help 👇️ Join the Discord.
 
 To say "thanks!" ☝️ Join the Discord or 👇️ send money.
 
-[![Sponsor galtzo-floss/gem-server on Open Source Collective][🖇osc-all-bottom-img]][🖇osc] 💌 [![Sponsor me on GitHub Sponsors][🖇sponsor-bottom-img]][🖇sponsor] 💌 [![Sponsor me on Liberapay][⛳liberapay-bottom-img]][⛳liberapay-img] 💌 [![Donate on PayPal][🖇paypal-bottom-img]][🖇paypal-img]
+[![Sponsor galtzo-floss/them-server on Open Source Collective][🖇osc-all-bottom-img]][🖇osc] 💌 [![Sponsor me on GitHub Sponsors][🖇sponsor-bottom-img]][🖇sponsor] 💌 [![Sponsor me on Liberapay][⛳liberapay-bottom-img]][⛳liberapay-img] 💌 [![Donate on PayPal][🖇paypal-bottom-img]][🖇paypal-img]
 
 ### Please give the project a star ⭐ ♥.
 
@@ -440,15 +436,14 @@ Thanks for RTFM. ☺️
 [✉️discord-invite-img-ftb]: https://img.shields.io/discord/1373797679469170758?style=for-the-badge&logo=discord
 [✉️ruby-friends-img]: https://img.shields.io/badge/daily.dev-%F0%9F%92%8E_Ruby_Friends-0A0A0A?style=for-the-badge&logo=dailydotdev&logoColor=white
 [✉️ruby-friends]: https://app.daily.dev/squads/rubyfriends
-
 [✇bundle-group-pattern]: https://gist.github.com/pboling/4564780
-[⛳️gem-namespace]: https://github.com/galtzo-floss/gem-server
+[⛳️gem-namespace]: https://github.com/galtzo-floss/them-server
 [⛳️namespace-img]: https://img.shields.io/badge/namespace-Gem::Server-3C2D2D.svg?style=square&logo=ruby&logoColor=white
-[⛳️gem-name]: https://bestgems.org/gems/gem-server
+[⛳️gem-name]: https://bestgems.org/gems/them-server
 [⛳️name-img]: https://img.shields.io/badge/name-gem--server-3C2D2D.svg?style=square&logo=rubygems&logoColor=red
-[⛳️tag-img]: https://img.shields.io/github/tag/galtzo-floss/gem-server.svg
-[⛳️tag]: http://github.com/galtzo-floss/gem-server/releases
-[🚂maint-blog]: http://www.railsbling.com/tags/gem-server
+[⛳️tag-img]: https://img.shields.io/github/tag/galtzo-floss/them-server.svg
+[⛳️tag]: http://github.com/galtzo-floss/them-server/releases
+[🚂maint-blog]: http://www.railsbling.com/tags/them-server
 [🚂maint-blog-img]: https://img.shields.io/badge/blog-railsbling-0093D0.svg?style=for-the-badge&logo=rubyonrails&logoColor=orange
 [🚂maint-contact]: http://www.railsbling.com/contact
 [🚂maint-contact-img]: https://img.shields.io/badge/Contact-Maintainer-0093D0.svg?style=flat&logo=rubyonrails&logoColor=red
@@ -476,69 +471,69 @@ Thanks for RTFM. ☺️
 [👨🏼‍🏫expsup-upwork-img]: https://img.shields.io/badge/UpWork-13544E?style=for-the-badge&logo=Upwork&logoColor=white
 [👨🏼‍🏫expsup-codementor]: https://www.codementor.io/peterboling?utm_source=github&utm_medium=button&utm_term=peterboling&utm_campaign=github
 [👨🏼‍🏫expsup-codementor-img]: https://img.shields.io/badge/CodeMentor-Get_Help-1abc9c?style=for-the-badge&logo=CodeMentor&logoColor=white
-[🏙️entsup-tidelift]: https://tidelift.com/subscription/pkg/rubygems-gem-server?utm_source=rubygems-gem-server&utm_medium=referral&utm_campaign=readme
+[🏙️entsup-tidelift]: https://tidelift.com/subscription/pkg/rubygems-them-server?utm_source=rubygems-them-server&utm_medium=referral&utm_campaign=readme
 [🏙️entsup-tidelift-img]: https://img.shields.io/badge/Tidelift_and_Sonar-Enterprise_Support-FD3456?style=for-the-badge&logo=sonar&logoColor=white
 [🏙️entsup-tidelift-sonar]: https://blog.tidelift.com/tidelift-joins-sonar
 [💁🏼‍♂️peterboling]: http://www.peterboling.com
 [🚂railsbling]: http://www.railsbling.com
 [📜src-gl-img]: https://img.shields.io/badge/GitLab-FBA326?style=for-the-badge&logo=Gitlab&logoColor=orange
-[📜src-gl]: https://gitlab.com/galtzo-floss/gem-server/
+[📜src-gl]: https://gitlab.com/galtzo-floss/them-server/
 [📜src-cb-img]: https://img.shields.io/badge/CodeBerg-4893CC?style=for-the-badge&logo=CodeBerg&logoColor=blue
-[📜src-cb]: https://codeberg.org/galtzo-floss/gem-server
+[📜src-cb]: https://codeberg.org/galtzo-floss/them-server
 [📜src-gh-img]: https://img.shields.io/badge/GitHub-238636?style=for-the-badge&logo=Github&logoColor=green
-[📜src-gh]: https://github.com/galtzo-floss/gem-server
+[📜src-gh]: https://github.com/galtzo-floss/them-server
 [📜docs-cr-rd-img]: https://img.shields.io/badge/RubyDoc-Current_Release-943CD2?style=for-the-badge&logo=readthedocs&logoColor=white
 [📜docs-head-rd-img]: https://img.shields.io/badge/YARD_on_Galtzo.com-HEAD-943CD2?style=for-the-badge&logo=readthedocs&logoColor=white
-[📜gl-wiki]: https://gitlab.com/galtzo-floss/gem-server/-/wikis/home
-[📜gh-wiki]: https://github.com/galtzo-floss/gem-server/wiki
+[📜gl-wiki]: https://gitlab.com/galtzo-floss/them-server/-/wikis/home
+[📜gh-wiki]: https://github.com/galtzo-floss/them-server/wiki
 [📜gl-wiki-img]: https://img.shields.io/badge/wiki-examples-943CD2.svg?style=for-the-badge&logo=gitlab&logoColor=white
 [📜gh-wiki-img]: https://img.shields.io/badge/wiki-examples-943CD2.svg?style=for-the-badge&logo=github&logoColor=white
-[👽dl-rank]: https://bestgems.org/gems/gem-server
-[👽dl-ranki]: https://img.shields.io/gem/rd/gem-server.svg
-[👽oss-help]: https://www.codetriage.com/galtzo-floss/gem-server
-[👽oss-helpi]: https://www.codetriage.com/galtzo-floss/gem-server/badges/users.svg
-[👽version]: https://bestgems.org/gems/gem-server
-[👽versioni]: https://img.shields.io/gem/v/gem-server.svg
-[🏀qlty-mnt]: https://qlty.sh/gh/galtzo-floss/projects/gem-server
-[🏀qlty-mnti]: https://qlty.sh/gh/galtzo-floss/projects/gem-server/maintainability.svg
-[🏀qlty-cov]: https://qlty.sh/gh/galtzo-floss/projects/gem-server/metrics/code?sort=coverageRating
-[🏀qlty-covi]: https://qlty.sh/gh/galtzo-floss/projects/gem-server/coverage.svg
-[🏀codecov]: https://codecov.io/gh/galtzo-floss/gem-server
-[🏀codecovi]: https://codecov.io/gh/galtzo-floss/gem-server/graph/badge.svg
-[🏀coveralls]: https://coveralls.io/github/galtzo-floss/gem-server?branch=main
-[🏀coveralls-img]: https://coveralls.io/repos/github/galtzo-floss/gem-server/badge.svg?branch=main
-[🖐codeQL]: https://github.com/galtzo-floss/gem-server/security/code-scanning
-[🖐codeQL-img]: https://github.com/galtzo-floss/gem-server/actions/workflows/codeql-analysis.yml/badge.svg
-[🚎1-an-wf]: https://github.com/galtzo-floss/gem-server/actions/workflows/ancient.yml
-[🚎1-an-wfi]: https://github.com/galtzo-floss/gem-server/actions/workflows/ancient.yml/badge.svg
-[🚎2-cov-wf]: https://github.com/galtzo-floss/gem-server/actions/workflows/coverage.yml
-[🚎2-cov-wfi]: https://github.com/galtzo-floss/gem-server/actions/workflows/coverage.yml/badge.svg
-[🚎3-hd-wf]: https://github.com/galtzo-floss/gem-server/actions/workflows/heads.yml
-[🚎3-hd-wfi]: https://github.com/galtzo-floss/gem-server/actions/workflows/heads.yml/badge.svg
-[🚎4-lg-wf]: https://github.com/galtzo-floss/gem-server/actions/workflows/legacy.yml
-[🚎4-lg-wfi]: https://github.com/galtzo-floss/gem-server/actions/workflows/legacy.yml/badge.svg
-[🚎5-st-wf]: https://github.com/galtzo-floss/gem-server/actions/workflows/style.yml
-[🚎5-st-wfi]: https://github.com/galtzo-floss/gem-server/actions/workflows/style.yml/badge.svg
-[🚎6-s-wf]: https://github.com/galtzo-floss/gem-server/actions/workflows/supported.yml
-[🚎6-s-wfi]: https://github.com/galtzo-floss/gem-server/actions/workflows/supported.yml/badge.svg
-[🚎7-us-wf]: https://github.com/galtzo-floss/gem-server/actions/workflows/unsupported.yml
-[🚎7-us-wfi]: https://github.com/galtzo-floss/gem-server/actions/workflows/unsupported.yml/badge.svg
-[🚎8-ho-wf]: https://github.com/galtzo-floss/gem-server/actions/workflows/hoary.yml
-[🚎8-ho-wfi]: https://github.com/galtzo-floss/gem-server/actions/workflows/hoary.yml/badge.svg
-[🚎9-t-wf]: https://github.com/galtzo-floss/gem-server/actions/workflows/truffle.yml
-[🚎9-t-wfi]: https://github.com/galtzo-floss/gem-server/actions/workflows/truffle.yml/badge.svg
-[🚎10-j-wf]: https://github.com/galtzo-floss/gem-server/actions/workflows/jruby.yml
-[🚎10-j-wfi]: https://github.com/galtzo-floss/gem-server/actions/workflows/jruby.yml/badge.svg
-[🚎11-c-wf]: https://github.com/galtzo-floss/gem-server/actions/workflows/current.yml
-[🚎11-c-wfi]: https://github.com/galtzo-floss/gem-server/actions/workflows/current.yml/badge.svg
-[🚎12-crh-wf]: https://github.com/galtzo-floss/gem-server/actions/workflows/dep-heads.yml
-[🚎12-crh-wfi]: https://github.com/galtzo-floss/gem-server/actions/workflows/dep-heads.yml/badge.svg
-[🚎13-🔒️-wf]: https://github.com/galtzo-floss/gem-server/actions/workflows/locked_deps.yml
-[🚎13-🔒️-wfi]: https://github.com/galtzo-floss/gem-server/actions/workflows/locked_deps.yml/badge.svg
-[🚎14-🔓️-wf]: https://github.com/galtzo-floss/gem-server/actions/workflows/unlocked_deps.yml
-[🚎14-🔓️-wfi]: https://github.com/galtzo-floss/gem-server/actions/workflows/unlocked_deps.yml/badge.svg
-[🚎15-🪪-wf]: https://github.com/galtzo-floss/gem-server/actions/workflows/license-eye.yml
-[🚎15-🪪-wfi]: https://github.com/galtzo-floss/gem-server/actions/workflows/license-eye.yml/badge.svg
+[👽dl-rank]: https://bestgems.org/gems/them-server
+[👽dl-ranki]: https://img.shields.io/gem/rd/them-server.svg
+[👽oss-help]: https://www.codetriage.com/galtzo-floss/them-server
+[👽oss-helpi]: https://www.codetriage.com/galtzo-floss/them-server/badges/users.svg
+[👽version]: https://bestgems.org/gems/them-server
+[👽versioni]: https://img.shields.io/gem/v/them-server.svg
+[🏀qlty-mnt]: https://qlty.sh/gh/galtzo-floss/projects/them-server
+[🏀qlty-mnti]: https://qlty.sh/gh/galtzo-floss/projects/them-server/maintainability.svg
+[🏀qlty-cov]: https://qlty.sh/gh/galtzo-floss/projects/them-server/metrics/code?sort=coverageRating
+[🏀qlty-covi]: https://qlty.sh/gh/galtzo-floss/projects/them-server/coverage.svg
+[🏀codecov]: https://codecov.io/gh/galtzo-floss/them-server
+[🏀codecovi]: https://codecov.io/gh/galtzo-floss/them-server/graph/badge.svg
+[🏀coveralls]: https://coveralls.io/github/galtzo-floss/them-server?branch=main
+[🏀coveralls-img]: https://coveralls.io/repos/github/galtzo-floss/them-server/badge.svg?branch=main
+[🖐codeQL]: https://github.com/galtzo-floss/them-server/security/code-scanning
+[🖐codeQL-img]: https://github.com/galtzo-floss/them-server/actions/workflows/codeql-analysis.yml/badge.svg
+[🚎1-an-wf]: https://github.com/galtzo-floss/them-server/actions/workflows/ancient.yml
+[🚎1-an-wfi]: https://github.com/galtzo-floss/them-server/actions/workflows/ancient.yml/badge.svg
+[🚎2-cov-wf]: https://github.com/galtzo-floss/them-server/actions/workflows/coverage.yml
+[🚎2-cov-wfi]: https://github.com/galtzo-floss/them-server/actions/workflows/coverage.yml/badge.svg
+[🚎3-hd-wf]: https://github.com/galtzo-floss/them-server/actions/workflows/heads.yml
+[🚎3-hd-wfi]: https://github.com/galtzo-floss/them-server/actions/workflows/heads.yml/badge.svg
+[🚎4-lg-wf]: https://github.com/galtzo-floss/them-server/actions/workflows/legacy.yml
+[🚎4-lg-wfi]: https://github.com/galtzo-floss/them-server/actions/workflows/legacy.yml/badge.svg
+[🚎5-st-wf]: https://github.com/galtzo-floss/them-server/actions/workflows/style.yml
+[🚎5-st-wfi]: https://github.com/galtzo-floss/them-server/actions/workflows/style.yml/badge.svg
+[🚎6-s-wf]: https://github.com/galtzo-floss/them-server/actions/workflows/supported.yml
+[🚎6-s-wfi]: https://github.com/galtzo-floss/them-server/actions/workflows/supported.yml/badge.svg
+[🚎7-us-wf]: https://github.com/galtzo-floss/them-server/actions/workflows/unsupported.yml
+[🚎7-us-wfi]: https://github.com/galtzo-floss/them-server/actions/workflows/unsupported.yml/badge.svg
+[🚎8-ho-wf]: https://github.com/galtzo-floss/them-server/actions/workflows/hoary.yml
+[🚎8-ho-wfi]: https://github.com/galtzo-floss/them-server/actions/workflows/hoary.yml/badge.svg
+[🚎9-t-wf]: https://github.com/galtzo-floss/them-server/actions/workflows/truffle.yml
+[🚎9-t-wfi]: https://github.com/galtzo-floss/them-server/actions/workflows/truffle.yml/badge.svg
+[🚎10-j-wf]: https://github.com/galtzo-floss/them-server/actions/workflows/jruby.yml
+[🚎10-j-wfi]: https://github.com/galtzo-floss/them-server/actions/workflows/jruby.yml/badge.svg
+[🚎11-c-wf]: https://github.com/galtzo-floss/them-server/actions/workflows/current.yml
+[🚎11-c-wfi]: https://github.com/galtzo-floss/them-server/actions/workflows/current.yml/badge.svg
+[🚎12-crh-wf]: https://github.com/galtzo-floss/them-server/actions/workflows/dep-heads.yml
+[🚎12-crh-wfi]: https://github.com/galtzo-floss/them-server/actions/workflows/dep-heads.yml/badge.svg
+[🚎13-🔒️-wf]: https://github.com/galtzo-floss/them-server/actions/workflows/locked_deps.yml
+[🚎13-🔒️-wfi]: https://github.com/galtzo-floss/them-server/actions/workflows/locked_deps.yml/badge.svg
+[🚎14-🔓️-wf]: https://github.com/galtzo-floss/them-server/actions/workflows/unlocked_deps.yml
+[🚎14-🔓️-wfi]: https://github.com/galtzo-floss/them-server/actions/workflows/unlocked_deps.yml/badge.svg
+[🚎15-🪪-wf]: https://github.com/galtzo-floss/them-server/actions/workflows/license-eye.yml
+[🚎15-🪪-wfi]: https://github.com/galtzo-floss/them-server/actions/workflows/license-eye.yml/badge.svg
 [💎ruby-3.2i]: https://img.shields.io/badge/Ruby-3.2-CC342D?style=for-the-badge&logo=ruby&logoColor=white
 [💎ruby-3.3i]: https://img.shields.io/badge/Ruby-3.3-CC342D?style=for-the-badge&logo=ruby&logoColor=white
 [💎ruby-c-i]: https://img.shields.io/badge/Ruby-current-CC342D?style=for-the-badge&logo=ruby&logoColor=green
@@ -554,19 +549,19 @@ Thanks for RTFM. ☺️
 [💎jruby-9.4i]: https://img.shields.io/badge/JRuby-9.4-FBE742?style=for-the-badge&logo=ruby&logoColor=red
 [💎jruby-c-i]: https://img.shields.io/badge/JRuby-current-FBE742?style=for-the-badge&logo=ruby&logoColor=green
 [💎jruby-headi]: https://img.shields.io/badge/JRuby-HEAD-FBE742?style=for-the-badge&logo=ruby&logoColor=blue
-[🤝gh-issues]: https://github.com/galtzo-floss/gem-server/issues
-[🤝gh-pulls]: https://github.com/galtzo-floss/gem-server/pulls
-[🤝gl-issues]: https://gitlab.com/galtzo-floss/gem-server/-/issues
-[🤝gl-pulls]: https://gitlab.com/galtzo-floss/gem-server/-/merge_requests
-[🤝cb-issues]: https://codeberg.org/galtzo-floss/gem-server/issues
-[🤝cb-pulls]: https://codeberg.org/galtzo-floss/gem-server/pulls
+[🤝gh-issues]: https://github.com/galtzo-floss/them-server/issues
+[🤝gh-pulls]: https://github.com/galtzo-floss/them-server/pulls
+[🤝gl-issues]: https://gitlab.com/galtzo-floss/them-server/-/issues
+[🤝gl-pulls]: https://gitlab.com/galtzo-floss/them-server/-/merge_requests
+[🤝cb-issues]: https://codeberg.org/galtzo-floss/them-server/issues
+[🤝cb-pulls]: https://codeberg.org/galtzo-floss/them-server/pulls
 [🤝cb-donate]: https://donate.codeberg.org/
 [🤝contributing]: CONTRIBUTING.md
-[🏀codecov-g]: https://codecov.io/gh/galtzo-floss/gem-server/graphs/tree.svg
+[🏀codecov-g]: https://codecov.io/gh/galtzo-floss/them-server/graphs/tree.svg
 [🖐contrib-rocks]: https://contrib.rocks
-[🖐contributors]: https://github.com/galtzo-floss/gem-server/graphs/contributors
-[🖐contributors-img]: https://contrib.rocks/image?repo=galtzo-floss/gem-server
-[🚎contributors-gl]: https://gitlab.com/galtzo-floss/gem-server/-/graphs/main
+[🖐contributors]: https://github.com/galtzo-floss/them-server/graphs/contributors
+[🖐contributors-img]: https://contrib.rocks/image?repo=galtzo-floss/them-server
+[🚎contributors-gl]: https://gitlab.com/galtzo-floss/them-server/-/graphs/main
 [🪇conduct]: CODE_OF_CONDUCT.md
 [🪇conduct-img]: https://img.shields.io/badge/Contributor_Covenant-2.1-259D6C.svg
 [📌pvc]: http://guides.rubygems.org/patterns/#pessimistic-version-constraint
@@ -577,7 +572,7 @@ Thanks for RTFM. ☺️
 [📌changelog]: CHANGELOG.md
 [📗keep-changelog]: https://keepachangelog.com/en/1.0.0/
 [📗keep-changelog-img]: https://img.shields.io/badge/keep--a--changelog-1.0.0-34495e.svg?style=flat
-[📌gitmoji]:https://gitmoji.dev
+[📌gitmoji]: https://gitmoji.dev
 [📌gitmoji-img]: https://img.shields.io/badge/gitmoji_commits-%20%F0%9F%98%9C%20%F0%9F%98%8D-34495e.svg?style=flat-square
 [🧮kloc]: https://www.youtube.com/watch?v=dQw4w9WgXcQ
 [🧮kloc-img]: https://img.shields.io/badge/KLOC-4.076-FFDD67.svg?style=for-the-badge&logo=YouTube&logoColor=blue
@@ -591,10 +586,10 @@ Thanks for RTFM. ☺️
 [📄license-compat-img]: https://img.shields.io/badge/Apache_Compatible:_Category_A-%E2%9C%93-259D6C.svg?style=flat&logo=Apache
 [📄ilo-declaration]: https://www.ilo.org/declaration/lang--en/index.htm
 [📄ilo-declaration-img]: https://img.shields.io/badge/ILO_Fundamental_Principles-✓-259D6C.svg?style=flat
-[🚎yard-current]: http://rubydoc.info/gems/gem-server
-[🚎yard-head]: https://gem-server.galtzo.com
+[🚎yard-current]: http://rubydoc.info/gems/them-server
+[🚎yard-head]: https://them-server.galtzo.com
 [💎stone_checksums]: https://github.com/galtzo-floss/stone_checksums
-[💎SHA_checksums]: https://gitlab.com/galtzo-floss/gem-server/-/tree/main/checksums
+[💎SHA_checksums]: https://gitlab.com/galtzo-floss/them-server/-/tree/main/checksums
 [💎rlts]: https://github.com/rubocop-lts/rubocop-lts
 [💎rlts-img]: https://img.shields.io/badge/code_style_&_linting-rubocop--lts-34495e.svg?plastic&logo=ruby&logoColor=white
 [💎appraisal2]: https://github.com/appraisal-rb/appraisal2
@@ -621,7 +616,7 @@ This server now supports minimal, secure federation to discover peers, subscribe
   - GET /federation/validate/scope/{scope-path}
     - Returns { exists, scope_path, signed_at, record_sig_b64, public_key_b64 }.
   - GET /federation/validate/gem/{scope-path}/{gem}
-    - Returns { exists, source: local|federated, name, version, scope_path, digest_sha256, record_sig_b64, public_key_b64, origin_* }.
+    - Returns { exists, source: local|federated, name, version, scope*path, digest_sha256, record_sig_b64, public_key_b64, origin*\* }.
 
 - Canonical request signing
   - canonical = [METHOD, PATH, signed_at, sha256_hex(payload)].join("\n")
@@ -640,5 +635,6 @@ This server now supports minimal, secure federation to discover peers, subscribe
   - federated_gems: remote gem metadata with origin link and signatures
 
 Security notes
+
 - All write endpoints require valid Ed25519 signatures; record signatures decouple per-object authenticity from transport signatures.
 - Keys are exchanged via announce and validated on subsequent calls.

@@ -1,0 +1,26 @@
+<h1>Create Account</h1>
+<% if flash && flash[:notice] %>
+  <p class="notice"><%= flash[:notice] %></p>
+<% end %>
+<% if flash && flash[:error] %>
+  <p class="error"><%= flash[:error] %></p>
+<% end %>
+<form action="/auth/create-account" method="post">
+  <label>Email</label>
+  <input type="email" name="login" value="<%= defined?(rodauth) ? rodauth.param('login') : '' %>" required>
+  <% if defined?(rodauth) && (e = rodauth.field_error('login')) %>
+    <p class="error"><%= e %></p>
+  <% end %>
+  <label>Password</label>
+  <input type="password" name="password" required>
+  <% if defined?(rodauth) && (e = rodauth.field_error('password')) %>
+    <p class="error"><%= e %></p>
+  <% end %>
+  <label>Confirm Password</label>
+  <input type="password" name="password-confirm" required>
+  <% if defined?(rodauth) && (e = rodauth.field_error('password-confirm')) %>
+    <p class="error"><%= e %></p>
+  <% end %>
+  <button type="submit">Create Account</button>
+</form>
+<p><a href="/auth/login">Back to login</a></p>

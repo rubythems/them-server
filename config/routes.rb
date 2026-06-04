@@ -3,13 +3,15 @@
 module Gem
   module Server
     class Routes < Hanami::Routes
-      # Authentication endpoints
-      get "/auth/login", to: "auth.login"
-      get "/auth/register", to: "auth.register"
-      get "/auth/dashboard", to: "auth.dashboard"
-      get "/auth/logout", to: "auth.logout"
-      post "/auth/identity/callback", to: "auth.callback"
-      get "/auth/identity/callback", to: "auth.callback"
+      slice :main, at: "/" do
+        use Gem::Server::AuthenticationApp
+
+        root to: "home.show"
+
+        get "/auth/dashboard", to: "auth.dashboard"
+
+        get "/account", to: "account.show"
+      end
 
       # Federation endpoints
       post "/federation/announce", to: "federation.announce"

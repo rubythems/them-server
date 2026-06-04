@@ -16,7 +16,7 @@ WORKDIR $APP_HOME
 
 # Copy the minimum needed for bundle install
 COPY gemfiles/ gemfiles/
-COPY Gemfile Gemfile.lock gem-server.gemspec ./
+COPY Gemfile Gemfile.lock them-server.gemspec ./
 
 # Install dependencies (will be cached unless gemspec/Gemfile change)
 RUN bundle install

@@ -18,14 +18,14 @@ gem_version =
   end
 
 Gem::Specification.new do |spec|
-  spec.name = "gem-server"
+  spec.name = "them-server"
   spec.version = gem_version
   spec.authors = ["Peter H. Boling"]
   spec.email = ["peter.boling@gmail.com"]
 
   spec.summary = "💎 A Federated Server of Ruby Gems"
   spec.description = "💎 A Federated Server of Ruby Gems"
-  spec.homepage = "https://github.com/galtzo-floss/gem-server"
+  spec.homepage = "https://github.com/galtzo-floss/them-server"
   spec.licenses = ["MIT"]
   spec.required_ruby_version = ">= 3.2.0"
 
@@ -104,17 +104,40 @@ Gem::Specification.new do |spec|
   # Listed files are the relative paths from bindir above.
   spec.executables = []
 
-  # Utilities
-  spec.add_dependency("ed25519", "~> 1.4")                              # ruby >= 3.0.0, signing & verification for federation
+  # App Framework
   spec.add_dependency("hanami", "~> 2.2", ">= 2.2.1")                   # ruby >= 3.1.0, Full-stack web framework
-  spec.add_dependency("hanami-utils", "~> 2.2")                         # ruby >= 3.1.0, Hanami utilities including inflector
-  spec.add_dependency("oauth2", "~> 2.0", ">= 2.0.17")                  # ruby >= 2.2.0, OAuth2 client for federation
-  spec.add_dependency("omniauth-identity", "~> 3.1", ">= 3.1.4")        # ruby >= 2.4.0, OmniAuth strategy for Identity (username/password)
+  spec.add_dependency("hanami-assets", "~> 2.2", ">= 2.2.1")            # ruby >= 3.1.0, Full-stack web framework
+  spec.add_dependency("hanami-cli", "~> 2.2", ">= 2.2.1")               # ruby >= 3.1.0, Full-stack web framework
+  spec.add_dependency("hanami-controller", "~> 2.2", ">= 2.2.1")        # ruby >= 3.1.0, Full-stack web framework
+  spec.add_dependency("hanami-db", "~> 2.2", ">= 2.2.1")                # ruby >= 3.1.0, Full-stack web framework
+  spec.add_dependency("hanami-router", "~> 2.2", ">= 2.2.1")            # ruby >= 3.1.0, Full-stack web framework
+  spec.add_dependency("hanami-view", "~> 2.2", ">= 2.2.1")              # ruby >= 3.1.0, Full-stack web framework
+
+  # Framework Support
+  spec.add_dependency("dry-types", "~> 1.8", ">= 1.8.3")                # ruby >= 3.1.0, Type system for Ruby
+  spec.add_dependency("hanami-utils", "~> 2.2", ">= 2.2.0")             # ruby >= 3.1.0, Hanami utilities including inflector
   spec.add_dependency("rack", "~> 3.2", ">= 3.2.3")                     # ruby >= 2.4.0, Rack web server interface
-  spec.add_dependency("rack-protection", "~> 4.0")                      # ruby >= 2.7.8, Security middleware
-  spec.add_dependency("rackup", "~> 2.1")                               # ruby >= 2.5.0, Rackup command is separate dependency in rack >= v3
-  spec.add_dependency("rom-sql", "~> 3.0")                              # ruby >= 3.1.0, Database toolkit
+  spec.add_dependency("rack-protection", "~> 4.2", ">= 4.2.1")          # ruby >= 2.7.8, Security middleware
+  spec.add_dependency("rackup", "~> 2.2", ">= 2.2.1")                   # ruby >= 2.5.0, Rackup command is separate dependency in rack >= v3
   spec.add_dependency("version_gem", "~> 1.1", ">= 1.1.9")              # ruby >= 2.2.0
+
+  # Database
+  # sqlite3 is not included so we have a choice of JRuby or CRuby,
+  #   or even alternate DBs like PostgreSQL or MySQL.
+  spec.add_dependency("rom-sql", "~> 3.7", ">= 3.7.0")                  # ruby >= 3.1.0, Database toolkit
+
+  # Core tools
+  spec.add_dependency("dry-struct", "~> 1.8")                           # ruby >= 3.1.0, Typed structs and value objects
+  spec.add_dependency("faraday", "~> 2.14", ">= 2.14.0")                # ruby >= 3.0.0, HTTP client wrapper library
+
+  # Authentication & Authorization
+  spec.add_dependency("ed25519", "~> 1.4", ">= 1.4.0")                  # ruby >= 3.0.0, signing & verification for federation
+  spec.add_dependency("oauth2", "~> 2.0", ">= 2.0.17")                  # ruby >= 2.2.0, OAuth2 client for federation
+  spec.add_dependency("rodauth", "~> 2.41", ">= 2.41.0")                # ruby >= 1.9.2, Rodauth authentication framework
+  spec.add_dependency("bcrypt", "~> 3.1", ">= 3.1.20")                  # ruby >= 2.3.0, password hashing
+
+  # Mail
+  spec.add_dependency("mail", "~> 2.8", ">= 2.8.1")                     # ruby >= 2.5.0, email library
 
   # NOTE: It is preferable to list development dependencies in the gemspec due to increased
   #       visibility and discoverability.
@@ -151,7 +174,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency("stone_checksums", "~> 1.0", ">= 1.0.2")          # ruby >= 2.2.0
 
   # Git integration (optional)
-  # The 'git' gem is optional; gem-server falls back to shelling out to `git` if it is not present.
+  # The 'git' gem is optional; them-server falls back to shelling out to `git` if it is not present.
   # The current release of the git gem depends on activesupport, which makes it too heavy to depend on directly
   # spec.add_dependency("git", ">= 1.19.1")                               # ruby >= 2.3
 

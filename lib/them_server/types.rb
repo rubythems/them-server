@@ -2,7 +2,7 @@
 
 require "dry/types"
 
-module GemServer
+module ThemServer
   Types = Dry.Types
 
   module Types

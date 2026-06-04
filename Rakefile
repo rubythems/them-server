@@ -107,7 +107,7 @@ namespace :db do
     current = current_migration_version(db)
     steps = (args[:steps] || "1").to_i
     target = [current - steps, 0].max
-    Sequel::Migrator.run(db, "db/migrations", target: target)
+    Sequel::Migrator.run(db, "config/db/migrate", target: target)
     puts "Rolled back #{steps} step(s). Now at version: #{current_migration_version(db)}"
   end
 
@@ -126,15 +126,32 @@ namespace :db do
   task :reset do
     db = Gem::Server::Database.db
     db.disconnect if db
-    # Compute DB file path same as config/database.rb
     root = File.expand_path("..", __dir__)
-    default_db_file = File.join(root, "db", "gem_server.db")
-    db_file = ENV["GEM_SERVER_DB"].to_s.strip
-    db_file = default_db_file if db_file.empty?
-    if File.exist?(db_file)
-      File.delete(db_file)
-      puts "Deleted #{db_file}"
+
+    # Determine DB file path based on DATABASE_URL or GEM_SERVER_DB
+    sqlite_file = nil
+    database_url = ENV["DATABASE_URL"].to_s.strip
+    if !database_url.empty?
+      if database_url.start_with?("sqlite://")
+        sqlite_file = database_url.sub("sqlite://", "")
+      elsif database_url.start_with?("sqlite:")
+        sqlite_file = database_url.sub("sqlite:", "")
+      end
     end
+
+    if sqlite_file.nil? || sqlite_file.empty?
+      default_db_file = File.join(root, "config", "db", "them_server.db")
+      db_file = ENV["GEM_SERVER_DB"].to_s.strip
+      sqlite_file = db_file.empty? ? default_db_file : db_file
+    end
+
+    if sqlite_file && sqlite_file != ":memory:" && File.exist?(sqlite_file)
+      File.delete(sqlite_file)
+      puts "Deleted #{sqlite_file}"
+    else
+      puts "No SQLite file to delete (using DATABASE_URL=#{database_url.inspect})"
+    end
+
     Rake::Task["db:migrate"].invoke
     begin
       Rake::Task["db:seed"].invoke
@@ -225,6 +242,34 @@ namespace :federation do
       end
     ensure
       ENV["FEDERATION_BROADCAST"] = prev
+    end
+  end
+end
+
+namespace :auth do
+  desc "Create a Rodauth account and associated owner. Usage: rake auth:create_user[email,password,name]"
+  task :create_user, [:email, :password, :name] do |_t, args|
+    require 'bcrypt'
+    require_relative 'config/database'
+    email = args[:email].to_s.strip
+    password = args[:password].to_s
+    name = (args[:name].to_s.strip)
+    abort "email is required" if email.empty?
+    abort "password is required" if password.empty?
+    name = email if name.empty?
+    db = Gem::Server::Database.db
+    now = Time.now
+    existing = db[:accounts].where(email: email).first
+    if existing
+      puts "Account already exists: #{email}"
+    else
+      phash = BCrypt::Password.create(password)
+      acc_id = db[:accounts].insert(email: email, status_id: 1, password_hash: phash, created_at: now, updated_at: now)
+      puts "Created account ##{acc_id} for #{email}"
+      if db.schema(:owners).map(&:first).include?(:account_id)
+        db[:owners].insert(name: name, public_key: nil, api_key: nil, account_id: acc_id, created_at: now, updated_at: now)
+        puts "Created owner for account ##{acc_id}"
+      end
     end
   end
 end

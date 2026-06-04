@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 require "hanami"
-require "rack/session/cookie"
-require "omniauth"
-require "omniauth-identity"
 
 module Gem
   module Server
@@ -46,23 +43,6 @@ module Gem
     class Application < Hanami::App
       config.logger.level = :info
       config.logger.stream = $stdout
-
-      # Add session middleware for authentication
-      config.middleware.use Rack::Session::Cookie,
-                            secret: ENV.fetch("SESSION_SECRET", SecureRandom.hex(64)),
-                            key: "gem_server.session",
-                            same_site: :lax,
-                            max_age: 86400 * 30 # 30 days
-
-      # Add OmniAuth middleware for authentication
-      config.middleware.use OmniAuth::Builder do
-        provider :identity,
-                 fields: [:email, :name],
-                 model: Gem::Server::Models::Identity,
-                 on_failed_registration: lambda { |env|
-                   [302, {"Location" => "/auth/register?error=registration_failed"}, []]
-                 }
-      end
 
       # Add middleware to handle gem uploads directly, bypassing Hanami router
       # This must be early in the middleware stack, before the router

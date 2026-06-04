@@ -24,28 +24,30 @@ Follow these instructions:
 
 ## Executables vs Rake tasks
 
-Executables shipped by gem-server can be used with or without generating the binstubs.
-They will work when gem-server is installed globally (i.e., `gem install gem-server`) and do not require that gem-server be in your bundle.
+Executables shipped by them-server can be used with or without generating the binstubs.
+They will work when them-server is installed globally (i.e., `gem install them-server`) and do not require that them-server be in your bundle.
 
 - kettle-changelog
 - kettle-commit-msg
-- gem-server-setup
+- them-server-setup
 - kettle-dvcs
 - kettle-pre-release
 - kettle-readme-backers
 - kettle-release
 
-However, the rake tasks provided by gem-server do require gem-server to be added as a development dependency and loaded in your Rakefile.
+However, the rake tasks provided by them-server do require them-server to be added as a development dependency and loaded in your Rakefile.
 See the full list of rake tasks in head of Rakefile
 
 **Gemfile**
+
 ```ruby
 group :development do
-  gem "gem-server", require: false
+  gem "them-server", require: false
 end
 ```
 
 **Rakefile**
+
 ```ruby
 # Rakefile
 require "gem/server"
@@ -56,11 +58,13 @@ require "gem/server"
 Below are the primary environment variables recognized by stone_checksums (and its integrated tools). Unless otherwise noted, set boolean values to the string "true" to enable.
 
 General/runtime
+
 - DEBUG: Enable extra internal logging for this library (default: false)
 - REQUIRE_BENCH: Enable `require_bench` to profile requires (default: false)
 - CI: When set to true, adjusts default rake tasks toward CI behavior
 
 Coverage (kettle-soup-cover / SimpleCov)
+
 - K_SOUP_COV_DO: Enable coverage collection (default: true in .envrc)
 - K_SOUP_COV_FORMATTERS: Comma-separated list of formatters (html, xml, rcov, lcov, json, tty)
 - K_SOUP_COV_MIN_LINE: Minimum line coverage threshold (integer, e.g., 100)
@@ -72,14 +76,17 @@ Coverage (kettle-soup-cover / SimpleCov)
   Tip: When running a single spec file locally, you may want `K_SOUP_COV_MIN_HARD=false` to avoid failing thresholds for a partial run.
 
 GitHub API and CI helpers
+
 - GITHUB_TOKEN or GH_TOKEN: Token used by `ci:act` and release workflow checks to query GitHub Actions status at higher rate limits
 
 Releasing and signing
+
 - SKIP_GEM_SIGNING: If set, skip gem signing during build/release
 - GEM_CERT_USER: Username for selecting your public cert in `certs/<USER>.pem` (defaults to $USER)
 - SOURCE_DATE_EPOCH: Reproducible build timestamp. `kettle-release` will set this automatically for the session.
 
 Git hooks and commit message helpers (exe/kettle-commit-msg)
+
 - GIT_HOOK_BRANCH_VALIDATE: Branch name validation mode (e.g., `jira`) or `false` to disable
 - GIT_HOOK_FOOTER_APPEND: Append a footer to commit messages when goalie allows (true/false)
 - GIT_HOOK_FOOTER_SENTINEL: Required when footer append is enabled — a unique first-line sentinel to prevent duplicates
@@ -105,6 +112,7 @@ This project provides Rake tasks for managing the local SQLite database and for 
   - federation:subscribe[to_base_url,my_base_url] — Send a signed subscribe to a peer
 
 Examples:
+
 ```bash
 bundle exec rake db:migrate
 bundle exec rake db:version
@@ -113,7 +121,8 @@ bundle exec rake federation:seed_known['https://peer.example','BASE64_PUBLIC_KEY
 ```
 
 Environment variables:
-- GEM_SERVER_DB: Override the SQLite DB path (default: db/gem_server.db). Useful to run multiple local servers side-by-side.
+
+- GEM_SERVER_DB: Override the SQLite DB path (default: config/db/them_server.db). Useful to run multiple local servers side-by-side.
 - FEDERATION_BASE_URL: Base URL advertised for this server in federation payloads.
 - FEDERATION_BROADCAST: If set to "1", successful gem pushes are broadcast to subscribed peers.
 - FEDERATION_PRIVATE_KEY_B64 and FEDERATION_PUBLIC_KEY_B64: Optional Ed25519 keypair for stable identity.
@@ -204,7 +213,7 @@ Your picture could be here!
 
 Made with [contributors-img][🖐contrib-rocks].
 
-Also see GitLab Contributors: [https://gitlab.com/galtzo-floss/gem-server/-/graphs/main][🚎contributors-gl]
+Also see GitLab Contributors: [https://gitlab.com/galtzo-floss/them-server/-/graphs/main][🚎contributors-gl]
 
 ## For Maintainers
 
@@ -222,7 +231,7 @@ NOTE: To build without signing the gem set `SKIP_GEM_SIGNING` to any value in th
 
 #### Automated process
 
-1. Update version.rb to contian the correct version-to-be-released.
+1. Update version.rb to contain the correct version-to-be-released.
 2. Run `bundle exec kettle-changelog`.
 3. Run `bundle exec kettle-release`.
 
@@ -233,16 +242,16 @@ NOTE: To build without signing the gem set `SKIP_GEM_SIGNING` to any value in th
 3. Run `bin/setup && bin/rake` again as a secondary check, and to update `Gemfile.lock`
 4. Run `git commit -am "🔖 Prepare release v<VERSION>"` to commit the changes
 5. Run `git push` to trigger the final CI pipeline before release, and merge PRs
-    - NOTE: Remember to [check the build][🧪build].
+   - NOTE: Remember to [check the build][🧪build].
 6. Run `export GIT_TRUNK_BRANCH_NAME="$(git remote show origin | grep 'HEAD branch' | cut -d ' ' -f5)" && echo $GIT_TRUNK_BRANCH_NAME`
 7. Run `git checkout $GIT_TRUNK_BRANCH_NAME`
 8. Run `git pull origin $GIT_TRUNK_BRANCH_NAME` to ensure latest trunk code
 9. Optional for older Bundler (< 2.7.0): Set `SOURCE_DATE_EPOCH` so `rake build` and `rake release` use the same timestamp and generate the same checksums
-    - If your Bundler is >= 2.7.0, you can skip this; builds are reproducible by default.
-    - Run `export SOURCE_DATE_EPOCH=$EPOCHSECONDS && echo $SOURCE_DATE_EPOCH`
-    - If the echo above has no output, then it didn't work.
-    - Note: `zsh/datetime` module is needed, if running `zsh`.
-    - In older versions of `bash` you can use `date +%s` instead, i.e. `export SOURCE_DATE_EPOCH=$(date +%s) && echo $SOURCE_DATE_EPOCH`
+   - If your Bundler is >= 2.7.0, you can skip this; builds are reproducible by default.
+   - Run `export SOURCE_DATE_EPOCH=$EPOCHSECONDS && echo $SOURCE_DATE_EPOCH`
+   - If the echo above has no output, then it didn't work.
+   - Note: `zsh/datetime` module is needed, if running `zsh`.
+   - In older versions of `bash` you can use `date +%s` instead, i.e. `export SOURCE_DATE_EPOCH=$(date +%s) && echo $SOURCE_DATE_EPOCH`
 10. Run `bundle exec rake build`
 11. Run `bin/gem_checksums` (more context [1][🔒️rubygems-checksums-pr], [2][🔒️rubygems-guides-pr])
     to create SHA-256 and SHA-512 checksums. This functionality is provided by the `stone_checksums`
@@ -253,15 +262,15 @@ NOTE: To build without signing the gem set `SKIP_GEM_SIGNING` to any value in th
 13. Run `bundle exec rake release` which will create a git tag for the version,
     push git commits and tags, and push the `.gem` file to the gem host configured in the gemspec.
 
-[📜src-gl]: https://gitlab.com/galtzo-floss/gem-server/
-[📜src-cb]: https://codeberg.org/galtzo-floss/gem-server
-[📜src-gh]: https://github.com/galtzo-floss/gem-server
-[🧪build]: https://github.com/galtzo-floss/gem-server/actions
-[🤝conduct]: https://gitlab.com/galtzo-floss/gem-server/-/blob/main/CODE_OF_CONDUCT.md
+[📜src-gl]: https://gitlab.com/galtzo-floss/them-server/
+[📜src-cb]: https://codeberg.org/galtzo-floss/them-server
+[📜src-gh]: https://github.com/galtzo-floss/them-server
+[🧪build]: https://github.com/galtzo-floss/them-server/actions
+[🤝conduct]: https://gitlab.com/galtzo-floss/them-server/-/blob/main/CODE_OF_CONDUCT.md
 [🖐contrib-rocks]: https://contrib.rocks
-[🖐contributors]: https://github.com/galtzo-floss/gem-server/graphs/contributors
-[🚎contributors-gl]: https://gitlab.com/galtzo-floss/gem-server/-/graphs/main
-[🖐contributors-img]: https://contrib.rocks/image?repo=galtzo-floss/gem-server
+[🖐contributors]: https://github.com/galtzo-floss/them-server/graphs/contributors
+[🚎contributors-gl]: https://gitlab.com/galtzo-floss/them-server/-/graphs/main
+[🖐contributors-img]: https://contrib.rocks/image?repo=galtzo-floss/them-server
 [💎gem-coop]: https://gem.coop
 [🔒️rubygems-security-guide]: https://guides.rubygems.org/security/#building-gems
 [🔒️rubygems-checksums-pr]: https://github.com/rubygems/rubygems/pull/6022

@@ -98,7 +98,7 @@ module Gem
 
             unless auth_result[:authenticated]
               response.headers["content-type"] = "text/plain; charset=utf-8"
-              response.headers["WWW-Authenticate"] = 'Bearer realm="gem-server"' if Gem::Server::OAuth2Config.enabled?
+              response.headers["WWW-Authenticate"] = 'Bearer realm="them-server"' if Gem::Server::OAuth2Config.enabled?
               response.body = Gem::Server::OAuth2Config.enabled? ? "API key or OAuth2 token required" : "API key required"
               response.status = 401
               return

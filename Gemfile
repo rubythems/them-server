@@ -16,10 +16,11 @@ gem "puma"
 gem "rake"
 gem "sqlite3"
 
-# Authentication
-gem "omniauth", "~> 2.1"
-gem "omniauth-identity", "~> 3.0"
+# Authentication (browser via Rodauth; CLI via API keys/OAuth2 elsewhere)
+# BCrypt used by Rodauth for password hashing
 gem "bcrypt", "~> 3.1"
+
+# Rack session used for shared session across Hanami and Rodauth
 gem "rack-session", "~> 2.0"
 
 group :development do
@@ -41,10 +42,15 @@ end
 group :test do
   # Database
   gem "database_cleaner-sequel"
+  gem "rom-factory"
 
-  # Web integration
+  # Web testing
   gem "capybara"
+  gem "launchy"
   gem "rack-test"
+
+  # Integration testing
+  gem "vcr"
 end
 
 git_source(:gitlab) { |repo_name| "https://gitlab.com/#{repo_name}" }
