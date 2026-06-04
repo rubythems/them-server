@@ -118,7 +118,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency("rackup", "~> 2.2", ">= 2.2.1")                   # ruby >= 2.5.0, Rackup command is separate dependency in rack >= v3
   spec.add_dependency("rodauth", "~> 2.41", ">= 2.41.0")                # ruby >= 1.9.2, Rodauth authentication framework
   spec.add_dependency("rom-sql", "~> 3.7", ">= 3.7.0")                  # ruby >= 3.1.0, Database toolkit
-  spec.add_dependency("sqlite3", "~> 2.9")                               # ruby >= 3.1.0, SQLite database adapter
   spec.add_dependency("version_gem", "~> 1.1", ">= 1.1.9")              # ruby >= 2.2.0
 
   # NOTE: It is preferable to list development dependencies in the gemspec due to increased

@@ -32,6 +32,9 @@ Please file a bug if you notice a violation of semantic versioning.
 
 ### Fixed
 
+- Split SQLite adapter dependencies into platform-aware appraisal gemfiles and
+  route JRuby SQLite URLs through JDBC so JRuby CI does not install native
+  `sqlite3`.
 - Kept the MRI-only `debug` gem out of cross-platform appraisal dependency
   resolution so JRuby and TruffleRuby CI do not try to install it.
 - Fixed remaining CI failures from E2E database cleanup, gem file fixtures, and

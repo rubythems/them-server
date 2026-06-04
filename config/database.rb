@@ -87,7 +87,7 @@ module Them
 
           raw_url = Hanami::DB::Testing.database_url(raw_url) if env == "test"
           raw_url = parallel_test_database_url(raw_url) if env == "test"
-          expand_sqlite_database_url(raw_url, root)
+          sqlite_url_for_engine(expand_sqlite_database_url(raw_url, root))
         end
 
         def expand_sqlite_database_url(raw_url, root)
@@ -98,6 +98,13 @@ module Them
 
           db_path = File.join(root, db_path) unless db_path.start_with?("/")
           "sqlite://#{db_path}"
+        end
+
+        def sqlite_url_for_engine(raw_url)
+          return raw_url unless RUBY_ENGINE == "jruby"
+          return raw_url unless raw_url.start_with?("sqlite://")
+
+          "jdbc:sqlite:#{raw_url.sub("sqlite://", "")}"
         end
 
         def parallel_test_database_url(raw_url)

@@ -1,0 +1,8 @@
+# frozen_string_literal: true
+
+gem "sqlite3", "~> 2.9", platforms: [:ruby]
+
+platforms :jruby do
+  gem "jdbc-sqlite3", ">= 3.46", "< 3.47"
+  gem "bigdecimal", ">= 1"
+end

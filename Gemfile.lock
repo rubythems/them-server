@@ -25,7 +25,6 @@ PATH
       rackup (~> 2.2, >= 2.2.1)
       rodauth (~> 2.41, >= 2.41.0)
       rom-sql (~> 3.7, >= 3.7.0)
-      sqlite3 (~> 2.9)
       version_gem (~> 1.1, >= 1.1.9)
 
 GEM
@@ -717,6 +716,7 @@ DEPENDENCIES
   addressable (>= 2.8, < 3)
   appraisal2 (~> 3.0, >= 3.0.6)
   benchmark (~> 0.5, >= 0.5.0)
+  bigdecimal (>= 1)
   bundler-audit (~> 0.9.3)
   capybara (~> 3.40)
   cgi (~> 0.5)
@@ -737,6 +737,7 @@ DEPENDENCIES
   hanami-view (~> 2.2)
   hanami-webconsole (~> 2.2)
   irb (~> 1.17)
+  jdbc-sqlite3 (>= 3.46, < 3.47)
   kettle-dev (~> 2.0, >= 2.0.8)
   kettle-soup-cover (~> 2.0, >= 2.0.1)
   kettle-test (~> 2.0, >= 2.0.3)
@@ -759,6 +760,7 @@ DEPENDENCIES
   rubocop-packaging (~> 0.6, >= 0.6.0)
   rubocop-ruby3_2 (~> 3.0, >= 3.0.2)
   ruby-progressbar (~> 1.13)
+  sqlite3 (~> 2.9)
   standard (~> 1.54, >= 1.54.0)
   stone_checksums (~> 1.0, >= 1.0.3)
   stringio (>= 3.0)

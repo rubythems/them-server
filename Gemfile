@@ -38,6 +38,9 @@ git_source(:gitlab) { |repo_name| "https://gitlab.com/#{repo_name}" }
 # Include dependencies from them-server.gemspec
 gemspec
 
+# Database adapters
+eval_gemfile "gemfiles/modular/database.gemfile"
+
 # Local workspace dependency wiring for *_local.gemfile overrides
 gem "nomono", "~> 1.0", ">= 1.0.2", require: false # ruby >= 2.2
 

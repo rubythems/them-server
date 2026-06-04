@@ -43,6 +43,7 @@ appraise "unlocked_deps" do
   gem "irb", "~> 1.17" # ruby >= 2.7
 
   eval_gemfile "modular/coverage.gemfile"
+  eval_gemfile "modular/database.gemfile"
   eval_gemfile "modular/documentation.gemfile"
   eval_gemfile "modular/optional.gemfile"
   eval_gemfile "modular/style.gemfile"
@@ -50,45 +51,55 @@ appraise "unlocked_deps" do
 end
 
 appraise "head" do
+  eval_gemfile "modular/database.gemfile"
   eval_gemfile "modular/x_std_libs.gemfile"
 end
 
 appraise "current" do
+  eval_gemfile "modular/database.gemfile"
   eval_gemfile "modular/x_std_libs.gemfile"
 end
 
 appraise "dep-heads" do
+  eval_gemfile "modular/database.gemfile"
   eval_gemfile "modular/runtime_heads.gemfile"
 end
 
 appraise "ruby-3-2" do
+  eval_gemfile "modular/database.gemfile"
   eval_gemfile "modular/x_std_libs/r3/libs.gemfile"
 end
 
 appraise "ruby-3-3" do
+  eval_gemfile "modular/database.gemfile"
   eval_gemfile "modular/x_std_libs/r3/libs.gemfile"
 end
 
 appraise "ruby-3-4" do
+  eval_gemfile "modular/database.gemfile"
   eval_gemfile "modular/x_std_libs/r3/libs.gemfile"
 end
 
 appraise "audit" do
+  eval_gemfile "modular/database.gemfile"
   eval_gemfile "modular/x_std_libs.gemfile"
 end
 
 appraise "coverage" do
   eval_gemfile "modular/coverage.gemfile"
+  eval_gemfile "modular/database.gemfile"
   eval_gemfile "modular/optional.gemfile"
   eval_gemfile "modular/x_std_libs.gemfile"
 end
 
 appraise "style" do
+  eval_gemfile "modular/database.gemfile"
   eval_gemfile "modular/style.gemfile"
   eval_gemfile "modular/x_std_libs.gemfile"
 end
 
 appraise "templating" do
+  eval_gemfile "modular/database.gemfile"
   eval_gemfile "modular/templating.gemfile"
   eval_gemfile "modular/x_std_libs.gemfile"
 end
