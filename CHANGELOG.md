@@ -32,6 +32,8 @@ Please file a bug if you notice a violation of semantic versioning.
 
 ### Fixed
 
+- Fixed remaining CI failures from E2E database cleanup, gem file fixtures, and
+  inherited template coverage thresholds.
 - Fixed CI appraisal gemfiles by declaring test dependencies in the gemspec.
 - Restored the app-specific Rackup binstub and Rake tasks after the template
   refresh.

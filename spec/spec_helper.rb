@@ -4,9 +4,14 @@
 require "kettle/test/rspec"
 
 require "pathname"
+require "zlib"
 SPEC_ROOT = Pathname(__dir__).realpath.freeze
 
 ENV["HANAMI_ENV"] ||= "test"
+parallel_suffix = ENV["TEST_ENV_NUMBER"].to_s.strip
+appraisal_suffix = Zlib.crc32(ENV["BUNDLE_GEMFILE"].to_s).to_s
+spec_gems_dir = ["tmp/spec_gems", parallel_suffix, appraisal_suffix].reject(&:empty?).join("_")
+ENV["THEM_SERVER_GEMS_DIR"] ||= File.expand_path(spec_gems_dir, SPEC_ROOT.parent)
 require "hanami/prepare"
 
 SPEC_ROOT.glob("support/**/*.rb").each { |f| require f }
@@ -55,21 +60,30 @@ RSpec.configure do |config|
     Them::Server::Database.migrate
   end
 
-  config.before do |example|
+  config.prepend_before do |example|
     # Skip database cleanup for E2E tests that manage their own database state
     # Check both the type metadata and if the example is tagged with :skip_db_cleanup
     next if example.metadata[:type] == :e2e || example.metadata[:skip_db_cleanup]
 
-    # Clean database before each test
     db = Them::Server::Database.db
-    # Federation tables first (FKs)
-    db[:federated_gems].delete if db.table_exists?(:federated_gems)
-    db[:known_servers].delete if db.table_exists?(:known_servers)
-    # Existing tables
-    db[:gem_owners].delete
-    db[:scope_owners].delete
-    db[:gems].delete
-    db[:owners].delete
-    db[:scopes].delete
+    db.run("PRAGMA foreign_keys = OFF") if db.database_type == :sqlite
+    %i[
+      account_remember_keys
+      account_login_change_keys
+      account_verification_keys
+      account_password_reset_keys
+      accounts
+      gem_owners
+      scope_owners
+      federated_gems
+      known_servers
+      gems
+      owners
+      scopes
+    ].each do |table|
+      db[table].delete if db.table_exists?(table)
+    end
+  ensure
+    db&.run("PRAGMA foreign_keys = ON") if db&.database_type == :sqlite
   end
 end

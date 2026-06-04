@@ -3,6 +3,7 @@
 require "sequel"
 require "rom"
 require "hanami/db/testing"
+require "zlib"
 
 module Them
   module Server
@@ -108,7 +109,13 @@ module Them
 
           ext = File.extname(db_path)
           base = ext.empty? ? db_path : db_path.delete_suffix(ext)
-          "sqlite://#{base}_#{test_env_number}#{ext}"
+          "sqlite://#{base}_#{test_database_suffix(test_env_number)}#{ext}"
+        end
+
+        def test_database_suffix(test_env_number)
+          appraisal = ENV["BUNDLE_GEMFILE"].to_s.strip
+          appraisal_suffix = appraisal.empty? ? "" : "_#{Zlib.crc32(appraisal)}"
+          "_#{test_env_number}#{appraisal_suffix}"
         end
       end
     end

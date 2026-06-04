@@ -2,6 +2,7 @@
 
 require "rubygems/package"
 require "tempfile"
+require "fileutils"
 require "them/server/scope_resolver"
 require_relative "../../../config/database"
 require "them/server/federation_broadcaster"
@@ -143,9 +144,10 @@ module Them
               name = spec.name
               version = spec.version.to_s
 
-              # Store the gem file
-              Dir.mkdir("gems") unless Dir.exist?("gems")
-              file_path = "gems/#{name}-#{version}.gem"
+              # Store uploads outside the repo-root in tests so parallel workers do not collide.
+              gem_storage_path = File.expand_path(gem_storage_dir)
+              FileUtils.mkdir_p(gem_storage_path)
+              file_path = File.join(gem_storage_path, "#{name}-#{version}.gem")
 
               temp_file.rewind
               File.binwrite(file_path, temp_file.read)
@@ -192,6 +194,10 @@ module Them
           end
 
           private
+
+          def gem_storage_dir
+            ENV.fetch("THEM_SERVER_GEMS_DIR", "gems")
+          end
 
           def io_empty?(io, content_length)
             # If this is the rack input stream, rely on Content-Length

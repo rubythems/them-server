@@ -27,11 +27,11 @@ RSpec.describe Them::Server::Actions::Gems::Create do
 
     before do
       allow(Gem::Package).to receive(:new).and_return(gem_package)
-      FileUtils.mkdir_p("gems")
+      FileUtils.mkdir_p(ENV.fetch("THEM_SERVER_GEMS_DIR"))
     end
 
     after do
-      FileUtils.rm_rf("gems")
+      FileUtils.rm_rf(ENV.fetch("THEM_SERVER_GEMS_DIR"))
     end
 
     context "without authentication" do

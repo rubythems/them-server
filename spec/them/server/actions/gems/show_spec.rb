@@ -174,10 +174,11 @@ RSpec.describe Them::Server::Actions::Gems::Show do
 
   describe "GET /{scope-path}/{gem}" do
     let(:gem_content) { "fake gem file content" }
-    let(:gem_file_path) { "gems/test-gem-1.0.0.gem" }
+    let(:gem_files_dir) { File.expand_path("../../../../tmp/spec_gems_show", __dir__) }
+    let(:gem_file_path) { File.join(gem_files_dir, "test-gem-1.0.0.gem") }
 
     before do
-      FileUtils.mkdir_p("gems")
+      FileUtils.mkdir_p(gem_files_dir)
       File.write(gem_file_path, gem_content)
 
       db[:gems].insert(
@@ -192,7 +193,7 @@ RSpec.describe Them::Server::Actions::Gems::Show do
     end
 
     after do
-      FileUtils.rm_f(gem_file_path)
+      FileUtils.rm_rf(gem_files_dir)
     end
 
     it "returns the gem file" do
@@ -220,8 +221,9 @@ RSpec.describe Them::Server::Actions::Gems::Show do
     end
 
     context "with multiple versions" do
+      let(:newer_file_path) { File.join(gem_files_dir, "test-gem-2.0.0.gem") }
+
       before do
-        newer_file_path = "gems/test-gem-2.0.0.gem"
         File.write(newer_file_path, "newer version content")
 
         db[:gems].insert(
@@ -233,10 +235,6 @@ RSpec.describe Them::Server::Actions::Gems::Show do
           created_at: Time.now,
           updated_at: Time.now
         )
-      end
-
-      after do
-        FileUtils.rm_f("gems/test-gem-2.0.0.gem")
       end
 
       it "returns the latest version" do
