@@ -721,7 +721,7 @@ DEPENDENCIES
   capybara (~> 3.40)
   cgi (~> 0.5)
   database_cleaner-sequel (~> 2.0)
-  debug (~> 1.11, >= 1.1)
+  debug (>= 1.1)
   dotenv (~> 3.2)
   erb (~> 6.0, >= 6.0.4)
   gem_bench (~> 2.0, >= 2.0.5)
