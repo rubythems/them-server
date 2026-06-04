@@ -8,49 +8,62 @@ To submit a patch, please fork the project, create a patch with tests, and send 
 
 Remember to [![Keep A Changelog][📗keep-changelog-img]][📗keep-changelog] if you make changes.
 
+## Developer Certificate of Origin
+
+In order to protect users of this project, we require all contributors to comply with the
+[Developer Certificate of Origin](https://developercertificate.org/).
+This ensures that all contributions are properly licensed and attributed.
+
 ## Help out!
 
-Take a look at the `reek` list which is the file called `REEK` and find something to improve.
+Take a look at the open issues and pull requests, or use the gem and find something to improve.
 
 Follow these instructions:
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b my-new-feature`)
-3. Make some fixes.
-4. Commit changes (`git commit -am 'Added some feature'`)
-5. Push to the branch (`git push origin my-new-feature`)
-6. Make sure to add tests for it. This is important, so it doesn't break in a future release.
-7. Create new Pull Request.
+1. Join the Discord: [![Live Chat on Discord][✉️discord-invite-img]][✉️discord-invite]
+2. Fork the repository
+3. Create your feature branch (`git checkout -b my-new-feature`)
+4. Make some fixes.
+5. Commit your changes (`git commit -am 'Added some feature'`)
+6. Push to the branch (`git push origin my-new-feature`)
+7. Make sure to add tests for it. This is important, so it doesn't break in a future release.
+8. Create new Pull Request.
+9. Announce it in the channel for this org in the [Discord][✉️discord-invite]!
 
 ## Executables vs Rake tasks
 
-Executables shipped by them-server can be used with or without generating the binstubs.
-They will work when them-server is installed globally (i.e., `gem install them-server`) and do not require that them-server be in your bundle.
+Executables shipped by dependencies, such as kettle-dev, and stone_checksums, are available
+after running `bin/setup`. These include:
 
+- gem_checksums
 - kettle-changelog
 - kettle-commit-msg
-- them-server-setup
+- kettle-dev-setup
 - kettle-dvcs
 - kettle-pre-release
 - kettle-readme-backers
 - kettle-release
 
-However, the rake tasks provided by them-server do require them-server to be added as a development dependency and loaded in your Rakefile.
-See the full list of rake tasks in head of Rakefile
+There are many Rake tasks available as well. You can see them by running:
 
-**Gemfile**
-
-```ruby
-group :development do
-  gem "them-server", require: false
-end
+```shell
+bin/rake -T
 ```
 
-**Rakefile**
+## Code quality checks
 
-```ruby
-# Rakefile
-require "gem/server"
+Run the Reek task when you want a smell check that fails on current findings:
+
+```shell
+bin/rake reek
+```
+
+Refresh the checked-in `REEK` backlog through the rake task, not by redirecting
+the raw `reek` executable output. The rake task uses the project bundle and
+avoids stale generated binstubs shadowing the Reek gem executable:
+
+```shell
+bin/rake reek:update
 ```
 
 ## Environment Variables for Local Development
@@ -58,14 +71,12 @@ require "gem/server"
 Below are the primary environment variables recognized by stone_checksums (and its integrated tools). Unless otherwise noted, set boolean values to the string "true" to enable.
 
 General/runtime
-
 - DEBUG: Enable extra internal logging for this library (default: false)
 - REQUIRE_BENCH: Enable `require_bench` to profile requires (default: false)
 - CI: When set to true, adjusts default rake tasks toward CI behavior
 
 Coverage (kettle-soup-cover / SimpleCov)
-
-- K_SOUP_COV_DO: Enable coverage collection (default: true in .envrc)
+- K_SOUP_COV_DO: Enable coverage collection (default: true in `mise.toml`)
 - K_SOUP_COV_FORMATTERS: Comma-separated list of formatters (html, xml, rcov, lcov, json, tty)
 - K_SOUP_COV_MIN_LINE: Minimum line coverage threshold (integer, e.g., 100)
 - K_SOUP_COV_MIN_BRANCH: Minimum branch coverage threshold (integer, e.g., 100)
@@ -76,107 +87,81 @@ Coverage (kettle-soup-cover / SimpleCov)
   Tip: When running a single spec file locally, you may want `K_SOUP_COV_MIN_HARD=false` to avoid failing thresholds for a partial run.
 
 GitHub API and CI helpers
-
 - GITHUB_TOKEN or GH_TOKEN: Token used by `ci:act` and release workflow checks to query GitHub Actions status at higher rate limits
 
 Releasing and signing
-
 - SKIP_GEM_SIGNING: If set, skip gem signing during build/release
 - GEM_CERT_USER: Username for selecting your public cert in `certs/<USER>.pem` (defaults to $USER)
-- SOURCE_DATE_EPOCH: Reproducible build timestamp. `kettle-release` will set this automatically for the session.
+- SOURCE_DATE_EPOCH: Reproducible build timestamp.
+  - `kettle-release` will set this automatically for the session.
+  - Not needed on bundler >= 2.7.0, as reproducible builds have become the default.
 
 Git hooks and commit message helpers (exe/kettle-commit-msg)
-
 - GIT_HOOK_BRANCH_VALIDATE: Branch name validation mode (e.g., `jira`) or `false` to disable
 - GIT_HOOK_FOOTER_APPEND: Append a footer to commit messages when goalie allows (true/false)
 - GIT_HOOK_FOOTER_SENTINEL: Required when footer append is enabled — a unique first-line sentinel to prevent duplicates
 - GIT_HOOK_FOOTER_APPEND_DEBUG: Extra debug output in the footer template (true/false)
 
-For a quick starting point, this repository’s `.envrc` shows sane defaults, and `.env.local` can override them locally.
+Git diff driver setup
+- Local setup writes repository `.gitattributes` entries and local Git `diff.smorg-*` command config so this checkout uses StructuredMerge semantic diffs.
+- Global setup registers `diff.smorg-*` commands once in the user Git config; use it when you work across several StructuredMerge-enabled repositories.
+- Include-file setup writes `.git/smorg/config` and includes it from local Git config, keeping command registrations out of the repository files.
+- Git hosting forges generally ignore external diff drivers, so pull request views may still show raw textual diffs even when local `git diff` uses semantic drivers.
 
-## Database and Federation Rake Tasks
-
-This project provides Rake tasks for managing the local SQLite database and for simple federation administration.
-
-- Database
-  - db:migrate — Run Sequel migrations
-  - db:version — Print current migration version
-  - db:rollback[steps] — Roll back a number of steps (default 1)
-  - db:seed — Seed the database (idempotent); seeds add a couple of localhost peers for demo
-  - db:reset — Delete the SQLite DB, migrate, and seed
-
-- Federation
-  - federation:list_known — List known servers
-  - federation:seed_known[base_url,public_key_b64] — Upsert a known server
-  - federation:announce[to_base_url,my_base_url] — Send a signed announce to a peer
-  - federation:subscribe[to_base_url,my_base_url] — Send a signed subscribe to a peer
-
-Examples:
-
-```bash
-bundle exec rake db:migrate
-bundle exec rake db:version
-bundle exec rake federation:list_known
-bundle exec rake federation:seed_known['https://peer.example','BASE64_PUBLIC_KEY']
+```console
+K_JEM_TEMPLATING=true bundle exec kettle-jem install
 ```
 
-Environment variables:
+Troubleshooting Git diffs
+- Use `git diff --no-ext-diff` to compare against Git's built-in diff output.
+- Use `git diff --no-textconv` when a textconv projection obscures the raw file bytes you need to inspect.
+- If Git reports a missing `smorg-*` executable, rerun `bundle install` and the setup command above, then check `git config --local --get-regexp '^diff\.smorg-'`.
+- To remove managed local entries, run `K_JEM_TEMPLATING=true bundle exec kettle-jem install --undo`; remove global command registrations with `git config --global --unset-all diff.smorg-ruby.command`.
 
-- GEM_SERVER_DB: Override the SQLite DB path (default: config/db/them_server.db). Useful to run multiple local servers side-by-side.
-- FEDERATION_BASE_URL: Base URL advertised for this server in federation payloads.
-- FEDERATION_BROADCAST: If set to "1", successful gem pushes are broadcast to subscribed peers.
-- FEDERATION_PRIVATE_KEY_B64 and FEDERATION_PUBLIC_KEY_B64: Optional Ed25519 keypair for stable identity.
-
-### Demo: Run Two Local Servers
-
-A minimal script is provided to spin up two local servers on different ports with separate DBs and wire them via federation.
-
-```bash
-bin/demo_federation.sh
-```
-
-Tip: After the script finishes, you can inspect peers on both servers:
-
-```bash
-curl http://localhost:9292/admin/known_servers | jq .
-curl http://localhost:9393/admin/known_servers | jq .
-```
+For a quick starting point, this repository’s `mise.toml` defines the shared defaults, and `.env.local` can override them locally. Copy `.env.local.example` to `.env.local`, use `KEY=value` lines, and either activate `mise` in your shell or run commands through `mise exec -C /path/to/project -- ...`.
 
 ## Appraisals
 
 From time to time the [appraisal2][🚎appraisal2] gemfiles in `gemfiles/` will need to be updated.
+Generated appraisal and CI workflow floors are controlled by `ruby.test_minimum`
+in `.structuredmerge/kettle-jem.yml`; this project was templated with `ruby.test_minimum: 3.2.0`.
+That value describes the lowest Ruby version expected to run the test/development
+toolchain, and it may be higher than the gemspec runtime floor.
+
 They are created and updated with the commands:
 
 ```console
 bin/rake appraisal:update
 ```
 
-When adding an appraisal to CI, check the [runner tool cache][🏃‍♂️runner-tool-cache] to see which runner to use.
-
-## The Reek List
-
-Take a look at the `reek` list which is the file called `REEK` and find something to improve.
-
-To refresh the `reek` list:
+If you need to reset all gemfiles/*.gemfile.lock files:
 
 ```console
-bundle exec reek > REEK
+bin/rake appraisal:reset
 ```
+
+When adding an appraisal to CI, check the [runner tool cache][🏃‍♂️runner-tool-cache] to see which runner to use.
 
 ## Run Tests
 
-To run all tests
+Run tests via `kettle-test` (provided by `kettle-test`). It runs RSpec, writes the full log to
+`tmp/kettle-test/rspec-TIMESTAMP.log`, and prints a compact highlight block with timing, seed,
+pass/fail count, failing example list, and SimpleCov coverage percentages.
 
 ```console
-bundle exec rake test
+bundle exec kettle-test
+```
+
+For targeted runs, disable the hard coverage threshold to avoid false failures:
+
+```console
+K_SOUP_COV_MIN_HARD=false bundle exec kettle-test spec/path/to/spec.rb
 ```
 
 ### Spec organization (required)
 
-- One spec file per class/module. For each class or module under `lib/`, keep all of its unit tests in a single spec file under `spec/` that mirrors the path and file name exactly: `lib/gem/server/release_cli.rb` -> `spec/gem/server/release_cli_spec.rb`.
-- Never add a second spec file for the same class/module. Examples of disallowed names: `*_more_spec.rb`, `*_extra_spec.rb`, `*_status_spec.rb`, or any other suffix that still targets the same class. If you find yourself wanting a second file, merge those examples into the canonical spec file for that class/module.
+- One spec file per class/module. For each class or module under `lib/`, keep all of its unit tests in a single spec file under `spec/` that mirrors the path and file name exactly: `lib/them/server/my_class.rb` -> `spec/them/server/my_class_spec.rb`.
 - Exception: Integration specs that intentionally span multiple classes. Place these under `spec/integration/` (or a clearly named integration folder), and do not directly mirror a single class. Name them after the scenario, not a class.
-- Migration note: If a duplicate spec file exists, move all examples into the canonical file and delete the duplicate. Do not leave stubs or empty files behind.
 
 ## Lint It
 
@@ -199,7 +184,7 @@ For more detailed information about using RuboCop in this project, please see th
 Never add `# rubocop:disable ...` / `# rubocop:enable ...` comments to code or specs (except when following the few existing `rubocop:disable` patterns for a rule already being disabled elsewhere in the code). Instead:
 
 - Prefer configuration-based exclusions when a rule should not apply to certain paths or files (e.g., via `.rubocop.yml`).
-- When a violation is temporary and you plan to fix it later, record it in `.rubocop_gradual.lock` using the gradual workflow:
+- When a violation is temporary, and you plan to fix it later, record it in `.rubocop_gradual.lock` using the gradual workflow:
   - `bundle exec rake rubocop_gradual:autocorrect` (preferred)
   - `bundle exec rake rubocop_gradual:force_update` (only when you cannot fix the violations immediately)
 
@@ -234,39 +219,41 @@ NOTE: To build without signing the gem set `SKIP_GEM_SIGNING` to any value in th
 1. Update version.rb to contain the correct version-to-be-released.
 2. Run `bundle exec kettle-changelog`.
 3. Run `bundle exec kettle-release`.
+4. Stay awake and monitor the release process for any errors, and answer any prompts.
 
 #### Manual process
 
 1. Run `bin/setup && bin/rake` as a "test, coverage, & linting" sanity check
 2. Update the version number in `version.rb`, and ensure `CHANGELOG.md` reflects changes
 3. Run `bin/setup && bin/rake` again as a secondary check, and to update `Gemfile.lock`
-4. Run `git commit -am "🔖 Prepare release v<VERSION>"` to commit the changes
-5. Run `git push` to trigger the final CI pipeline before release, and merge PRs
-   - NOTE: Remember to [check the build][🧪build].
-6. Run `export GIT_TRUNK_BRANCH_NAME="$(git remote show origin | grep 'HEAD branch' | cut -d ' ' -f5)" && echo $GIT_TRUNK_BRANCH_NAME`
-7. Run `git checkout $GIT_TRUNK_BRANCH_NAME`
-8. Run `git pull origin $GIT_TRUNK_BRANCH_NAME` to ensure latest trunk code
-9. Optional for older Bundler (< 2.7.0): Set `SOURCE_DATE_EPOCH` so `rake build` and `rake release` use the same timestamp and generate the same checksums
-   - If your Bundler is >= 2.7.0, you can skip this; builds are reproducible by default.
-   - Run `export SOURCE_DATE_EPOCH=$EPOCHSECONDS && echo $SOURCE_DATE_EPOCH`
-   - If the echo above has no output, then it didn't work.
-   - Note: `zsh/datetime` module is needed, if running `zsh`.
-   - In older versions of `bash` you can use `date +%s` instead, i.e. `export SOURCE_DATE_EPOCH=$(date +%s) && echo $SOURCE_DATE_EPOCH`
-10. Run `bundle exec rake build`
-11. Run `bin/gem_checksums` (more context [1][🔒️rubygems-checksums-pr], [2][🔒️rubygems-guides-pr])
+4. Run `bin/rake yard` to regenerate the docs site using the canonical docs task
+5. Run `git commit -am "🔖 Prepare release v<VERSION>"` to commit the changes
+6. Run `git push` to trigger the final CI pipeline before release, and merge PRs
+    - NOTE: Remember to [check the build][🧪build].
+7. Run `export GIT_TRUNK_BRANCH_NAME="$(git remote show origin | grep 'HEAD branch' | cut -d ' ' -f5)" && echo $GIT_TRUNK_BRANCH_NAME`
+8. Run `git checkout $GIT_TRUNK_BRANCH_NAME`
+9. Run `git pull origin $GIT_TRUNK_BRANCH_NAME` to ensure latest trunk code
+10. Optional for older Bundler (< 2.7.0): Set `SOURCE_DATE_EPOCH` so `rake build` and `rake release` use the same timestamp and generate the same checksums
+    - If your Bundler is >= 2.7.0, you can skip this; builds are reproducible by default.
+    - Run `export SOURCE_DATE_EPOCH=$EPOCHSECONDS && echo $SOURCE_DATE_EPOCH`
+    - If the echo above has no output, then it didn't work.
+    - Note: `zsh/datetime` module is needed, if running `zsh`.
+    - In older versions of `bash` you can use `date +%s` instead, i.e. `export SOURCE_DATE_EPOCH=$(date +%s) && echo $SOURCE_DATE_EPOCH`
+11. Run `bundle exec rake build`
+12. Run `bin/gem_checksums` (more context [1][🔒️rubygems-checksums-pr], [2][🔒️rubygems-guides-pr])
     to create SHA-256 and SHA-512 checksums. This functionality is provided by the `stone_checksums`
     [gem][💎stone_checksums].
     - The script automatically commits but does not push the checksums
-12. Sanity check the SHA256, comparing with the output from the `bin/gem_checksums` command:
+13. Sanity check the SHA256, comparing with the output from the `bin/gem_checksums` command:
     - `sha256sum pkg/<gem name>-<version>.gem`
-13. Run `bundle exec rake release` which will create a git tag for the version,
+14. Run `bundle exec rake release` which will create a git tag for the version,
     push git commits and tags, and push the `.gem` file to the gem host configured in the gemspec.
 
-[📜src-gl]: https://gitlab.com/galtzo-floss/them-server/
+[📜src-gl]: https://gitlab.com/galtzo-floss/them-server
 [📜src-cb]: https://codeberg.org/galtzo-floss/them-server
 [📜src-gh]: https://github.com/galtzo-floss/them-server
 [🧪build]: https://github.com/galtzo-floss/them-server/actions
-[🤝conduct]: https://gitlab.com/galtzo-floss/them-server/-/blob/main/CODE_OF_CONDUCT.md
+[🤝conduct]: https://github.com/galtzo-floss/them-server/blob/main/CODE_OF_CONDUCT.md
 [🖐contrib-rocks]: https://contrib.rocks
 [🖐contributors]: https://github.com/galtzo-floss/them-server/graphs/contributors
 [🚎contributors-gl]: https://gitlab.com/galtzo-floss/them-server/-/graphs/main
@@ -282,3 +269,4 @@ NOTE: To build without signing the gem set `SKIP_GEM_SIGNING` to any value in th
 [📌major-versions-not-sacred]: https://tom.preston-werner.com/2022/05/23/major-version-numbers-are-not-sacred.html
 [🚎appraisal2]: https://github.com/appraisal-rb/appraisal2
 [🏃‍♂️runner-tool-cache]: https://github.com/ruby/ruby-builder/releases/tag/toolcache
+[✉️discord-invite]: https://discord.gg/3qme4XHNKN

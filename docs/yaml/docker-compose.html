@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Untitled</title>
+  <style>
+    /* minimal, namespaced styles */
+    .yyaml-page { font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+    .yyaml-title { margin: 0.2em 0 0.4em; font-size: 1.6em; }
+    .yyaml-desc { color: #444; margin-bottom: 1em; }
+    .yyaml-body { line-height: 1.5; }
+  </style>
+</head>
+<body class="yyaml-page">
+  <h1 class="yyaml-title">Untitled</h1>
+  
+  <div class="yyaml-body"><div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">version</span><span class="pi">:</span> <span class="s2">"</span><span class="s">3.9"</span>
+<span class="na">services</span><span class="pi">:</span>
+  <span class="na">server1</span><span class="pi">:</span>
+    <span class="na">build</span><span class="pi">:</span> <span class="s">.</span>
+    <span class="na">container_name</span><span class="pi">:</span> <span class="s">them-server-1</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">9292:9292"</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="na">HANAMI_PORT</span><span class="pi">:</span> <span class="m">9292</span>
+      <span class="na">HANAMI_ENV</span><span class="pi">:</span> <span class="s">production</span>
+      <span class="na">GEM_SERVER_DB</span><span class="pi">:</span> <span class="s">/app/config/db/them_server_1.db</span>
+      <span class="na">FEDERATION_BASE_URL</span><span class="pi">:</span> <span class="s">http://server1:9292</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">./config/db:/app/config/db</span>
+    <span class="na">command</span><span class="pi">:</span> <span class="pi">&gt;-</span>
+      <span class="s">sh -lc "ruby -e 'require \"./config/database\"; Gem::Server::Database.migrate' &amp;&amp; bundle exec rackup -p 9292 -E production --host 0.0.0.0"</span>
+
+  <span class="na">server2</span><span class="pi">:</span>
+    <span class="na">build</span><span class="pi">:</span> <span class="s">.</span>
+    <span class="na">container_name</span><span class="pi">:</span> <span class="s">them-server-2</span>
+    <span class="na">ports</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">9393:9393"</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="na">HANAMI_PORT</span><span class="pi">:</span> <span class="m">9393</span>
+      <span class="na">HANAMI_ENV</span><span class="pi">:</span> <span class="s">production</span>
+      <span class="na">GEM_SERVER_DB</span><span class="pi">:</span> <span class="s">/app/config/db/them_server_2.db</span>
+      <span class="na">FEDERATION_BASE_URL</span><span class="pi">:</span> <span class="s">http://server2:9393</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">./config/db:/app/config/db</span>
+    <span class="na">command</span><span class="pi">:</span> <span class="pi">&gt;-</span>
+      <span class="s">sh -lc "ruby -e 'require \"./config/database\"; Gem::Server::Database.migrate' &amp;&amp; bundle exec rackup -p 9393 -E production --host 0.0.0.0"</span>
+
+  <span class="na">wire</span><span class="pi">:</span>
+    <span class="na">build</span><span class="pi">:</span> <span class="s">.</span>
+    <span class="na">container_name</span><span class="pi">:</span> <span class="s">them-server-wire</span>
+    <span class="na">depends_on</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">server1</span>
+      <span class="pi">-</span> <span class="s">server2</span>
+    <span class="na">environment</span><span class="pi">:</span>
+      <span class="na">WIRE_WAIT</span><span class="pi">:</span> <span class="m">5</span>
+    <span class="na">command</span><span class="pi">:</span> <span class="pi">&gt;-</span>
+      <span class="s">sh -lc "ruby docker/demo/wire.rb &amp;&amp; echo 'Done wiring federation' &amp;&amp; sleep 2"</span>
+</code></pre></div></div>
+<hr />
+
+<p>Produced by <a href="https://github.com/kettle-rb/yaml-converter">yaml-converter</a></p>
+</div>
+</body>
+</html>

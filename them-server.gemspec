@@ -1,25 +1,14 @@
-# coding: utf-8
 # frozen_string_literal: true
 
-gem_version =
-  if RUBY_VERSION >= "3.1" # rubocop:disable Gemspec/RubyVersionGlobalsUsage
-    # Loading Version into an anonymous module allows version.rb to get code coverage from SimpleCov!
-    # See: https://github.com/simplecov-ruby/simplecov/issues/557#issuecomment-2630782358
-    # See: https://github.com/panorama-ed/memo_wise/pull/397
-    Module.new.tap { |mod| Kernel.load("#{__dir__}/lib/gem/server/version.rb", mod) }::Gem::Server::Version::VERSION
-  else
-    # NOTE: Use __FILE__ or __dir__ until removal of Ruby 1.x support
-    # __dir__ introduced in Ruby 1.9.1
-    # lib = File.expand_path("../lib", __FILE__)
-    lib = File.expand_path("lib", __dir__)
-    $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-    require "gem/server/version"
-    Gem::Server::Version::VERSION
-  end
+# kettle-jem:freeze
+# To retain chunks of comments & code during them-server templating:
+# Wrap custom sections with freeze markers (e.g., as above and below this comment chunk).
+# them-server will then preserve content between those markers across template runs.
+# kettle-jem:unfreeze
 
 Gem::Specification.new do |spec|
   spec.name = "them-server"
-  spec.version = gem_version
+  spec.version = Module.new.tap { |mod| Kernel.load("#{__dir__}/lib/them/server/version.rb", mod) }::Them::Server::Version::VERSION
   spec.authors = ["Peter H. Boling"]
   spec.email = ["peter.boling@gmail.com"]
 
@@ -47,7 +36,7 @@ Gem::Specification.new do |spec|
     end
   end
 
-  spec.metadata["homepage_uri"] = "https://#{spec.name.tr("_", "-")}.galtzo.com/"
+  spec.metadata["homepage_uri"] = "https://them-server.galtzo.com"
   spec.metadata["source_code_uri"] = "#{spec.homepage}/tree/v#{spec.version}"
   spec.metadata["changelog_uri"] = "#{spec.homepage}/blob/v#{spec.version}/CHANGELOG.md"
   spec.metadata["bug_tracker_uri"] = "#{spec.homepage}/issues"
@@ -58,20 +47,22 @@ Gem::Specification.new do |spec|
   spec.metadata["discord_uri"] = "https://discord.gg/3qme4XHNKN"
   spec.metadata["rubygems_mfa_required"] = "true"
 
+  enumerate_package_files = lambda do |root|
+    Dir.glob(File.join(root, "**", "*"), File::FNM_DOTMATCH).select do |path|
+      File.file?(path) && ![".", ".."].include?(File.basename(path))
+    end
+  end
+
   # Specify which files are part of the released package.
-  spec.files = Dir[
-    # Executables and tasks
-    "exe/*",
-    "bin/*",
-    "lib/**/*.rb",
-    "lib/**/*.rake",
-    # Config and app
-    "config/**/*.rb",
-    "app/**/*.rb",
-    "db/**/*.rb",
-    "config.ru",
+  spec.files = [
+    # Code / tasks / data (NOTE: exe/ is specified via spec.bindir and spec.executables below)
+    *enumerate_package_files.call("lib"),
+    # Executables and executable support scripts
+    *enumerate_package_files.call("exe"),
+    # Public certs for gem signing
+    *enumerate_package_files.call("certs"),
     # Signatures
-    "sig/**/*.rbs",
+    *enumerate_package_files.call("sig")
   ]
 
   # Automatically included with gem package, no need to list again in files.
@@ -82,11 +73,10 @@ Gem::Specification.new do |spec|
     "CODE_OF_CONDUCT.md",
     "CONTRIBUTING.md",
     "FUNDING.md",
-    "LICENSE.txt",
+    "LICENSE.md",
     "README.md",
-    "REEK",
     "RUBOCOP.md",
-    "SECURITY.md",
+    "SECURITY.md"
   ]
   spec.rdoc_options += [
     "--title",
@@ -97,47 +87,35 @@ Gem::Specification.new do |spec|
     "^sig/",
     "--line-numbers",
     "--inline-source",
-    "--quiet",
+    "--quiet"
   ]
-  spec.require_paths = ["lib"]
   spec.bindir = "exe"
   # Listed files are the relative paths from bindir above.
   spec.executables = []
+  spec.require_paths = ["lib"]
 
-  # App Framework
+  # Utilities
+  spec.add_dependency("bcrypt", "~> 3.1", ">= 3.1.20")                  # ruby >= 2.3.0, password hashing
+  spec.add_dependency("dry-struct", "~> 1.8")                           # ruby >= 3.1.0, Typed structs and value objects
+  spec.add_dependency("dry-types", "~> 1.8", ">= 1.8.3")                # ruby >= 3.1.0, Type system for Ruby
+  spec.add_dependency("ed25519", "~> 1.4", ">= 1.4.0")                  # ruby >= 3.0.0, signing & verification for federation
+  spec.add_dependency("faraday", "~> 2.14", ">= 2.14.0")                # ruby >= 3.0.0, HTTP client wrapper library
   spec.add_dependency("hanami", "~> 2.2", ">= 2.2.1")                   # ruby >= 3.1.0, Full-stack web framework
   spec.add_dependency("hanami-assets", "~> 2.2", ">= 2.2.1")            # ruby >= 3.1.0, Full-stack web framework
   spec.add_dependency("hanami-cli", "~> 2.2", ">= 2.2.1")               # ruby >= 3.1.0, Full-stack web framework
   spec.add_dependency("hanami-controller", "~> 2.2", ">= 2.2.1")        # ruby >= 3.1.0, Full-stack web framework
   spec.add_dependency("hanami-db", "~> 2.2", ">= 2.2.1")                # ruby >= 3.1.0, Full-stack web framework
   spec.add_dependency("hanami-router", "~> 2.2", ">= 2.2.1")            # ruby >= 3.1.0, Full-stack web framework
-  spec.add_dependency("hanami-view", "~> 2.2", ">= 2.2.1")              # ruby >= 3.1.0, Full-stack web framework
-
-  # Framework Support
-  spec.add_dependency("dry-types", "~> 1.8", ">= 1.8.3")                # ruby >= 3.1.0, Type system for Ruby
   spec.add_dependency("hanami-utils", "~> 2.2", ">= 2.2.0")             # ruby >= 3.1.0, Hanami utilities including inflector
+  spec.add_dependency("hanami-view", "~> 2.2", ">= 2.2.1")              # ruby >= 3.1.0, Full-stack web framework
+  spec.add_dependency("mail", "~> 2.8", ">= 2.8.1")                     # ruby >= 2.5.0, email library
+  spec.add_dependency("oauth2", "~> 2.0", ">= 2.0.17")                  # ruby >= 2.2.0, OAuth2 client for federation
   spec.add_dependency("rack", "~> 3.2", ">= 3.2.3")                     # ruby >= 2.4.0, Rack web server interface
   spec.add_dependency("rack-protection", "~> 4.2", ">= 4.2.1")          # ruby >= 2.7.8, Security middleware
   spec.add_dependency("rackup", "~> 2.2", ">= 2.2.1")                   # ruby >= 2.5.0, Rackup command is separate dependency in rack >= v3
-  spec.add_dependency("version_gem", "~> 1.1", ">= 1.1.9")              # ruby >= 2.2.0
-
-  # Database
-  # sqlite3 is not included so we have a choice of JRuby or CRuby,
-  #   or even alternate DBs like PostgreSQL or MySQL.
-  spec.add_dependency("rom-sql", "~> 3.7", ">= 3.7.0")                  # ruby >= 3.1.0, Database toolkit
-
-  # Core tools
-  spec.add_dependency("dry-struct", "~> 1.8")                           # ruby >= 3.1.0, Typed structs and value objects
-  spec.add_dependency("faraday", "~> 2.14", ">= 2.14.0")                # ruby >= 3.0.0, HTTP client wrapper library
-
-  # Authentication & Authorization
-  spec.add_dependency("ed25519", "~> 1.4", ">= 1.4.0")                  # ruby >= 3.0.0, signing & verification for federation
-  spec.add_dependency("oauth2", "~> 2.0", ">= 2.0.17")                  # ruby >= 2.2.0, OAuth2 client for federation
   spec.add_dependency("rodauth", "~> 2.41", ">= 2.41.0")                # ruby >= 1.9.2, Rodauth authentication framework
-  spec.add_dependency("bcrypt", "~> 3.1", ">= 3.1.20")                  # ruby >= 2.3.0, password hashing
-
-  # Mail
-  spec.add_dependency("mail", "~> 2.8", ">= 2.8.1")                     # ruby >= 2.5.0, email library
+  spec.add_dependency("rom-sql", "~> 3.7", ">= 3.7.0")                  # ruby >= 3.1.0, Database toolkit
+  spec.add_dependency("version_gem", "~> 1.1", ">= 1.1.9")              # ruby >= 2.2.0
 
   # NOTE: It is preferable to list development dependencies in the gemspec due to increased
   #       visibility and discoverability.
@@ -153,10 +131,10 @@ Gem::Specification.new do |spec|
   #       and preferably a modular one (see gemfiles/modular/*.gemfile).
 
   # Dev, Test, & Release Tasks
-  spec.add_development_dependency("kettle-dev", "~> 1.1")                     # ruby >= 2.3.0
+  spec.add_development_dependency("kettle-dev", "~> 2.0", ">= 2.0.8")      # ruby >= 3.2.0
 
   # Security
-  spec.add_development_dependency("bundler-audit", "~> 0.9.2")                      # ruby >= 2.0.0
+  spec.add_development_dependency("bundler-audit", "~> 0.9.3")                      # ruby >= 2.0.0
 
   # Tasks
   spec.add_development_dependency("rake", "~> 13.0")                                # ruby >= 2.2.0
@@ -165,13 +143,13 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency("require_bench", "~> 1.0", ">= 1.0.4")            # ruby >= 2.2.0
 
   # Testing
-  spec.add_development_dependency("appraisal2", "~> 3.0")                           # ruby >= 1.8.7, for testing against multiple versions of dependencies
-  spec.add_development_dependency("kettle-test", "~> 1.0")                          # ruby >= 2.3
-  spec.add_development_dependency("rspec-pending_for", "~> 0.0", ">= 0.0.17")       # ruby >= 2.3, used to skip specs on incompatible Rubies
+  spec.add_development_dependency("appraisal2", "~> 3.0", ">= 3.0.6")               # ruby >= 1.8.7, for testing against multiple versions of dependencies
+  spec.add_development_dependency("kettle-test", "~> 2.0", ">= 2.0.3")             # ruby >= 3.2.0
+  spec.add_development_dependency("turbo_tests2", "~> 3.1", ">= 3.1.1")            # ruby >= 2.4.0, default kettle-test runner
 
   # Releasing
   spec.add_development_dependency("ruby-progressbar", "~> 1.13")                    # ruby >= 0
-  spec.add_development_dependency("stone_checksums", "~> 1.0", ">= 1.0.2")          # ruby >= 2.2.0
+  spec.add_development_dependency("stone_checksums", "~> 1.0", ">= 1.0.3")          # ruby >= 2.2.0
 
   # Git integration (optional)
   # The 'git' gem is optional; them-server falls back to shelling out to `git` if it is not present.
@@ -179,12 +157,19 @@ Gem::Specification.new do |spec|
   # spec.add_dependency("git", ">= 1.19.1")                               # ruby >= 2.3
 
   # Development tasks
-  spec.add_development_dependency("gitmoji-regex", "~> 1.0", ">= 1.0.3")            # ruby >= 2.3.0
+  # The cake is a lie. erb v2.2, the oldest release, was never compatible with Ruby 2.3.
+  # This means we have no choice but to use the erb that shipped with Ruby 2.3
+  # /opt/hostedtoolcache/Ruby/2.3.8/x64/lib/ruby/gems/2.3.0/gems/erb-2.2.2/lib/erb.rb:670:in `prepare_trim_mode': undefined method `match?' for "-":String (NoMethodError)
+  # spec.add_development_dependency("erb", ">= 2.2")                                  # ruby >= 2.3.0, not SemVer, old rubies get dropped in a patch.
+  spec.add_development_dependency("gitmoji-regex", "~> 2.0", ">= 2.0.1")            # ruby >= 2.4
 
   # HTTP recording for deterministic specs
   # In Ruby 3.5 (HEAD) the CGI library has been pared down, so we also need to depend on gem "cgi" for ruby@head
   # This is done in the "head" appraisal.
   # See: https://github.com/vcr/vcr/issues/1057
+  # spec.add_development_dependency("vcr", ">= 4")                        # 6.0 claims to support ruby >= 2.3, but fails on ruby 2.4
+  # spec.add_development_dependency("webmock", ">= 3")                    # Last version to support ruby >= 2.3
+  spec.add_development_dependency("rspec-pending_for", "~> 0.0", ">= 0.0.17")       # ruby >= 2.3, used to skip specs on incompatible Rubies
   spec.add_development_dependency("vcr", ">= 4")                        # 6.0 claims to support ruby >= 2.3, but fails on ruby 2.4
   spec.add_development_dependency("webmock", ">= 3")                    # Last version to support ruby >= 2.3
 end

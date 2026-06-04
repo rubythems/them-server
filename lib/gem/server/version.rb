@@ -5,6 +5,6 @@ module Gem
     module Version
       VERSION = "0.1.0"
     end
-    VERSION = Version::VERSION
+    VERSION = Version::VERSION # Traditional Constant Location
   end
 end

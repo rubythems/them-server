@@ -29,6 +29,9 @@ rescue LoadError => error
   raise error unless error.message.include?("kettle")
 end
 
+# This library
+require "them/server"
+
 # this library
 require "gem/server"
 

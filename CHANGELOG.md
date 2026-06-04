@@ -22,6 +22,8 @@ Please file a bug if you notice a violation of semantic versioning.
 
 ### Changed
 
+- Refreshed generated project templates with `kettle-jem`.
+
 ### Deprecated
 
 ### Removed
