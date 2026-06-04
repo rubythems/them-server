@@ -96,9 +96,11 @@ Gem::Specification.new do |spec|
 
   # Utilities
   spec.add_dependency("bcrypt", "~> 3.1", ">= 3.1.20")                  # ruby >= 2.3.0, password hashing
+  spec.add_dependency("dry-operation", "~> 1.1")                         # ruby >= 3.1.0, Railway-oriented operation objects
   spec.add_dependency("dry-struct", "~> 1.8")                           # ruby >= 3.1.0, Typed structs and value objects
   spec.add_dependency("dry-types", "~> 1.8", ">= 1.8.3")                # ruby >= 3.1.0, Type system for Ruby
   spec.add_dependency("ed25519", "~> 1.4", ">= 1.4.0")                  # ruby >= 3.0.0, signing & verification for federation
+  spec.add_dependency("erubi", "~> 1.13")                                # ruby >= 2.5.0, ERB renderer used by Roda/Tilt
   spec.add_dependency("faraday", "~> 2.14", ">= 2.14.0")                # ruby >= 3.0.0, HTTP client wrapper library
   spec.add_dependency("hanami", "~> 2.2", ">= 2.2.1")                   # ruby >= 3.1.0, Full-stack web framework
   spec.add_dependency("hanami-assets", "~> 2.2", ">= 2.2.1")            # ruby >= 3.1.0, Full-stack web framework
@@ -110,11 +112,13 @@ Gem::Specification.new do |spec|
   spec.add_dependency("hanami-view", "~> 2.2", ">= 2.2.1")              # ruby >= 3.1.0, Full-stack web framework
   spec.add_dependency("mail", "~> 2.8", ">= 2.8.1")                     # ruby >= 2.5.0, email library
   spec.add_dependency("oauth2", "~> 2.0", ">= 2.0.17")                  # ruby >= 2.2.0, OAuth2 client for federation
+  spec.add_dependency("puma", "~> 7.2")                                  # ruby >= 2.7.0, Rack server
   spec.add_dependency("rack", "~> 3.2", ">= 3.2.3")                     # ruby >= 2.4.0, Rack web server interface
   spec.add_dependency("rack-protection", "~> 4.2", ">= 4.2.1")          # ruby >= 2.7.8, Security middleware
   spec.add_dependency("rackup", "~> 2.2", ">= 2.2.1")                   # ruby >= 2.5.0, Rackup command is separate dependency in rack >= v3
   spec.add_dependency("rodauth", "~> 2.41", ">= 2.41.0")                # ruby >= 1.9.2, Rodauth authentication framework
   spec.add_dependency("rom-sql", "~> 3.7", ">= 3.7.0")                  # ruby >= 3.1.0, Database toolkit
+  spec.add_dependency("sqlite3", "~> 2.9")                               # ruby >= 3.1.0, SQLite database adapter
   spec.add_dependency("version_gem", "~> 1.1", ">= 1.1.9")              # ruby >= 2.2.0
 
   # NOTE: It is preferable to list development dependencies in the gemspec due to increased
@@ -140,11 +144,19 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency("rake", "~> 13.0")                                # ruby >= 2.2.0
 
   # Debugging
+  spec.add_development_dependency("debug", "~> 1.11")                              # ruby >= 2.7.0
+  spec.add_development_dependency("dotenv", "~> 3.2")                              # ruby >= 3.1.0
   spec.add_development_dependency("require_bench", "~> 1.0", ">= 1.0.4")            # ruby >= 2.2.0
 
   # Testing
   spec.add_development_dependency("appraisal2", "~> 3.0", ">= 3.0.6")               # ruby >= 1.8.7, for testing against multiple versions of dependencies
+  spec.add_development_dependency("capybara", "~> 3.40")                           # ruby >= 2.6.0, integration testing
+  spec.add_development_dependency("cgi", "~> 0.5")                                  # ruby >= 2.5.0, extracted stdlib needed by Capybara on Ruby 4
+  spec.add_development_dependency("database_cleaner-sequel", "~> 2.0")             # ruby >= 2.5.0, test database cleanup
   spec.add_development_dependency("kettle-test", "~> 2.0", ">= 2.0.3")             # ruby >= 3.2.0
+  spec.add_development_dependency("launchy", "~> 3.1")                             # ruby >= 2.7.0, browser launch helper
+  spec.add_development_dependency("rack-test", "~> 2.2")                           # ruby >= 2.7.0, Rack integration testing
+  spec.add_development_dependency("rom-factory", "~> 0.13")                        # ruby >= 3.1.0, ROM test factories
   spec.add_development_dependency("turbo_tests2", "~> 3.1", ">= 3.1.1")            # ruby >= 2.4.0, default kettle-test runner
 
   # Releasing

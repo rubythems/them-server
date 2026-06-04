@@ -22,7 +22,7 @@ now = Time.now
 
 peers = [
   {base_url: "http://localhost:9292"},
-  {base_url: "http://localhost:9393"},
+  {base_url: "http://localhost:9393"}
 ]
 
 peers.each do |peer|
@@ -33,7 +33,7 @@ peers.each do |peer|
     subscribed: false,
     last_seen_at: nil,
     created_at: now,
-    updated_at: now,
+    updated_at: now
   }
   if row
     DB[:known_servers].where(id: row[:id]).update(attrs.merge(created_at: row[:created_at]))

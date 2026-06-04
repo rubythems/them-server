@@ -157,7 +157,7 @@ module Them
               digest = begin
                 bytes = File.binread(local[:file_path])
                 Crypto.sha256_hex(bytes)
-              rescue StandardError
+              rescue
                 ""
               end
 
@@ -174,7 +174,7 @@ module Them
                 scope_path: scope_path,
                 digest_sha256: digest,
                 record_sig_b64: sig,
-                public_key_b64: Crypto.public_key_b64,
+                public_key_b64: Crypto.public_key_b64
               }
             else
               # Priority 2: Search federated gems if no local copy exists
@@ -198,7 +198,7 @@ module Them
                   record_sig_b64: sig,
                   origin_public_key_b64: origin && origin[:public_key_b64],
                   origin_base_url: origin && origin[:base_url],
-                  public_key_b64: Crypto.public_key_b64,
+                  public_key_b64: Crypto.public_key_b64
                 }
               else
                 # Gem not found (neither local nor federated)
@@ -216,4 +216,3 @@ module Them
     end
   end
 end
-

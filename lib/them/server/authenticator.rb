@@ -91,7 +91,7 @@ module Them
             user: nil,
             token: nil,
             scopes: [],
-            token_info: nil,
+            token_info: nil
           }
         end
 
@@ -155,7 +155,7 @@ module Them
               user: nil,
               token: nil,
               scopes: [],
-              token_info: nil,
+              token_info: nil
             }
           end
 
@@ -168,7 +168,7 @@ module Them
             user: token_info["username"] || token_info["sub"] || token_info["client_id"],
             token: access_token,
             scopes: scopes,
-            token_info: token_info,
+            token_info: token_info
           }
         end
 
@@ -206,7 +206,7 @@ module Them
           if (match = auth.match(/^Basic\s+(.+)$/i))
             encoded = match[1].strip
             # Validate that it's proper Base64 (only A-Z, a-z, 0-9, +, /, =)
-            if encoded =~ /^[A-Za-z0-9+\/]+=*$/
+            if /^[A-Za-z0-9+\/]+=*$/.match?(encoded)
               begin
                 decoded = Base64.strict_decode64(encoded)
                 # Extract username (before colon)
@@ -221,7 +221,7 @@ module Them
                   user: nil,
                   token: nil,
                   scopes: [],
-                  token_info: nil,
+                  token_info: nil
                 }
               end
             else
@@ -232,7 +232,7 @@ module Them
                 user: nil,
                 token: nil,
                 scopes: [],
-                token_info: nil,
+                token_info: nil
               }
             end
           end
@@ -274,7 +274,7 @@ module Them
             user: key,  # For API keys, the key itself is the user identifier
             token: key,
             scopes: [],  # API keys don't have scopes
-            token_info: nil,
+            token_info: nil
           }
         end
       end

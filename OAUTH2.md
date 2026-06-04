@@ -197,12 +197,12 @@ Test OAuth2 integration with VCR for deterministic HTTP recording:
 ```ruby
 RSpec.describe "OAuth2 authentication" do
   it "validates tokens via introspection", :vcr do
-    ENV['OAUTH2_PROVIDER_URL'] = 'https://oauth.example.com'
-    ENV['OAUTH2_CLIENT_ID'] = 'test-client'
-    ENV['OAUTH2_CLIENT_SECRET'] = 'test-secret'
+    ENV["OAUTH2_PROVIDER_URL"] = "https://oauth.example.com"
+    ENV["OAUTH2_CLIENT_ID"] = "test-client"
+    ENV["OAUTH2_CLIENT_SECRET"] = "test-secret"
 
     result = Them::Server::Authenticator.authenticate({
-      'HTTP_AUTHORIZATION' => 'Bearer valid-token'
+      "HTTP_AUTHORIZATION" => "Bearer valid-token"
     })
 
     expect(result[:authenticated]).to be true

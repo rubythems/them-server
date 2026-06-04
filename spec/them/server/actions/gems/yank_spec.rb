@@ -17,7 +17,7 @@ RSpec.describe Them::Server::Actions::Gems::Yank do
       name: "gem-owner",
       api_key: owner_api_key,
       created_at: Time.now,
-      updated_at: Time.now,
+      updated_at: Time.now
     )
   end
 
@@ -29,7 +29,7 @@ RSpec.describe Them::Server::Actions::Gems::Yank do
       file_path: "gems/test-gem-1.0.0.gem",
       yanked: false,
       created_at: Time.now,
-      updated_at: Time.now,
+      updated_at: Time.now
     )
   end
 
@@ -37,7 +37,7 @@ RSpec.describe Them::Server::Actions::Gems::Yank do
     db[:gem_owners].insert(
       gem_id: gem_id,
       owner_id: owner_id,
-      created_at: Time.now,
+      created_at: Time.now
     )
   end
 
@@ -92,7 +92,7 @@ RSpec.describe Them::Server::Actions::Gems::Yank do
           name: "unauthorized-owner",
           api_key: unauthorized_api_key,
           created_at: Time.now,
-          updated_at: Time.now,
+          updated_at: Time.now
         )
       end
 
@@ -110,7 +110,7 @@ RSpec.describe Them::Server::Actions::Gems::Yank do
           name: "myorg",
           parent_id: nil,
           created_at: Time.now,
-          updated_at: Time.now,
+          updated_at: Time.now
         )
       end
 
@@ -122,7 +122,7 @@ RSpec.describe Them::Server::Actions::Gems::Yank do
           file_path: "gems/scoped-gem-1.0.0.gem",
           yanked: false,
           created_at: Time.now,
-          updated_at: Time.now,
+          updated_at: Time.now
         )
       end
 
@@ -130,7 +130,7 @@ RSpec.describe Them::Server::Actions::Gems::Yank do
         db[:gem_owners].insert(
           gem_id: scoped_gem_id,
           owner_id: owner_id,
-          created_at: Time.now,
+          created_at: Time.now
         )
       end
 
@@ -150,7 +150,7 @@ RSpec.describe Them::Server::Actions::Gems::Yank do
           name: "myorg",
           parent_id: nil,
           created_at: Time.now,
-          updated_at: Time.now,
+          updated_at: Time.now
         )
       end
 
@@ -159,7 +159,7 @@ RSpec.describe Them::Server::Actions::Gems::Yank do
           name: "team",
           parent_id: parent_scope_id,
           created_at: Time.now,
-          updated_at: Time.now,
+          updated_at: Time.now
         )
       end
 
@@ -171,7 +171,7 @@ RSpec.describe Them::Server::Actions::Gems::Yank do
           file_path: "gems/nested-gem-1.0.0.gem",
           yanked: false,
           created_at: Time.now,
-          updated_at: Time.now,
+          updated_at: Time.now
         )
       end
 
@@ -179,7 +179,7 @@ RSpec.describe Them::Server::Actions::Gems::Yank do
         db[:gem_owners].insert(
           gem_id: nested_gem_id,
           owner_id: owner_id,
-          created_at: Time.now,
+          created_at: Time.now
         )
       end
 

@@ -27,8 +27,6 @@ module Them
           begin
             if Password.new(owner[:password_digest]) == password
               owner
-            else
-              nil
             end
           rescue BCrypt::Errors::InvalidHash
             nil

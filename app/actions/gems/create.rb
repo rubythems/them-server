@@ -20,10 +20,10 @@ module Them
             if ENV["HANAMI_ENV"] == "test"
               File.open("tmp/hanami_action_debug.log", "a") do |f|
                 f.puts "\n=== [#{Time.now}] Hanami Action Called ==="
-                f.puts "Content-Type: #{request.env['CONTENT_TYPE']}"
-                f.puts "Original Content-Type: #{request.env['HTTP_X_ORIGINAL_CONTENT_TYPE']}"
-                f.puts "Content-Length: #{request.env['CONTENT_LENGTH']}"
-                f.puts "PATH_INFO: #{request.env['PATH_INFO']}"
+                f.puts "Content-Type: #{request.env["CONTENT_TYPE"]}"
+                f.puts "Original Content-Type: #{request.env["HTTP_X_ORIGINAL_CONTENT_TYPE"]}"
+                f.puts "Content-Length: #{request.env["CONTENT_LENGTH"]}"
+                f.puts "PATH_INFO: #{request.env["PATH_INFO"]}"
               end
             end
 
@@ -35,10 +35,10 @@ module Them
             # Normalize and drop the API prefix if present (e.g., /api/v1/gems)
             segments = path_info.split("/").reject(&:empty?)
             path_parts = if segments[0] == "api" && segments[1] == "v1" && segments[2] == "gems"
-                           segments[3..] || []
-                         else
-                           segments
-                         end
+              segments[3..] || []
+            else
+              segments
+            end
 
             # Determine upload mode: multipart form vs. raw body
             # Use original content type if it was saved by middleware
@@ -91,7 +91,7 @@ module Them
                   user: api_key,
                   token: api_key,
                   scopes: [],
-                  token_info: nil,
+                  token_info: nil
                 }
               end
             end
@@ -133,7 +133,7 @@ module Them
               # Ensure we read from the start
               begin
                 file.rewind if file.respond_to?(:rewind)
-              rescue StandardError
+              rescue
                 # Ignore if cannot rewind (e.g., non-rewindable IO). We'll read as-is.
               end
               temp_file.write(file.read)
@@ -158,23 +158,23 @@ module Them
                 file_path: file_path,
                 yanked: false,
                 created_at: Time.now,
-                updated_at: Time.now,
-                )
+                updated_at: Time.now
+              )
 
               # Add owner as gem owner
               db[:gem_owners].insert(
                 gem_id: gem_id,
                 owner_id: owner[:id],
-                created_at: Time.now,
-                )
+                created_at: Time.now
+              )
 
               # Optional federation broadcast
               Them::Server::FederationBroadcaster.broadcast_gem(
                 name: name,
                 version: version,
                 scope_path: path_parts,
-                file_path: file_path,
-                )
+                file_path: file_path
+              )
 
               response.headers["content-type"] = "text/plain; charset=utf-8"
               response.body = (path_parts.empty? ? "Successfully registered gem: #{name} (#{version})" : "Gem #{name} #{version} pushed successfully")
@@ -193,7 +193,6 @@ module Them
 
           private
 
-
           def io_empty?(io, content_length)
             # If this is the rack input stream, rely on Content-Length
             return true if (io.respond_to?(:path) ? false : true) && content_length.to_i <= 0
@@ -206,7 +205,7 @@ module Them
             # Fallback: try to peek 1 byte without consuming
             begin
               original_pos = io.pos
-            rescue StandardError
+            rescue
               original_pos = nil
             end
             begin
@@ -219,7 +218,7 @@ module Them
                 elsif io.respond_to?(:rewind)
                   io.rewind
                 end
-              rescue StandardError
+              rescue
                 # ignore
               end
             end
@@ -232,7 +231,7 @@ module Them
             begin
               return s.encode("UTF-8", invalid: :replace, undef: :replace, replace: "?") if s.encoding == Encoding::UTF_8 && s.valid_encoding?
               s.encode("UTF-8", "binary", invalid: :replace, undef: :replace, replace: "?")
-            rescue StandardError
+            rescue
               # Fallback: use scrub if available
               s.force_encoding("UTF-8").scrub("?")
             end

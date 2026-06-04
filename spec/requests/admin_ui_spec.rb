@@ -8,4 +8,3 @@ RSpec.describe "Admin UI", type: :request do
     expect(last_response.body).to include("Them::Server Admin")
   end
 end
-

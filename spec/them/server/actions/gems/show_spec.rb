@@ -19,7 +19,7 @@ RSpec.describe Them::Server::Actions::Gems::Show do
 
         expect(last_response.status).to eq(200)
         expect(last_response.content_type).to include("application/json")
-        expect(JSON.parse(last_response.body)).to eq([])
+        expect(JSON.parse(last_response.body)).to be_empty
       end
     end
 
@@ -32,7 +32,7 @@ RSpec.describe Them::Server::Actions::Gems::Show do
           file_path: "gems/test-gem-1.0.0.gem",
           yanked: false,
           created_at: Time.now,
-          updated_at: Time.now,
+          updated_at: Time.now
         )
         db[:gems].insert(
           name: "another-gem",
@@ -41,7 +41,7 @@ RSpec.describe Them::Server::Actions::Gems::Show do
           file_path: "gems/another-gem-2.0.0.gem",
           yanked: false,
           created_at: Time.now,
-          updated_at: Time.now,
+          updated_at: Time.now
         )
       end
 
@@ -64,7 +64,7 @@ RSpec.describe Them::Server::Actions::Gems::Show do
           file_path: "gems/visible-gem-1.0.0.gem",
           yanked: false,
           created_at: Time.now,
-          updated_at: Time.now,
+          updated_at: Time.now
         )
         db[:gems].insert(
           name: "yanked-gem",
@@ -73,7 +73,7 @@ RSpec.describe Them::Server::Actions::Gems::Show do
           file_path: "gems/yanked-gem-1.0.0.gem",
           yanked: true,
           created_at: Time.now,
-          updated_at: Time.now,
+          updated_at: Time.now
         )
       end
 
@@ -94,7 +94,7 @@ RSpec.describe Them::Server::Actions::Gems::Show do
           name: "myorg",
           parent_id: nil,
           created_at: Time.now,
-          updated_at: Time.now,
+          updated_at: Time.now
         )
       end
 
@@ -106,7 +106,7 @@ RSpec.describe Them::Server::Actions::Gems::Show do
           file_path: "gems/scoped-gem-1.0.0.gem",
           yanked: false,
           created_at: Time.now,
-          updated_at: Time.now,
+          updated_at: Time.now
         )
         # Add a root gem to ensure scoping works
         db[:gems].insert(
@@ -116,7 +116,7 @@ RSpec.describe Them::Server::Actions::Gems::Show do
           file_path: "gems/root-gem-1.0.0.gem",
           yanked: false,
           created_at: Time.now,
-          updated_at: Time.now,
+          updated_at: Time.now
         )
       end
 
@@ -136,7 +136,7 @@ RSpec.describe Them::Server::Actions::Gems::Show do
           name: "myorg",
           parent_id: nil,
           created_at: Time.now,
-          updated_at: Time.now,
+          updated_at: Time.now
         )
       end
 
@@ -145,7 +145,7 @@ RSpec.describe Them::Server::Actions::Gems::Show do
           name: "team",
           parent_id: parent_scope_id,
           created_at: Time.now,
-          updated_at: Time.now,
+          updated_at: Time.now
         )
       end
 
@@ -157,7 +157,7 @@ RSpec.describe Them::Server::Actions::Gems::Show do
           file_path: "gems/nested-gem-1.0.0.gem",
           yanked: false,
           created_at: Time.now,
-          updated_at: Time.now,
+          updated_at: Time.now
         )
       end
 
@@ -187,7 +187,7 @@ RSpec.describe Them::Server::Actions::Gems::Show do
         file_path: gem_file_path,
         yanked: false,
         created_at: Time.now,
-        updated_at: Time.now,
+        updated_at: Time.now
       )
     end
 
@@ -231,7 +231,7 @@ RSpec.describe Them::Server::Actions::Gems::Show do
           file_path: newer_file_path,
           yanked: false,
           created_at: Time.now,
-          updated_at: Time.now,
+          updated_at: Time.now
         )
       end
 

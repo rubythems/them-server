@@ -19,7 +19,7 @@ module Them
                 known_servers_subscribed: known.where(subscribed: true).count,
                 federated_gems_total: fedg.count,
                 last_seen_latest: known.exclude(last_seen_at: nil).order(Sequel.desc(:last_seen_at)).get(:last_seen_at),
-                last_announced_latest: known.exclude(last_announced_at: nil).order(Sequel.desc(:last_announced_at)).get(:last_announced_at),
+                last_announced_latest: known.exclude(last_announced_at: nil).order(Sequel.desc(:last_announced_at)).get(:last_announced_at)
               }
 
               response.format = :json
@@ -32,4 +32,3 @@ module Them
     end
   end
 end
-

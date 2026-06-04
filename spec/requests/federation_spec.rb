@@ -25,7 +25,7 @@ RSpec.describe "Federation", type: :request do
     payload = {base_url: base_url, public_key_b64: remote_pub_b64, signed_at: signed_at}
     post "/federation/announce", JSON.generate(payload), {
       "CONTENT_TYPE" => "application/json",
-      "HTTP_X_SIGNATURE" => signature,
+      "HTTP_X_SIGNATURE" => signature
     }
     expect(last_response.status).to eq(200)
 
@@ -37,7 +37,7 @@ RSpec.describe "Federation", type: :request do
 
     post "/federation/subscribe", body_str, {
       "CONTENT_TYPE" => "application/json",
-      "HTTP_X_SIGNATURE" => signature,
+      "HTTP_X_SIGNATURE" => signature
     }
     expect(last_response.status).to eq(200)
   end
@@ -49,7 +49,7 @@ RSpec.describe "Federation", type: :request do
     sig = sign_canonical(method: "POST", path: "/federation/announce", signed_at: signed_at, body_digest: Them::Server::Crypto.sha256_hex(to_sign))
     post "/federation/announce", JSON.generate({base_url: base_url, public_key_b64: remote_pub_b64, signed_at: signed_at}), {
       "CONTENT_TYPE" => "application/json",
-      "HTTP_X_SIGNATURE" => sig,
+      "HTTP_X_SIGNATURE" => sig
     }
     expect(last_response.status).to eq(200)
 
@@ -68,7 +68,7 @@ RSpec.describe "Federation", type: :request do
       scope_path: scope_path,
       digest_sha256: digest_sha256,
       record_sig_b64: record_sig_b64,
-      signed_at: signed_at,
+      signed_at: signed_at
     }
     body_str = JSON.generate(push_payload)
     body_digest = Them::Server::Crypto.sha256_hex(body_str)
@@ -76,7 +76,7 @@ RSpec.describe "Federation", type: :request do
 
     post "/federation/push", body_str, {
       "CONTENT_TYPE" => "application/json",
-      "HTTP_X_SIGNATURE" => signature,
+      "HTTP_X_SIGNATURE" => signature
     }
     expect(last_response.status).to eq(202)
 
@@ -96,4 +96,3 @@ RSpec.describe "Federation", type: :request do
     expect(gem_json["version"]).to eq(version)
   end
 end
-

@@ -25,7 +25,7 @@ module Them
                 client_id: Them::Server::OAuth2Config.client_id,
                 has_client_secret: !Them::Server::OAuth2Config.client_secret.to_s.empty?,
                 introspection_enabled: !Them::Server::OAuth2Config.introspection_url.to_s.empty?,
-                introspection_url: Them::Server::OAuth2Config.introspection_url,
+                introspection_url: Them::Server::OAuth2Config.introspection_url
               }
 
               # Test connectivity if enabled
@@ -33,7 +33,7 @@ module Them
                 begin
                   client = Them::Server::OAuth2Config.client
                   status[:client_configured] = !client.nil?
-                rescue StandardError => e
+                rescue => e
                   status[:client_configured] = false
                   status[:error] = "#{e.class}: #{e.message}"
                 end
@@ -49,4 +49,3 @@ module Them
     end
   end
 end
-

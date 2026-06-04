@@ -1,21 +1,61 @@
 {
-  "app/actions/gems/create.rb:3226710203": [
-    [182, 50, 15, "Style/IfWithBooleanLiteralBranches: Remove redundant ternary operator with boolean literal branches.", 562381739]
+  "Rakefile:20583263": [
+    [251, 5, 19, "Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.", 2836416036]
   ],
-  "config/database.rb:4080113718": [
-    [10, 18, 3, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 193449827],
-    [10, 34, 3, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 193449827],
-    [10, 42, 3, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 193449827],
-    [15, 11, 3, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 193449827]
+  "app/actions/gems/create.rb:1065855877": [
+    [198, 50, 15, "Style/IfWithBooleanLiteralBranches: Remove redundant ternary operator with boolean literal branches.", 562381739]
   ],
-  "spec/e2e/gem_push_spec.rb:262554920": [
+  "config/database.rb:3658387423": [
+    [19, 18, 3, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 193449827],
+    [19, 51, 3, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 193449827],
+    [19, 59, 3, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 193449827],
+    [41, 11, 3, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 193449827],
+    [46, 18, 4, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 2088896725],
+    [46, 35, 4, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 2088896725],
+    [46, 44, 4, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 2088896725],
+    [69, 11, 4, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 2088896725]
+  ],
+  "lib/them/server/crypto.rb:1175456881": [
+    [91, 9, 8, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 1700737912],
+    [100, 13, 8, "Style/IdenticalConditionalBranches: Move `[sk, pk]` out of the conditional.", 863377260],
+    [105, 13, 10, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 393773674],
+    [106, 13, 8, "Style/IdenticalConditionalBranches: Move `[sk, pk]` out of the conditional.", 863377260]
+  ],
+  "lib/them/server/oauth2_config.rb:1589186919": [
+    [66, 11, 7, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 659483516]
+  ],
+  "spec/e2e/gem_push_spec.rb:1205406287": [
     [9, 16, 14, "RSpec/DescribeClass: The first argument to describe should be the class or module being tested.", 4004177254],
-    [32, 3, 12, "RSpec/BeforeAfterAll: Beware of using `before(:all)` as it may cause state to leak between tests. If you are using `rspec-rails`, and `use_transactional_fixtures` is enabled, then records created in `before(:all)` are not automatically rolled back.", 86334566],
-    [44, 3, 11, "RSpec/BeforeAfterAll: Beware of using `after(:all)` as it may cause state to leak between tests. If you are using `rspec-rails`, and `use_transactional_fixtures` is enabled, then records created in `after(:all)` are not automatically rolled back.", 2059152091],
-    [73, 5, 18, "ThreadSafety/DirChdir: Avoid using `Dir.chdir` due to its process-wide effect.", 3416111016],
-    [127, 5, 18, "ThreadSafety/DirChdir: Avoid using `Dir.chdir` due to its process-wide effect.", 3416111016]
+    [10, 3, 56, "RSpec/LeakyLocalVariable: Do not use local variables defined outside of examples inside of them.", 930025595],
+    [11, 3, 21, "RSpec/LeakyLocalVariable: Do not use local variables defined outside of examples inside of them.", 1442386915],
+    [12, 3, 28, "RSpec/LeakyLocalVariable: Do not use local variables defined outside of examples inside of them.", 344215532],
+    [14, 3, 16, "RSpec/LeakyLocalVariable: Do not use local variables defined outside of examples inside of them.", 2867956264],
+    [15, 3, 44, "RSpec/LeakyLocalVariable: Do not use local variables defined outside of examples inside of them.", 2097271753],
+    [38, 3, 12, "RSpec/BeforeAfterAll: Beware of using `before(:all)` as it may cause state to leak between tests. If you are using `rspec-rails`, and `use_transactional_fixtures` is enabled, then records created in `before(:all)` are not automatically rolled back.", 86334566],
+    [121, 3, 11, "RSpec/BeforeAfterAll: Beware of using `after(:all)` as it may cause state to leak between tests. If you are using `rspec-rails`, and `use_transactional_fixtures` is enabled, then records created in `after(:all)` are not automatically rolled back.", 2059152091],
+    [130, 5, 18, "ThreadSafety/DirChdir: Avoid using `Dir.chdir` due to its process-wide effect.", 3416111016],
+    [189, 5, 18, "ThreadSafety/DirChdir: Avoid using `Dir.chdir` due to its process-wide effect.", 3416111016],
+    [212, 7, 33, "Env/Assign: Mock the return value of an ENV variable instead of assigning to ENV directly.", 4184151021],
+    [213, 7, 21, "Env/Assign: Mock the return value of an ENV variable instead of assigning to ENV directly.", 225165733]
   ],
-  "spec/gem/server/actions/gems/create_spec.rb:2596067122": [
+  "spec/requests/admin_known_servers_spec.rb:605805894": [
+    [38, 33, 2, "RSpec/BeEq: Prefer `be` over `eq`.", 5860785]
+  ],
+  "spec/requests/federation_spec.rb:1467517071": [
+    [87, 37, 2, "RSpec/BeEq: Prefer `be` over `eq`.", 5860785],
+    [93, 35, 2, "RSpec/BeEq: Prefer `be` over `eq`.", 5860785]
+  ],
+  "spec/spec_helper.rb:121779758": [
+    [36, 1, 21, "Lint/DuplicateRequire: Duplicate `require` detected.", 257135926]
+  ],
+  "spec/support/requests.rb:194965783": [
+    [5, 22, 12, "RSpec/ContextWording: Context description should match /^when\\b/, /^with\\b/, or /^without\\b/.", 179097960]
+  ],
+  "spec/tasks/rake_tasks_spec.rb:3950147734": [
+    [5, 16, 12, "RSpec/DescribeClass: The first argument to describe should be the class or module being tested.", 669100966],
+    [6, 3, 11, "RSpec/BeforeAfterAll: Beware of using `before :all` as it may cause state to leak between tests. If you are using `rspec-rails`, and `use_transactional_fixtures` is enabled, then records created in `before :all` are not automatically rolled back.", 792432231]
+  ],
+  "spec/them/server/actions/gems/create_spec.rb:1601854130": [
     [64, 13, 15, "RSpec/ContextWording: Context description should match /^when\\b/, /^with\\b/, or /^without\\b/.", 2840264402],
     [77, 33, 2, "RSpec/BeEq: Prefer `be` over `eq`.", 5860785],
     [85, 13, 21, "RSpec/ContextWording: Context description should match /^when\\b/, /^with\\b/, or /^without\\b/.", 1262620339],
@@ -23,20 +63,27 @@
     [118, 7, 15, "RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.", 2724003130],
     [176, 13, 25, "RSpec/ContextWording: Context description should match /^when\\b/, /^with\\b/, or /^without\\b/.", 3059770298]
   ],
-  "spec/gem/server/actions/gems/yank_spec.rb:3049721269": [
+  "spec/them/server/actions/gems/yank_spec.rb:3718527865": [
     [70, 33, 2, "RSpec/BeEq: Prefer `be` over `eq`.", 5860785],
     [88, 13, 22, "RSpec/ContextWording: Context description should match /^when\\b/, /^with\\b/, or /^without\\b/.", 2835595275],
     [90, 7, 28, "RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.", 1938774898],
     [143, 33, 2, "RSpec/BeEq: Prefer `be` over `eq`.", 5860785],
     [192, 33, 2, "RSpec/BeEq: Prefer `be` over `eq`.", 5860785]
   ],
-  "spec/gem/server_spec.rb:475044081": [
-    [12, 23, 11, "RSpec/DescribedClass: Use `described_class` instead of `Gem::Server`.", 1774056175]
+  "spec/them/server/federation_client_spec.rb:2377714999": [
+    [8, 12, 46, "Env/Assign: Mock the return value of an ENV variable instead of assigning to ENV directly.", 1519640089]
   ],
-  "spec/gem/version_spec.rb:4192720890": [
-    [3, 1, 35, "RSpec/SpecFilePathFormat: Spec path should end with `gem/server/version*_spec.rb`.", 4173372705]
+  "spec/them/server/oauth2_integration_spec.rb:941997774": [
+    [7, 16, 20, "RSpec/DescribeClass: The first argument to describe should be the class or module being tested.", 2609734798],
+    [90, 11, 72, "RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [91].", 1224880171],
+    [91, 11, 84, "RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [90].", 2986856111],
+    [263, 11, 72, "RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [264].", 1224880171],
+    [264, 11, 144, "RSpec/ReceiveMessages: Use `receive_messages` instead of multiple stubs on lines [263].", 830901585]
   ],
-  "spec/support/requests.rb:194965783": [
-    [5, 22, 12, "RSpec/ContextWording: Context description should match /^when\\b/, /^with\\b/, or /^without\\b/.", 179097960]
+  "spec/them/server_spec.rb:265268746": [
+    [12, 23, 12, "RSpec/DescribedClass: Use `described_class` instead of `Them::Server`.", 1284262132]
+  ],
+  "spec/them/version_spec.rb:3549871809": [
+    [3, 1, 36, "RSpec/SpecFilePathFormat: Spec path should end with `them/server/version*_spec.rb`.", 303551002]
   ]
 }

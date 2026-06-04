@@ -278,7 +278,7 @@ namespace :db do
     Rake::Task["db:migrate"].invoke
     begin
       Rake::Task["db:seed"].invoke
-    rescue StandardError
+    rescue
       # seeding optional
     end
     puts "DB reset complete."
@@ -358,7 +358,7 @@ namespace :federation do
           name: name,
           version: version,
           scope_path: scope,
-          file_path: tmp.path,
+          file_path: tmp.path
         )
         scope_label = scope.empty? ? "(root)" : scope.join("/")
         puts "Broadcasted stub gem #{name}-#{version} (scope: #{scope_label})"
@@ -372,11 +372,11 @@ end
 namespace :auth do
   desc "Create a Rodauth account and associated owner. Usage: rake auth:create_user[email,password,name]"
   task :create_user, [:email, :password, :name] do |_t, args|
-    require 'bcrypt'
-    require_relative 'config/database'
+    require "bcrypt"
+    require_relative "config/database"
     email = args[:email].to_s.strip
     password = args[:password].to_s
-    name = (args[:name].to_s.strip)
+    name = args[:name].to_s.strip
     abort "email is required" if email.empty?
     abort "password is required" if password.empty?
     name = email if name.empty?

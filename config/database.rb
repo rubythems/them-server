@@ -21,9 +21,21 @@ module Them
           connection = Sequel.connect(database_url)
 
           if env == "test"
-            connection.run("PRAGMA journal_mode=WAL") rescue nil
-            connection.run("PRAGMA synchronous=NORMAL") rescue nil
-            connection.run("PRAGMA busy_timeout=5000") rescue nil
+            begin
+              connection.run("PRAGMA journal_mode=WAL")
+            rescue
+              nil
+            end
+            begin
+              connection.run("PRAGMA synchronous=NORMAL")
+            rescue
+              nil
+            end
+            begin
+              connection.run("PRAGMA busy_timeout=5000")
+            rescue
+              nil
+            end
           end
 
           @db = connection if env != "test"

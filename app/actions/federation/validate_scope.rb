@@ -112,7 +112,7 @@ module Them
           #   # => {"exists": false, "scope_path": [], ...}
           #
           def handle(request, response)
-            db = Database.db
+            Database.db
 
             # Parse path parameter into scope components
             # Format: scope1/scope2/scope3/...
@@ -142,7 +142,7 @@ module Them
               scope_path: path_parts,
               signed_at: signed_at,
               record_sig_b64: signature_b64,
-              public_key_b64: Crypto.public_key_b64,
+              public_key_b64: Crypto.public_key_b64
             })
           end
         end
@@ -150,4 +150,3 @@ module Them
     end
   end
 end
-

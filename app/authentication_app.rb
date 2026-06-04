@@ -80,8 +80,7 @@ module Them
         end
         after_create_account do
           # Create an owner record associated to this account for dashboard usage
-          email = account[:email]
-          name = email # ensure uniqueness
+          account[:email] # ensure uniqueness
           now = Time.now
           db[:owners].insert(
             name: param("name"),
@@ -89,7 +88,7 @@ module Them
             api_key: nil,
             account_id: account[:id],
             created_at: now,
-            updated_at: now,
+            updated_at: now
           )
         end
 
@@ -109,7 +108,7 @@ module Them
               api_key: nil,
               account_id: acct[:id],
               created_at: now,
-              updated_at: now,
+              updated_at: now
             )
             owner = db[:owners].where(id: oid).first
           end

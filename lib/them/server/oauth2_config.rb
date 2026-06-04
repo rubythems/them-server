@@ -113,7 +113,7 @@ module Them
           # OAuth2 errors (401, 403, etc.) indicate invalid token
           warn "OAuth2 validation error: #{e.class}: #{e.message}"
           nil
-        rescue StandardError => e
+        rescue => e
           # Other errors (network, timeout) should be logged but not expose details
           warn "OAuth2 validation failed: #{e.class}: #{e.message}"
           nil
@@ -197,11 +197,11 @@ module Them
             connection_opts: {
               request: {
                 timeout: 10,        # 10 second timeout for requests
-                open_timeout: 5,    # 5 second timeout for connection
-              },
-            },
+                open_timeout: 5    # 5 second timeout for connection
+              }
+            }
           )
-        rescue StandardError => e
+        rescue => e
           warn "Failed to build OAuth2 client: #{e.class}: #{e.message}"
           nil
         end
@@ -223,8 +223,8 @@ module Them
           response = client.request(:post, introspection_url, {
             body: {
               token: access_token,
-              token_type_hint: "access_token",
-            },
+              token_type_hint: "access_token"
+            }
           })
 
           data = JSON.parse(response.body)
@@ -255,27 +255,25 @@ module Them
           endpoints = [
             "/api/v4/user",           # GitLab
             "/user",                  # GitHub
-            "/oauth/token/info",      # Generic
+            "/oauth/token/info"      # Generic
           ]
 
           endpoints.each do |endpoint|
-            begin
-              response = token.get(endpoint)
-              data = JSON.parse(response.body)
+            response = token.get(endpoint)
+            data = JSON.parse(response.body)
 
-              # Successful response indicates valid token
-              return {
-                "active" => true,
-                "username" => data["username"] || data["login"] || data["email"],
-                "scope" => data["scope"] || "",
-                "client_id" => client_id,
-              }
-            rescue OAuth2::Error
-              # Try next endpoint
-              next
-            rescue JSON::ParserError
-              next
-            end
+            # Successful response indicates valid token
+            return {
+              "active" => true,
+              "username" => data["username"] || data["login"] || data["email"],
+              "scope" => data["scope"] || "",
+              "client_id" => client_id
+            }
+          rescue OAuth2::Error
+            # Try next endpoint
+            next
+          rescue JSON::ParserError
+            next
           end
 
           # No endpoint worked
@@ -315,4 +313,3 @@ module Them
     end
   end
 end
-

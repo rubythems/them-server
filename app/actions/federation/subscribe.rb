@@ -136,7 +136,7 @@ module Them
             db[:known_servers].where(id: server[:id]).update(
               subscribed: true,
               last_seen_at: now,
-              updated_at: now,
+              updated_at: now
             )
 
             # Return success confirmation
@@ -167,7 +167,7 @@ module Them
             io = request.body
             begin
               io.rewind
-            rescue StandardError
+            rescue
               # Some IO objects don't support rewind; continue anyway
             end
             io.read.to_s
@@ -177,4 +177,3 @@ module Them
     end
   end
 end
-

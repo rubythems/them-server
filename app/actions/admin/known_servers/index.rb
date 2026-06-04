@@ -22,7 +22,7 @@ module Them
                   last_announced_at: r[:last_announced_at],
                   last_seen_at: r[:last_seen_at],
                   created_at: r[:created_at],
-                  updated_at: r[:updated_at],
+                  updated_at: r[:updated_at]
                 }
               })
             end
@@ -32,4 +32,3 @@ module Them
     end
   end
 end
-

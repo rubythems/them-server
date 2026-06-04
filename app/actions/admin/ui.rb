@@ -17,7 +17,7 @@ module Them
             metrics = {
               known_servers_total: db[:known_servers].count,
               known_servers_subscribed: db[:known_servers].where(subscribed: true).count,
-              federated_gems_total: (db.table_exists?(:federated_gems) ? db[:federated_gems].count : 0),
+              federated_gems_total: (db.table_exists?(:federated_gems) ? db[:federated_gems].count : 0)
             }
 
             html = render_template(known, metrics)

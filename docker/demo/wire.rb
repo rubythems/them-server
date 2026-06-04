@@ -27,4 +27,3 @@ begin
 rescue => e
   warn "wire: curl failed: #{e.class}: #{e.message}"
 end
-

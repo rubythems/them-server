@@ -28,4 +28,3 @@ RSpec.describe Them::Server::FederationClient do
     expect(stub).to have_been_requested
   end
 end
-

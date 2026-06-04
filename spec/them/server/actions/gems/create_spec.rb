@@ -17,7 +17,7 @@ RSpec.describe Them::Server::Actions::Gems::Create do
       name: "test-owner",
       api_key: owner_api_key,
       created_at: Time.now,
-      updated_at: Time.now,
+      updated_at: Time.now
     )
   end
 
@@ -88,7 +88,7 @@ RSpec.describe Them::Server::Actions::Gems::Create do
           name: "myorg",
           parent_id: nil,
           created_at: Time.now,
-          updated_at: Time.now,
+          updated_at: Time.now
         )
       end
 
@@ -96,7 +96,7 @@ RSpec.describe Them::Server::Actions::Gems::Create do
         db[:scope_owners].insert(
           scope_id: scope_id,
           owner_id: owner_id,
-          created_at: Time.now,
+          created_at: Time.now
         )
       end
 
@@ -120,7 +120,7 @@ RSpec.describe Them::Server::Actions::Gems::Create do
           name: "restricted-org",
           parent_id: nil,
           created_at: Time.now,
-          updated_at: Time.now,
+          updated_at: Time.now
         )
       end
 
@@ -140,7 +140,7 @@ RSpec.describe Them::Server::Actions::Gems::Create do
           name: "myorg",
           parent_id: nil,
           created_at: Time.now,
-          updated_at: Time.now,
+          updated_at: Time.now
         )
       end
 
@@ -149,7 +149,7 @@ RSpec.describe Them::Server::Actions::Gems::Create do
           name: "team",
           parent_id: parent_scope_id,
           created_at: Time.now,
-          updated_at: Time.now,
+          updated_at: Time.now
         )
       end
 
@@ -157,7 +157,7 @@ RSpec.describe Them::Server::Actions::Gems::Create do
         db[:scope_owners].insert(
           scope_id: child_scope_id,
           owner_id: owner_id,
-          created_at: Time.now,
+          created_at: Time.now
         )
       end
 
@@ -178,7 +178,7 @@ RSpec.describe Them::Server::Actions::Gems::Create do
         body = "FAKEGEMBYTES".b
         headers = {
           "CONTENT_TYPE" => "application/octet-stream",
-          "HTTP_AUTHORIZATION" => "RubyGems #{owner_api_key}",
+          "HTTP_AUTHORIZATION" => "RubyGems #{owner_api_key}"
         }
 
         post "/api/v1/gems", body, headers

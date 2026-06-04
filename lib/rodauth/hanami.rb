@@ -60,14 +60,14 @@ Rodauth::Feature.define(:hanami) do
 
   def view_context
     @view_context ||= begin
-                        action_request = Hanami::Action::Request.new(
-                          env: request.env,
-                          params: request.params,
-                          session_enabled: true
-                        )
+      action_request = Hanami::Action::Request.new(
+        env: request.env,
+        params: request.params,
+        session_enabled: true
+      )
 
-                        base_view.config.default_context.class.new(request: action_request)
-                      end
+      base_view.config.default_context.class.new(request: action_request)
+    end
   end
 
   def base_view

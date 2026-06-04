@@ -53,7 +53,7 @@ module Them
                 body = request.body
                 begin
                   body.rewind
-                rescue StandardError
+                rescue
                 end
                 JSON.parse(body.read.to_s)
               else
@@ -61,7 +61,7 @@ module Them
                 rack_req = ::Rack::Request.new(request.env)
                 rack_req.params
               end
-            rescue StandardError
+            rescue
               {}
             end
 

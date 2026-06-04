@@ -51,7 +51,7 @@ module Them
             gem_record = db[:gems].where(
               name: gem_name,
               scope_id: scope&.fetch(:id, nil),
-              version: version,
+              version: version
             ).first
 
             unless gem_record
@@ -64,7 +64,7 @@ module Them
             # Check permission: owner must be gem owner
             is_gem_owner = db[:gem_owners].where(
               gem_id: gem_record[:id],
-              owner_id: owner[:id],
+              owner_id: owner[:id]
             ).first
 
             unless is_gem_owner
@@ -77,7 +77,7 @@ module Them
             # Yank
             db[:gems].where(id: gem_record[:id]).update(
               yanked: true,
-              updated_at: Time.now,
+              updated_at: Time.now
             )
 
             response.headers["Content-Type"] = "text/plain; charset=utf-8"

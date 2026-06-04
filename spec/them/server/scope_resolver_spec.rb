@@ -19,7 +19,7 @@ RSpec.describe Them::Server::ScopeResolver do
 
     it "handles empty array" do
       resolver = described_class.new([])
-      expect(resolver.path_parts).to eq([])
+      expect(resolver.path_parts).to be_empty
     end
   end
 
@@ -48,12 +48,12 @@ RSpec.describe Them::Server::ScopeResolver do
 
     it "returns empty array for single-element path" do
       resolver = described_class.new(["my-gem"])
-      expect(resolver.scope_path).to eq([])
+      expect(resolver.scope_path).to be_empty
     end
 
     it "returns empty array for empty path" do
       resolver = described_class.new([])
-      expect(resolver.scope_path).to eq([])
+      expect(resolver.scope_path).to be_empty
     end
   end
 

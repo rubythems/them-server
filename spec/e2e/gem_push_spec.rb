@@ -21,7 +21,7 @@ RSpec.describe "Gem push e2e", type: :e2e do
         http.get("/")
       end
       return true
-    rescue StandardError
+    rescue
       break if Time.now > deadline
 
       sleep 0.2
@@ -58,7 +58,7 @@ RSpec.describe "Gem push e2e", type: :e2e do
         name: "test_owner",
         api_key: api_key,
         created_at: Time.now,
-        updated_at: Time.now,
+        updated_at: Time.now
       )
     end
 
@@ -70,7 +70,7 @@ RSpec.describe "Gem push e2e", type: :e2e do
     sleep 1
   end
 
-  before(:each) do
+  before do
     # Ensure no servers are running from previous tests
     kill_existing_servers
 
@@ -78,7 +78,7 @@ RSpec.describe "Gem push e2e", type: :e2e do
     root = File.expand_path("../..", __dir__)
     env = {
       "HANAMI_ENV" => "test",
-      "RACK_ENV" => "test",
+      "RACK_ENV" => "test"
     }
 
     # Capture server output for debugging
@@ -95,17 +95,21 @@ RSpec.describe "Gem push e2e", type: :e2e do
     raise "Server failed to start" unless wait_for_server(port: test_port)
   end
 
-  after(:each) do
+  after do
     if @server_pid
       begin
         Process.kill("TERM", @server_pid)
         sleep 0.2
-        Process.kill("KILL", @server_pid) rescue nil
-      rescue StandardError
+        begin
+          Process.kill("KILL", @server_pid)
+        rescue
+          nil
+        end
+      rescue
       ensure
         begin
           Process.wait(@server_pid)
-        rescue StandardError
+        rescue
         end
       end
       @server_pid = nil
@@ -155,7 +159,7 @@ RSpec.describe "Gem push e2e", type: :e2e do
         "Content-Type: application/octet-stream",
         "--data-binary",
         "@#{gem_file}",
-        "#{server_url}/api/v1/gems",
+        "#{server_url}/api/v1/gems"
       )
 
       # Debug: print server logs if the test fails
@@ -179,7 +183,6 @@ RSpec.describe "Gem push e2e", type: :e2e do
   end
 
   it "pushes a gem using gem push command" do
-
     gem_name = "e2e_test_gem_push"
     gem_file = File.join(tmp_dir, "#{gem_name}-#{gem_version}.gem")
 

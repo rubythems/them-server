@@ -12,7 +12,7 @@ RSpec.describe "Admin Known Servers", type: :request do
       public_key_b64: "PUB",
       subscribed: false,
       created_at: Time.now,
-      updated_at: Time.now,
+      updated_at: Time.now
     )
 
     get "/admin/known_servers"
@@ -28,7 +28,7 @@ RSpec.describe "Admin Known Servers", type: :request do
       public_key_b64: "PUB",
       subscribed: false,
       created_at: Time.now,
-      updated_at: Time.now,
+      updated_at: Time.now
     )
 
     post "/admin/known_servers/toggle", JSON.generate({base_url: "http://toggle.test", subscribed: true}), {"CONTENT_TYPE" => "application/json"}
@@ -38,4 +38,3 @@ RSpec.describe "Admin Known Servers", type: :request do
     expect(row[:subscribed]).to eq(true)
   end
 end
-

@@ -32,6 +32,7 @@ Please file a bug if you notice a violation of semantic versioning.
 
 ### Fixed
 
+- Fixed CI appraisal gemfiles by declaring test dependencies in the gemspec.
 - Restored the app-specific Rackup binstub and Rake tasks after the template
   refresh.
 - Fixed Hanami route boot by removing the missing `:main` slice mount.

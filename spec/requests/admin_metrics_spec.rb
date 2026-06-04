@@ -18,4 +18,3 @@ RSpec.describe "Admin Federation Metrics", type: :request do
     expect(body).to have_key("federated_gems_total")
   end
 end
-

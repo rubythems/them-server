@@ -35,7 +35,7 @@ RSpec.describe Them::Server do
         name: "test-owner",
         api_key: "test-key",
         created_at: Time.now,
-        updated_at: Time.now,
+        updated_at: Time.now
       )
 
       # Create scope
@@ -43,14 +43,14 @@ RSpec.describe Them::Server do
         name: "myorg",
         parent_id: nil,
         created_at: Time.now,
-        updated_at: Time.now,
+        updated_at: Time.now
       )
 
       # Assign owner to scope
       db[:scope_owners].insert(
         scope_id: scope_id,
         owner_id: owner_id,
-        created_at: Time.now,
+        created_at: Time.now
       )
 
       # Create gem
@@ -61,14 +61,14 @@ RSpec.describe Them::Server do
         file_path: "gems/my-gem-1.0.0.gem",
         yanked: false,
         created_at: Time.now,
-        updated_at: Time.now,
+        updated_at: Time.now
       )
 
       # Assign owner to gem
       db[:gem_owners].insert(
         gem_id: gem_id,
         owner_id: owner_id,
-        created_at: Time.now,
+        created_at: Time.now
       )
 
       # Verify relationships
@@ -93,7 +93,7 @@ RSpec.describe Them::Server do
         name: "team-owner",
         api_key: "team-key",
         created_at: Time.now,
-        updated_at: Time.now,
+        updated_at: Time.now
       )
 
       # Create parent scope
@@ -101,7 +101,7 @@ RSpec.describe Them::Server do
         name: "company",
         parent_id: nil,
         created_at: Time.now,
-        updated_at: Time.now,
+        updated_at: Time.now
       )
 
       # Create child scope
@@ -109,7 +109,7 @@ RSpec.describe Them::Server do
         name: "team",
         parent_id: parent_id,
         created_at: Time.now,
-        updated_at: Time.now,
+        updated_at: Time.now
       )
 
       # Create grandchild scope
@@ -117,7 +117,7 @@ RSpec.describe Them::Server do
         name: "project",
         parent_id: child_id,
         created_at: Time.now,
-        updated_at: Time.now,
+        updated_at: Time.now
       )
 
       # Verify hierarchy
@@ -138,7 +138,7 @@ RSpec.describe Them::Server do
         file_path: "gems/project-gem-1.0.0.gem",
         yanked: false,
         created_at: Time.now,
-        updated_at: Time.now,
+        updated_at: Time.now
       )
 
       expect(db[:gems].where(id: gem_id).first[:scope_id]).to eq(grandchild_id)
@@ -150,14 +150,14 @@ RSpec.describe Them::Server do
         name: "owner1",
         api_key: "key1",
         created_at: Time.now,
-        updated_at: Time.now,
+        updated_at: Time.now
       )
 
       owner2_id = db[:owners].insert(
         name: "owner2",
         api_key: "key2",
         created_at: Time.now,
-        updated_at: Time.now,
+        updated_at: Time.now
       )
 
       # Create two scopes
@@ -165,28 +165,28 @@ RSpec.describe Them::Server do
         name: "org1",
         parent_id: nil,
         created_at: Time.now,
-        updated_at: Time.now,
+        updated_at: Time.now
       )
 
       scope2_id = db[:scopes].insert(
         name: "org2",
         parent_id: nil,
         created_at: Time.now,
-        updated_at: Time.now,
+        updated_at: Time.now
       )
 
       # Assign owner1 to scope1
       db[:scope_owners].insert(
         scope_id: scope1_id,
         owner_id: owner1_id,
-        created_at: Time.now,
+        created_at: Time.now
       )
 
       # Assign owner2 to scope2
       db[:scope_owners].insert(
         scope_id: scope2_id,
         owner_id: owner2_id,
-        created_at: Time.now,
+        created_at: Time.now
       )
 
       # Verify isolation

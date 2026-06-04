@@ -179,7 +179,7 @@ module Them
                   origin_server_id: origin_id,
                   digest_sha256: digest_sha256,
                   signature_b64: record_sig_b64,
-                  created_at: now,
+                  created_at: now
                 )
               end
             rescue Sequel::UniqueConstraintViolation
@@ -217,7 +217,7 @@ module Them
             io = request.body
             begin
               io.rewind
-            rescue StandardError
+            rescue
               # Some IO objects don't support rewind; continue anyway
             end
             io.read.to_s
@@ -227,4 +227,3 @@ module Them
     end
   end
 end
-

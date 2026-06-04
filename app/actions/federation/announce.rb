@@ -141,7 +141,7 @@ module Them
                 public_key_b64: public_key_b64,
                 last_announced_at: Time.at(signed_at),
                 last_seen_at: now,
-                updated_at: now,
+                updated_at: now
               )
             else
               db[:known_servers].insert(
@@ -151,7 +151,7 @@ module Them
                 last_announced_at: Time.at(signed_at),
                 last_seen_at: now,
                 created_at: now,
-                updated_at: now,
+                updated_at: now
               )
             end
 
@@ -184,7 +184,7 @@ module Them
             io = request.body
             begin
               io.rewind
-            rescue StandardError
+            rescue
               # Some IO objects don't support rewind; continue anyway
             end
             io.read.to_s

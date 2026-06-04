@@ -96,7 +96,7 @@ RSpec.describe "OAuth2 Integration" do
             "active" => true,
             "username" => "octocat",
             "scope" => "read write",
-            "client_id" => "test-client",
+            "client_id" => "test-client"
           }
         end
 
@@ -122,7 +122,7 @@ RSpec.describe "OAuth2 Integration" do
           result = described_class.authenticate(env)
 
           expect(result[:authenticated]).to be true
-          expect(result[:scopes]).to eq([])
+          expect(result[:scopes]).to be_empty
         end
 
         it "rejects inactive tokens" do
@@ -254,7 +254,7 @@ RSpec.describe "OAuth2 Integration" do
           expect(result[:scheme]).to be_nil
           expect(result[:user]).to be_nil
           expect(result[:token]).to be_nil
-          expect(result[:scopes]).to eq([])
+          expect(result[:scopes]).to be_empty
         end
       end
 

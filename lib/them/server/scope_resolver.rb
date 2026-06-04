@@ -42,7 +42,7 @@ module Them
               name: name,
               parent_id: parent_id,
               created_at: Time.now,
-              updated_at: Time.now,
+              updated_at: Time.now
             )
             current_scope = db[:scopes].where(id: new_id).first
           else

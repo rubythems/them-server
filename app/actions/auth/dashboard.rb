@@ -42,10 +42,10 @@ module Them
               .all
 
             response.render view,
-                           owner: owner,
-                           gems: owned_gems,
-                           user_name: owner[:name],
-                           user_email: request.session[:user_email]
+              owner: owner,
+              gems: owned_gems,
+              user_name: owner[:name],
+              user_email: request.session[:user_email]
           end
         end
       end

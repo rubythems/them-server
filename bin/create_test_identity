@@ -14,7 +14,9 @@ puts "=" * 60
 # First, ensure we have a test owner
 test_owner = db[:owners].where(name: "test-owner").first
 
-unless test_owner
+if test_owner
+  puts "✓ Test owner already exists: #{test_owner[:name]}"
+else
   puts "\nCreating test owner..."
   owner_id = db[:owners].insert(
     name: "test-owner",
@@ -24,8 +26,6 @@ unless test_owner
   )
   test_owner = db[:owners].where(id: owner_id).first
   puts "✓ Created owner: #{test_owner[:name]}"
-else
-  puts "✓ Test owner already exists: #{test_owner[:name]}"
 end
 
 # Check if identity already exists
@@ -75,4 +75,3 @@ puts "\nYou can now test authentication with:"
 puts "  Email: test@example.com"
 puts "  Password: password123"
 puts ""
-

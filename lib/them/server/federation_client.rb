@@ -191,7 +191,7 @@ module Them
           resp = yield
           if resp.respond_to?(:code) && resp.code.to_i >= 200 && resp.code.to_i < 300
             LOGGER.info("client #{action} ok #{resp.code}")
-            return resp
+            resp
           else
             code = resp.respond_to?(:code) ? resp.code : "?"
             raise "HTTP #{code}"
@@ -199,7 +199,7 @@ module Them
         rescue => e
           if attempts < 3
             # Exponential backoff: 0.5s, 1s, 2s
-            sleep_time = 0.5 * (2 ** (attempts - 1))
+            sleep_time = 0.5 * (2**(attempts - 1))
             LOGGER.warn("client #{action} error: #{e.class}: #{e.message}; retrying in #{sleep_time}s")
             sleep sleep_time
             retry
