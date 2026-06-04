@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: PRD
+  
+    &mdash; Documentation by YARD 0.9.44
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css">
+
+  <link rel="stylesheet" href="css/common.css" type="text/css">
+
+<script type="text/javascript">
+  pathId = "PRD";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
+    <div class="nav_wrap">
+      <iframe id="nav" src="file_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: PRD</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'><h1 id="product-requirements-document-prd-for-federated-ruby-them-server">Product Requirements Document (PRD) for Federated Ruby Them Server</h1>
+
+<h2 id="overview">Overview</h2>
+
+<p>This PRD outlines the requirements for a Ruby gem server that supports scoped gem namespaces, permissions management, federation across multiple instances, and a key server for cryptographic validation. The server must be backward-compatible with existing RubyGems conventions, allowing it to serve as a drop-in replacement or extension to rubygems.org.</p>
+
+<h2 id="1-scopes-namespaces">1. Scopes (Namespaces)</h2>
+
+<h3 id="description">Description</h3>
+<p>Scopes allow for the organization of gems into logical namespaces, enabling the reuse of gem names across different scopes on the same server. This prevents naming conflicts and provides better organization for large-scale gem ecosystems.</p>
+
+<h3 id="requirements">Requirements</h3>
+<ul>
+  <li>Clients must be able to specify a scope when pushing or pulling gems.</li>
+  <li>A gem name can be reused across different scopes (e.g., <code>mygem</code> in scope <code>org1</code> and <code>org2</code>).</li>
+  <li>The null scope (empty or default) is treated as the root scope, equivalent to the global namespace in traditional RubyGems.</li>
+  <li>Scope names must be URL-safe strings, allowing them to be used in API endpoints (e.g., <code>/{scope-path}/{gem}</code> where scope-path can include up to 3 levels of nested scopes separated by <code>/</code>).</li>
+  <li>Scopes must be discoverable via API endpoints.</li>
+</ul>
+
+<h3 id="api-considerations">API Considerations</h3>
+<ul>
+  <li>Push endpoint: <code>POST /{scope-path}</code> (scope-path is the full scope hierarchy, e.g., <code>/org/sub</code>)</li>
+  <li>Pull endpoint: <code>GET /{scope-path}/{gem}</code>
+</li>
+  <li>List gems in scope: <code>GET /{scope-path}</code>
+</li>
+</ul>
+
+<h2 id="2-permissions">2. Permissions</h2>
+
+<h3 id="description-1">Description</h3>
+<p>Permissions control who can push, yank, or manage gems and scopes. This includes hierarchical ownership where scope owners have higher-level control.</p>
+
+<h3 id="requirements-1">Requirements</h3>
+<ul>
+  <li>
+<strong>Gem Owners</strong>: Each gem has a set of owners with push/yank rights. Owners can push new versions and yank existing ones for their gems.</li>
+  <li>
+<strong>Scope Owners</strong>: Each scope has a set of authorized owners. Scope owners can add or remove gem push rights from gem owners within their scope.</li>
+  <li>Hierarchy: Scope owners exist at a higher level than gem owners. Scope owners can override gem-level permissions.</li>
+  <li>Authentication: All operations requiring permissions must use cryptographic signatures or API keys tied to verified identities.</li>
+  <li>Authorization checks must occur on push, yank, and management operations.</li>
+</ul>
+
+<h3 id="api-considerations-1">API Considerations</h3>
+<ul>
+  <li>Add gem owner: <code>POST /{scope-path}/{gem}/owners</code> (scope owner only)</li>
+  <li>Remove gem owner: <code>DELETE /{scope-path}/{gem}/owners/{owner}</code> (scope owner only)</li>
+  <li>Yank gem: <code>DELETE /{scope-path}/{gem}/versions/{version}</code> (gem owner only)</li>
+</ul>
+
+<h2 id="3-federation">3. Federation</h2>
+
+<h3 id="description-2">Description</h3>
+<p>Federation allows multiple instances of the gem server to operate across different domains, sharing gem updates, scopes, and validation information in a decentralized manner.</p>
+
+<h3 id="requirements-2">Requirements</h3>
+<ul>
+  <li>
+<strong>Protocol Selection</strong>: Use or extend an existing federation protocol. Recommended: AT Protocol (ATProto) due to its focus on decentralized social networks and content distribution. If ATProto is insufficient, consider ActivityPub or a custom protocol based on DID (Decentralized Identifiers) and verifiable credentials.</li>
+  <li>
+<strong>Discovery</strong>: Servers must be able to discover other federated servers via a registry or DHT (Distributed Hash Table).</li>
+  <li>
+<strong>Subscription and Updates</strong>: Servers can subscribe to gem updates from other servers and push updates to subscribers.</li>
+  <li>
+<strong>Validation</strong>:
+    <ul>
+      <li>Equivalency of signing keys for gems.</li>
+      <li>Presence and validity of scopes (cryptographically signed).</li>
+      <li>Presence and validity of gem names within scopes (signed).</li>
+    </ul>
+  </li>
+  <li>
+<strong>Publishing</strong>:
+    <ul>
+      <li>New scopes: Published with cryptographic signature, verifiable via public key.</li>
+      <li>New gems: Signed and verifiable.</li>
+    </ul>
+  </li>
+  <li>
+<strong>Protocol Requirements</strong>:
+    <ul>
+      <li>Decentralized: No central authority.</li>
+      <li>Secure: All communications encrypted and signed.</li>
+      <li>Efficient: Support for delta updates and caching.</li>
+      <li>Extensible: Allow for future features like gem dependencies federation.</li>
+      <li>Reuse: Extend ATProto by defining custom record types for gems, scopes, and keys. If extending, add schemas for GemRecord, ScopeRecord, KeyRecord.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="api-considerations-2">API Considerations</h3>
+<ul>
+  <li>Federation endpoints for subscribing: <code>POST /federation/subscribe</code>
+</li>
+  <li>Push updates: <code>POST /federation/push</code>
+</li>
+  <li>Validate scope: <code>GET /federation/validate/scope/{scope-path}</code>
+</li>
+  <li>Validate gem: <code>GET /federation/validate/gem/{scope-path}/{gem}</code>
+</li>
+</ul>
+
+<h2 id="4-key-server">4. Key Server</h2>
+
+<h3 id="description-3">Description</h3>
+<p>The key server manages public keys for gem owners, enabling cryptographic validation of gem signatures.</p>
+
+<h3 id="requirements-3">Requirements</h3>
+<ul>
+  <li>
+<strong>Public Keys</strong>: Every gem owner must have a published public key for validating pushed gems.</li>
+  <li>
+<strong>API</strong>: Provide endpoints to retrieve and validate keys.</li>
+  <li>
+<strong>Signing</strong>: First push of a gem must be signed with the owner’s private key. Public key must be made available to the federation.</li>
+  <li>
+<strong>Standards and Protocols</strong>:
+    <ul>
+      <li>Support RubyGems signing standards (e.g., PGP, Ed25519 as per RubyGems 3.2+).</li>
+      <li>Minimum: Ed25519 for signatures.</li>
+      <li>Additional: Support for RSA, ECDSA if needed for compatibility.</li>
+    </ul>
+  </li>
+  <li>
+<strong>Revocation</strong>: Support key revocation via a revocation list or certificate revocation. Owners can revoke keys, and revocations must propagate through federation.</li>
+  <li>
+<strong>Validation</strong>: API to check key validity, including revocation status.</li>
+  <li>
+<strong>Storage</strong>: Keys stored securely, possibly in a distributed manner via federation.</li>
+</ul>
+
+<h3 id="api-considerations-3">API Considerations</h3>
+<ul>
+  <li>Get key: <code>GET /keys/{owner}</code>
+</li>
+  <li>Validate key: <code>POST /keys/validate</code> (with signature proof)</li>
+  <li>Revoke key: <code>POST /keys/revoke</code> (owner only)</li>
+</ul>
+
+<h2 id="5-backward-compatibility-with-rubygems">5. Backward Compatibility with RubyGems</h2>
+
+<h3 id="description-4">Description</h3>
+<p>The server must decompose to existing RubyGems conventions, allowing it to serve existing gems and integrate with the broader ecosystem.</p>
+
+<h3 id="requirements-4">Requirements</h3>
+<ul>
+  <li>
+<strong>Default Source</strong>: Default to <code>https://rubygems.org</code> for unspecified sources.</li>
+  <li>
+<strong>Null Scope</strong>: Treat null scope as the root, mapping to traditional gem names.</li>
+  <li>
+<strong>Mirroring</strong>: Ability to mirror unsigned gems from other servers (e.g., rubygems.org) that don’t support federation.</li>
+  <li>
+<strong>Installation</strong>: Clients can install existing corpus of gems without modification.</li>
+  <li>
+<strong>API Compatibility</strong>: Support standard RubyGems API endpoints (e.g., <code>/gems</code>, <code>/api/v1/gems</code>) for backward compatibility.</li>
+  <li>
+<strong>Migration</strong>: Provide tools to migrate existing gems into scopes if desired.</li>
+</ul>
+
+<h3 id="api-considerations-4">API Considerations</h3>
+<ul>
+  <li>Standard endpoints: <code>GET /gems</code> (maps to null scope)</li>
+  <li>Mirror endpoint: <code>POST /admin/mirror</code> (internal for syncing from rubygems.org)</li>
+</ul>
+
+<h2 id="implementation-considerations">Implementation Considerations</h2>
+
+<ul>
+  <li>
+<strong>Security</strong>: All sensitive operations must use HTTPS, signatures, and possibly OAuth or similar for authentication.</li>
+  <li>
+<strong>Scalability</strong>: Design for high availability, possibly using distributed databases.</li>
+  <li>
+<strong>Testing</strong>: Comprehensive tests for federation, permissions, and compatibility.</li>
+  <li>
+<strong>Documentation</strong>: API docs, federation protocol specs.</li>
+  <li>
+<strong>Timeline</strong>: Phase 1: Basic server with scopes and permissions. Phase 2: Federation. Phase 3: Full key server and compatibility.</li>
+</ul>
+
+<h2 id="risks-and-mitigations">Risks and Mitigations</h2>
+
+<ul>
+  <li>
+<strong>Adoption</strong>: Low adoption of federation; mitigate by ensuring backward compatibility.</li>
+  <li>
+<strong>Security</strong>: Key compromises; mitigate with revocation and multi-signature requirements.</li>
+  <li>
+<strong>Complexity</strong>: Federation protocol; mitigate by choosing/extending proven protocols like ATProto.</li>
+</ul>
+</div></div>
+
+      <div id="footer">
+  Generated on Thu Jun  4 16:16:29 2026 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.44 (ruby-4.0.5).
+</div>
+
+    </div>
+  </body>
+</html>

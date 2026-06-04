@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
 
   spec.summary = "💎 A Federated Server of Ruby Gems"
   spec.description = "💎 A Federated Server of Ruby Gems"
-  spec.homepage = "https://github.com/galtzo-floss/them-server"
+  spec.homepage = "https://github.com/rubythems/them-server"
   spec.licenses = ["MIT"]
   spec.required_ruby_version = ">= 3.2.0"
 

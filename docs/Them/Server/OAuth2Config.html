@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Module: Them::Server::OAuth2Config
+  
+    &mdash; Documentation by YARD 0.9.44
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css">
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css">
+
+<script type="text/javascript">
+  pathId = "Them::Server::OAuth2Config";
+  relpath = '../../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
+    <div class="nav_wrap">
+      <iframe id="nav" src="../../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../../_index.html">Index (O)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../Them.html" title="Them (module)">Them</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Server.html" title="Them::Server (module)">Server</a></span></span>
+     &raquo; 
+    <span class="title">OAuth2Config</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Module: Them::Server::OAuth2Config
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/them/server/oauth2_config.rb
+</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>OAuth2 configuration and client management.</p>
+
+<p>This module provides OAuth2 integration for gem server authentication,<br />
+allowing the server to act as both an OAuth2 client (for authenticating<br />
+against external providers) and resource server (for validating tokens).</p>
+
+<p>The implementation supports:</p>
+<ul>
+  <li>Multiple OAuth2 providers (GitHub, GitLab, custom providers)</li>
+  <li>Token introspection (RFC 7662)</li>
+  <li>Bearer token authentication (RFC 6750)</li>
+  <li>Client credentials grant (RFC 6749 Section 4.4)</li>
+</ul>
+
+<p>Configuration via environment variables:</p>
+<ul>
+  <li>OAUTH2_PROVIDER_URL: Base URL of the OAuth2 provider</li>
+  <li>OAUTH2_CLIENT_ID: OAuth2 client identifier</li>
+  <li>OAUTH2_CLIENT_SECRET: OAuth2 client secret</li>
+  <li>OAUTH2_INTROSPECTION_URL: Token introspection endpoint (optional)</li>
+  <li>OAUTH2_TOKEN_URL: Token endpoint (default: /oauth/token)</li>
+  <li>OAUTH2_AUTHORIZE_URL: Authorization endpoint (default: /oauth/authorize)</li>
+</ul>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h4 class="tag_title">Examples:</h4>
+    
+      
+        <h5 class="example_title"><div class='inline'><p>Basic configuration</p>
+</div></h5>
+      
+      <pre class="example code"><code><span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>OAUTH2_PROVIDER_URL</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>https://github.com</span><span class='tstring_end'>&#39;</span></span>
+<span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>OAUTH2_CLIENT_ID</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>your-client-id</span><span class='tstring_end'>&#39;</span></span>
+<span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>OAUTH2_CLIENT_SECRET</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>your-client-secret</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_client'>client</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Them.html" title="Them (module)">Them</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Server.html" title="Them::Server (module)">Server</a></span></span><span class='op'>::</span><span class='const'>OAuth2Config</span><span class='period'>.</span><span class='id identifier rubyid_client'><span class='object_link'><a href="#client-class_method" title="Them::Server::OAuth2Config.client (method)">client</a></span></span></code></pre>
+    
+      
+        <h5 class="example_title"><div class='inline'><p>Token validation</p>
+</div></h5>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_token'>token</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Them.html" title="Them (module)">Them</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Server.html" title="Them::Server (module)">Server</a></span></span><span class='op'>::</span><span class='const'>OAuth2Config</span><span class='period'>.</span><span class='id identifier rubyid_validate_token'><span class='object_link'><a href="#validate_token-class_method" title="Them::Server::OAuth2Config.validate_token (method)">validate_token</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>access-token-here</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+<span class='kw'>if</span> <span class='id identifier rubyid_token'>token</span>
+  <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Valid token for user: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_token'>token</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>username</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></code></pre>
+    
+  </div>
+
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="https://datatracker.ietf.org/doc/html/rfc6749" target="_parent" title="OAuth 2.0 Framework (RFC 6749)">OAuth 2.0 Framework (RFC 6749)</a></li>
+    
+      <li><a href="https://datatracker.ietf.org/doc/html/rfc6750" target="_parent" title="OAuth 2.0 Bearer Token Usage (RFC 6750)">OAuth 2.0 Bearer Token Usage (RFC 6750)</a></li>
+    
+      <li><a href="https://datatracker.ietf.org/doc/html/rfc7662" target="_parent" title="OAuth 2.0 Token Introspection (RFC 7662)">OAuth 2.0 Token Introspection (RFC 7662)</a></li>
+    
+      <li><a href="https://datatracker.ietf.org/doc/html/rfc8414" target="_parent" title="OAuth 2.0 Authorization Server Metadata (RFC 8414)">OAuth 2.0 Authorization Server Metadata (RFC 8414)</a></li>
+    
+  </ul>
+
+</div>
+
+
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#client-class_method" title="client (class method)">.<strong>client</strong>  &#x21d2; OAuth2::Client<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns a configured OAuth2 client instance.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#client_id-class_method" title="client_id (class method)">.<strong>client_id</strong>  &#x21d2; String<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the configured client ID.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#client_secret-class_method" title="client_secret (class method)">.<strong>client_secret</strong>  &#x21d2; String<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the configured client secret.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#enabled%3F-class_method" title="enabled? (class method)">.<strong>enabled?</strong>  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Checks if OAuth2 is configured and enabled.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#introspection_url-class_method" title="introspection_url (class method)">.<strong>introspection_url</strong>  &#x21d2; String<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the token introspection endpoint URL.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#provider_url-class_method" title="provider_url (class method)">.<strong>provider_url</strong>  &#x21d2; String<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the configured provider URL.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#validate_token-class_method" title="validate_token (class method)">.<strong>validate_token</strong>(access_token)  &#x21d2; Hash<sup>?</sup> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Validates an OAuth2 access token.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+    
+  
+
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="client-class_method">
+  
+    .<strong>client</strong>  &#x21d2; <tt>OAuth2::Client</tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>Returns nil if OAUTH2_PROVIDER_URL is not set, allowing the<br />
+server to function without OAuth2 when not needed.</p>
+</div>
+  </div>
+
+<p>Returns a configured OAuth2 client instance.</p>
+
+<p>The client is cached per-process to avoid recreating connections.<br />
+It uses the OAuth2::Client from the oauth2 gem which provides<br />
+automatic token refresh, request signing, and error handling.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h4 class="tag_title">Examples:</h4>
+    
+      
+        <h5 class="example_title"><div class='inline'><p>Getting a client</p>
+</div></h5>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_client'>client</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Them::Server::OAuth2Config (module)">OAuth2Config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_client'>client</span>
+<span class='kw'>if</span> <span class='id identifier rubyid_client'>client</span>
+  <span class='id identifier rubyid_token'>token</span> <span class='op'>=</span> <span class='id identifier rubyid_client'>client</span><span class='period'>.</span><span class='id identifier rubyid_client_credentials'>client_credentials</span><span class='period'>.</span><span class='id identifier rubyid_get_token'>get_token</span>
+<span class='kw'>end</span></code></pre>
+    
+  </div>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>OAuth2::Client</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Configured OAuth2 client or nil if not configured</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="https://github.com/oauth-xx/oauth2" target="_parent" title="oauth2 gem documentation">oauth2 gem documentation</a></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+65
+66
+67</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/them/server/oauth2_config.rb', line 65</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_client'>client</span>
+  <span class='ivar'>@client</span> <span class='op'>||=</span> <span class='id identifier rubyid_build_client'>build_client</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="client_id-class_method">
+  
+    .<strong>client_id</strong>  &#x21d2; <tt>String</tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the configured client ID.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The OAuth2 client identifier</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+149
+150
+151</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/them/server/oauth2_config.rb', line 149</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_client_id'>client_id</span>
+  <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>OAUTH2_CLIENT_ID</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="client_secret-class_method">
+  
+    .<strong>client_secret</strong>  &#x21d2; <tt>String</tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>This should be kept secure and never logged or exposed in responses</p>
+</div>
+  </div>
+
+<p>Returns the configured client secret.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The OAuth2 client secret</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+159
+160
+161</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/them/server/oauth2_config.rb', line 159</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_client_secret'>client_secret</span>
+  <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>OAUTH2_CLIENT_SECRET</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="enabled?-class_method">
+  
+    .<strong>enabled?</strong>  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Checks if OAuth2 is configured and enabled.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h4 class="tag_title">Examples:</h4>
+    
+      
+        <h5 class="example_title"><div class='inline'><p>Checking if OAuth2 is available</p>
+</div></h5>
+      
+      <pre class="example code"><code><span class='kw'>if</span> <span class='const'><span class='object_link'><a href="" title="Them::Server::OAuth2Config (module)">OAuth2Config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_enabled?'>enabled?</span>
+  <span class='comment'># Use OAuth2 authentication
+</span><span class='kw'>else</span>
+  <span class='comment'># Fall back to API keys
+</span><span class='kw'>end</span></code></pre>
+    
+  </div>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>true if OAuth2 provider URL is set</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+133
+134
+135</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/them/server/oauth2_config.rb', line 133</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_enabled?'>enabled?</span>
+  <span class='op'>!</span><span class='id identifier rubyid_provider_url'>provider_url</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="introspection_url-class_method">
+  
+    .<strong>introspection_url</strong>  &#x21d2; <tt>String</tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>If not set, falls back to token info endpoint</p>
+</div>
+  </div>
+
+<p>Returns the token introspection endpoint URL.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The introspection endpoint URL or nil</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+169
+170
+171</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/them/server/oauth2_config.rb', line 169</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_introspection_url'>introspection_url</span>
+  <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>OAUTH2_INTROSPECTION_URL</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="provider_url-class_method">
+  
+    .<strong>provider_url</strong>  &#x21d2; <tt>String</tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the configured provider URL.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The OAuth2 provider base URL</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+141
+142
+143</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/them/server/oauth2_config.rb', line 141</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_provider_url'>provider_url</span>
+  <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>OAUTH2_PROVIDER_URL</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="validate_token-class_method">
+  
+    .<strong>validate_token</strong>(access_token)  &#x21d2; <tt>Hash</tt><sup>?</sup> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>Returns nil if OAuth2 is not configured</p>
+</div>
+  </div>
+
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>Caches negative results briefly to prevent DoS via invalid tokens</p>
+</div>
+  </div>
+
+<p>Validates an OAuth2 access token.</p>
+
+<p>This method performs token validation using one of two strategies:</p>
+<ol>
+  <li>Token introspection (RFC 7662) - if introspection endpoint is configured</li>
+  <li>Token info endpoint - fallback for providers without introspection</li>
+</ol>
+
+<p>Token introspection provides authoritative validation, checking if the<br />
+token is active, not expired, and not revoked. The response includes<br />
+metadata about the token such as scopes, expiration, and subject.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h4 class="tag_title">Examples:</h4>
+    
+      
+        <h5 class="example_title"><div class='inline'><p>Validating a token</p>
+</div></h5>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_token_info'>token_info</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Them::Server::OAuth2Config (module)">OAuth2Config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_validate_token'>validate_token</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>access-token</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+<span class='kw'>if</span> <span class='id identifier rubyid_token_info'>token_info</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_token_info'>token_info</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>active</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+  <span class='comment'># Token is valid
+</span>  <span class='id identifier rubyid_scopes'>scopes</span> <span class='op'>=</span> <span class='id identifier rubyid_token_info'>token_info</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>scope</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> </span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>access_token</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The access token to validate</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Token metadata if valid, nil if invalid or error</p>
+<ul>
+  <li>‘active’ [Boolean]: Whether the token is currently active</li>
+  <li>‘scope’ [String]: Space-separated list of scopes</li>
+  <li>‘client_id’ [String]: Client that obtained the token</li>
+  <li>‘username’ [String]: Resource owner username (if available)</li>
+  <li>‘exp’ [Integer]: Token expiration time (Unix timestamp)</li>
+  <li>‘iat’ [Integer]: Token issued at time (Unix timestamp)</li>
+</ul>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="https://datatracker.ietf.org/doc/html/rfc7662" target="_parent" title="Token Introspection (RFC 7662)">Token Introspection (RFC 7662)</a></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/them/server/oauth2_config.rb', line 101</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_validate_token'>validate_token</span><span class='lparen'>(</span><span class='id identifier rubyid_access_token'>access_token</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>if</span> <span class='id identifier rubyid_access_token'>access_token</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+  <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>unless</span> <span class='id identifier rubyid_client'>client</span>
+
+  <span class='comment'># Use introspection endpoint if configured (RFC 7662)
+</span>  <span class='kw'>if</span> <span class='id identifier rubyid_introspection_url'>introspection_url</span>
+    <span class='id identifier rubyid_introspect_token'>introspect_token</span><span class='lparen'>(</span><span class='id identifier rubyid_access_token'>access_token</span><span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='comment'># Fallback to token info endpoint for providers without introspection
+</span>    <span class='id identifier rubyid_fetch_token_info'>fetch_token_info</span><span class='lparen'>(</span><span class='id identifier rubyid_access_token'>access_token</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>rescue</span> <span class='const'>OAuth2</span><span class='op'>::</span><span class='const'>Error</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+  <span class='comment'># OAuth2 errors (401, 403, etc.) indicate invalid token
+</span>  <span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>OAuth2 validation error: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>nil</span>
+<span class='kw'>rescue</span> <span class='const'>StandardError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+  <span class='comment'># Other errors (network, timeout) should be logged but not expose details
+</span>  <span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>OAuth2 validation failed: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Thu Jun  4 16:16:29 2026 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.44 (ruby-4.0.5).
+</div>
+
+    </div>
+  </body>
+</html>
