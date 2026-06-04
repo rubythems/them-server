@@ -8,12 +8,12 @@ services:
     environment:
       HANAMI_PORT: 9292
       HANAMI_ENV: production
-      GEM_SERVER_DB: /app/config/db/them_server_1.db
+      THEM_SERVER_DB: /app/config/db/them_server_1.db
       FEDERATION_BASE_URL: http://server1:9292
     volumes:
       - ./config/db:/app/config/db
     command: >-
-      sh -lc "ruby -e 'require \"./config/database\"; Gem::Server::Database.migrate' && bundle exec rackup -p 9292 -E production --host 0.0.0.0"
+      sh -lc "ruby -e 'require \"./config/database\"; Them::Server::Database.migrate' && bundle exec rackup -p 9292 -E production --host 0.0.0.0"
 
   server2:
     build: .
@@ -23,12 +23,12 @@ services:
     environment:
       HANAMI_PORT: 9393
       HANAMI_ENV: production
-      GEM_SERVER_DB: /app/config/db/them_server_2.db
+      THEM_SERVER_DB: /app/config/db/them_server_2.db
       FEDERATION_BASE_URL: http://server2:9393
     volumes:
       - ./config/db:/app/config/db
     command: >-
-      sh -lc "ruby -e 'require \"./config/database\"; Gem::Server::Database.migrate' && bundle exec rackup -p 9393 -E production --host 0.0.0.0"
+      sh -lc "ruby -e 'require \"./config/database\"; Them::Server::Database.migrate' && bundle exec rackup -p 9393 -E production --host 0.0.0.0"
 
   wire:
     build: .

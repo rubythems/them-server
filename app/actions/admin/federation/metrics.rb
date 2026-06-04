@@ -3,12 +3,12 @@
 require "json"
 require_relative "../../../../config/database"
 
-module Gem
+module Them
   module Server
     module Actions
       module Admin
         module Federation
-          class Metrics < Gem::Server::Action
+          class Metrics < Them::Server::Action
             def handle(_request, response)
               db = Database.db
               known = db[:known_servers]

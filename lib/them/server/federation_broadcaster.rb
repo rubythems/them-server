@@ -5,9 +5,9 @@ require "uri"
 require "net/http"
 require "logger"
 require_relative "../../../config/database"
-require "gem/server/crypto"
+require "them/server/crypto"
 
-module Gem
+module Them
   module Server
     # Broadcasts gem publications to subscribed federated servers.
     #
@@ -30,7 +30,7 @@ module Gem
     # @see https://www.enterpriseintegrationpatterns.com/patterns/messaging/PublishSubscribeChannel.html Pub-Sub Pattern
     #
     # @example Broadcasting a gem publication
-    #   Gem::Server::FederationBroadcaster.broadcast_gem(
+    #   Them::Server::FederationBroadcaster.broadcast_gem(
     #     name: "rails",
     #     version: "7.0.0",
     #     scope_path: ["org", "rails"],
@@ -92,7 +92,7 @@ module Gem
           # Early return if broadcasting is disabled
           return unless ENV["FEDERATION_BROADCAST"] == "1"
 
-          db = Gem::Server::Database.db
+          db = Them::Server::Database.db
 
           # Retrieve all servers that have subscribed to this server's updates
           servers = db[:known_servers].where(subscribed: true).all
@@ -102,7 +102,7 @@ module Gem
           # This allows subscribers to verify the gem hasn't been tampered with
           digest_sha256 = begin
             bytes = File.binread(file_path)
-            Gem::Server::Crypto.sha256_hex(bytes)
+            Them::Server::Crypto.sha256_hex(bytes)
           rescue StandardError => e
             LOGGER.warn("digest-failed: #{e.class}: #{e.message}")
             ""
@@ -111,7 +111,7 @@ module Gem
           # Sign the canonical gem record for non-repudiation
           # Format: "name\nversion\nscope\ndigest" (same as validation endpoints)
           record = [name, version, Array(scope_path).join("/"), digest_sha256].join("\n")
-          record_sig_b64 = Gem::Server::Crypto.sign_bytes(record)
+          record_sig_b64 = Them::Server::Crypto.sign_bytes(record)
 
           # Resolve this server's base URL for origin identification
           from_base_url = ENV["FEDERATION_BASE_URL"].to_s.strip
@@ -205,12 +205,12 @@ module Gem
         def post_push(endpoint:, payload:)
           uri = URI.parse(endpoint)
           body_str = JSON.generate(payload)
-          body_digest = Gem::Server::Crypto.sha256_hex(body_str)
+          body_digest = Them::Server::Crypto.sha256_hex(body_str)
 
           # Generate canonical HTTP request signature
           # This prevents man-in-the-middle tampering of the request
-          canonical = Gem::Server::Crypto.canonical_request_string(method: "POST", path: "/federation/push", signed_at: payload[:signed_at], body_digest: body_digest)
-          signature = Gem::Server::Crypto.sign_bytes(canonical)
+          canonical = Them::Server::Crypto.canonical_request_string(method: "POST", path: "/federation/push", signed_at: payload[:signed_at], body_digest: body_digest)
+          signature = Them::Server::Crypto.sign_bytes(canonical)
 
           http = Net::HTTP.new(uri.host, uri.port)
           http.use_ssl = uri.scheme == "https"

@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require "gem/server/federation_client"
+require "them/server/federation_client"
 require "net/http"
 
 # Wait for servers to boot
 sleep(Integer(ENV.fetch("WIRE_WAIT", 3)))
 
-client = Gem::Server::FederationClient.new
+client = Them::Server::FederationClient.new
 
 # server1 -> server2
 ENV["FEDERATION_BASE_URL"] = "http://server1:9292"

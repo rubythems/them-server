@@ -3,7 +3,7 @@
 require "base64"
 require_relative "oauth2_config"
 
-module Gem
+module Them
   module Server
     # Unified authentication handler supporting multiple authentication schemes.
     #
@@ -25,7 +25,7 @@ module Gem
     # @see https://guides.rubygems.org/rubygems-org-api/ RubyGems API Documentation
     #
     # @example Authenticating a request
-    #   result = Gem::Server::Authenticator.authenticate(request.env)
+    #   result = Them::Server::Authenticator.authenticate(request.env)
     #   if result[:authenticated]
     #     user = result[:user]
     #     scopes = result[:scopes]

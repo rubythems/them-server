@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Gem::Server::Database do
+RSpec.describe Them::Server::Database do
   describe ".db" do
     it "returns a Sequel database connection" do
       expect(described_class.db).to be_a(Sequel::Database)

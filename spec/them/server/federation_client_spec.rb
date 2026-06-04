@@ -2,9 +2,9 @@
 
 require "webmock/rspec"
 require "json"
-require "gem/server/federation_client"
+require "them/server/federation_client"
 
-RSpec.describe Gem::Server::FederationClient do
+RSpec.describe Them::Server::FederationClient do
   before { ENV["FEDERATION_BASE_URL"] = "http://me.local" }
   after { ENV.delete("FEDERATION_BASE_URL") }
 

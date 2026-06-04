@@ -4,7 +4,7 @@
 require "hanami/action"
 require "dry/monads"
 
-module Gem
+module Them
   module Server
     class Action < Hanami::Action
       # Provide `Success` and `Failure` for pattern matching on operation results

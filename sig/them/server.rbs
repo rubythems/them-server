@@ -1,4 +1,4 @@
-module Gem
+module Them
   module Server
     VERSION: String
     # See the writing guide of rbs: https://github.com/ruby/rbs#guides

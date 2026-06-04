@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-module Gem
+module Them
   module Server
     module Views
       module Auth
-        class Register < Gem::Server::View
+        class Register < Them::Server::View
           expose :error
 
           def page_title
-            "Register - Gem Server"
+            "Register - Them Server"
           end
         end
       end

@@ -3,12 +3,12 @@
 require "json"
 require_relative "../../../../config/database"
 
-module Gem
+module Them
   module Server
     module Actions
       module Admin
         module KnownServers
-          class Index < Gem::Server::Action
+          class Index < Them::Server::Action
             def handle(_request, response)
               db = Database.db
               rows = db[:known_servers].all

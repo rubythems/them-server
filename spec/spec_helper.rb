@@ -33,7 +33,7 @@ end
 require "them/server"
 
 # this library
-require "gem/server"
+require "them/server"
 
 # Load database configuration
 require_relative "../config/database"
@@ -52,7 +52,7 @@ RSpec.configure do |config|
   # Database cleanup
   config.before(:suite) do
     # Create test database
-    Gem::Server::Database.migrate
+    Them::Server::Database.migrate
   end
 
   config.before do |example|
@@ -61,7 +61,7 @@ RSpec.configure do |config|
     next if example.metadata[:type] == :e2e || example.metadata[:skip_db_cleanup]
 
     # Clean database before each test
-    db = Gem::Server::Database.db
+    db = Them::Server::Database.db
     # Federation tables first (FKs)
     db[:federated_gems].delete if db.table_exists?(:federated_gems)
     db[:known_servers].delete if db.table_exists?(:known_servers)

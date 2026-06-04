@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Gem::Server::Version do
+RSpec.describe Them::Server::Version do
   it_behaves_like "a Version module", described_class
 
   it "is greater than 0.1.0" do

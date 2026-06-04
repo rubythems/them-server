@@ -20,7 +20,7 @@ RSpec.configure do |config|
   }
 
   config.before :suite do
-    Gem::Server::Database.migrate
+    Them::Server::Database.migrate
 
     all_databases.call.each do |db|
       # Disable foreign key constraints temporarily for SQLite during truncation

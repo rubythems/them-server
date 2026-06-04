@@ -15,9 +15,9 @@
 #   categories.insert(title: "General")
 
 require_relative "../../config/database"
-require "gem/server/crypto"
+require "them/server/crypto"
 
-DB = Gem::Server::Database.db
+DB = Them::Server::Database.db
 now = Time.now
 
 peers = [
@@ -29,7 +29,7 @@ peers.each do |peer|
   row = DB[:known_servers].where(base_url: peer[:base_url]).first
   attrs = {
     base_url: peer[:base_url],
-    public_key_b64: Gem::Server::Crypto.public_key_b64,
+    public_key_b64: Them::Server::Crypto.public_key_b64,
     subscribed: false,
     last_seen_at: nil,
     created_at: now,

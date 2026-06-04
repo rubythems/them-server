@@ -3,14 +3,14 @@
 require "spec_helper"
 require "rack/test"
 
-RSpec.describe Gem::Server::Actions::Gems::Show do
+RSpec.describe Them::Server::Actions::Gems::Show do
   include Rack::Test::Methods
 
   def app
     Hanami.app
   end
 
-  let(:db) { Gem::Server::Database.db }
+  let(:db) { Them::Server::Database.db }
 
   describe "GET /" do
     context "with no gems" do

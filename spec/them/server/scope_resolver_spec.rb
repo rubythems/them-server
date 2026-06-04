@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 require "spec_helper"
-require "gem/server/scope_resolver"
+require "them/server/scope_resolver"
 
-RSpec.describe Gem::Server::ScopeResolver do
-  let(:db) { Gem::Server::Database.db }
+RSpec.describe Them::Server::ScopeResolver do
+  let(:db) { Them::Server::Database.db }
 
   describe "#initialize" do
     it "accepts an array of path parts" do

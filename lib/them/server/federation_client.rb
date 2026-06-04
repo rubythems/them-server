@@ -4,9 +4,9 @@ require "json"
 require "uri"
 require "net/http"
 require "logger"
-require "gem/server/crypto"
+require "them/server/crypto"
 
-module Gem
+module Them
   module Server
     # Client for communicating with federated gem servers.
     #
@@ -29,14 +29,14 @@ module Gem
     # @see https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/ Exponential Backoff
     #
     # @example Announcing to a peer server
-    #   client = Gem::Server::FederationClient.new
+    #   client = Them::Server::FederationClient.new
     #   client.announce(
     #     to_base_url: "https://gems.example.com",
     #     my_base_url: "https://mygems.example.com"
     #   )
     #
     # @example Subscribing to a peer server
-    #   client = Gem::Server::FederationClient.new
+    #   client = Them::Server::FederationClient.new
     #   client.subscribe(
     #     to_base_url: "https://gems.example.com",
     #     my_base_url: "https://mygems.example.com"
@@ -89,14 +89,14 @@ module Gem
 
         # Prepare self-signed announcement payload
         # The signature proves ownership of the public key
-        public_key_b64 = Gem::Server::Crypto.public_key_b64
+        public_key_b64 = Them::Server::Crypto.public_key_b64
         signed_at = Time.now.to_i
         to_sign = [my_base, public_key_b64, signed_at.to_s].join("\n")
-        body_digest = Gem::Server::Crypto.sha256_hex(to_sign)
+        body_digest = Them::Server::Crypto.sha256_hex(to_sign)
 
         # Generate canonical request signature per HTTP Signatures pattern
-        canonical = Gem::Server::Crypto.canonical_request_string(method: "POST", path: "/federation/announce", signed_at: signed_at, body_digest: body_digest)
-        signature = Gem::Server::Crypto.sign_bytes(canonical)
+        canonical = Them::Server::Crypto.canonical_request_string(method: "POST", path: "/federation/announce", signed_at: signed_at, body_digest: body_digest)
+        signature = Them::Server::Crypto.sign_bytes(canonical)
 
         payload = {base_url: my_base, public_key_b64: public_key_b64, signed_at: signed_at}
         endpoint = URI.join(to_base_url, "/federation/announce").to_s
@@ -148,11 +148,11 @@ module Gem
         signed_at = Time.now.to_i
         payload = {base_url: my_base, signed_at: signed_at}
         body_str = JSON.generate(payload)
-        body_digest = Gem::Server::Crypto.sha256_hex(body_str)
+        body_digest = Them::Server::Crypto.sha256_hex(body_str)
 
         # Generate canonical request signature
-        canonical = Gem::Server::Crypto.canonical_request_string(method: "POST", path: "/federation/subscribe", signed_at: signed_at, body_digest: body_digest)
-        signature = Gem::Server::Crypto.sign_bytes(canonical)
+        canonical = Them::Server::Crypto.canonical_request_string(method: "POST", path: "/federation/subscribe", signed_at: signed_at, body_digest: body_digest)
+        signature = Them::Server::Crypto.sign_bytes(canonical)
 
         endpoint = URI.join(to_base_url, "/federation/subscribe").to_s
 

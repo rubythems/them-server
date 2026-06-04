@@ -2,7 +2,7 @@
 
 require "dry/types"
 
-module Gem
+module Them
   module Server
     Types = Dry.Types
 

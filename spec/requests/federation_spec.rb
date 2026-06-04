@@ -2,7 +2,7 @@
 
 require "json"
 require "ed25519"
-require "gem/server/crypto"
+require "them/server/crypto"
 
 RSpec.describe "Federation", type: :request do
   let(:remote_signing_key) { Ed25519::SigningKey.generate }
@@ -11,7 +11,7 @@ RSpec.describe "Federation", type: :request do
   let(:base_url) { "https://remote.example.test" }
 
   def sign_canonical(method:, path:, signed_at:, body_digest:)
-    canonical = Gem::Server::Crypto.canonical_request_string(method: method, path: path, signed_at: signed_at, body_digest: body_digest)
+    canonical = Them::Server::Crypto.canonical_request_string(method: method, path: path, signed_at: signed_at, body_digest: body_digest)
     Base64.strict_encode64(remote_signing_key.sign(canonical))
   end
 
@@ -19,7 +19,7 @@ RSpec.describe "Federation", type: :request do
     # Announce
     signed_at = Time.now.to_i
     to_sign = [base_url, remote_pub_b64, signed_at.to_s].join("\n")
-    body_digest = Gem::Server::Crypto.sha256_hex(to_sign)
+    body_digest = Them::Server::Crypto.sha256_hex(to_sign)
     signature = sign_canonical(method: "POST", path: "/federation/announce", signed_at: signed_at, body_digest: body_digest)
 
     payload = {base_url: base_url, public_key_b64: remote_pub_b64, signed_at: signed_at}
@@ -32,7 +32,7 @@ RSpec.describe "Federation", type: :request do
     # Subscribe
     body = {base_url: base_url, signed_at: signed_at}
     body_str = JSON.generate(body)
-    body_digest = Gem::Server::Crypto.sha256_hex(body_str)
+    body_digest = Them::Server::Crypto.sha256_hex(body_str)
     signature = sign_canonical(method: "POST", path: "/federation/subscribe", signed_at: signed_at, body_digest: body_digest)
 
     post "/federation/subscribe", body_str, {
@@ -46,7 +46,7 @@ RSpec.describe "Federation", type: :request do
     # First, announce to register known server
     signed_at = Time.now.to_i
     to_sign = [base_url, remote_pub_b64, signed_at.to_s].join("\n")
-    sig = sign_canonical(method: "POST", path: "/federation/announce", signed_at: signed_at, body_digest: Gem::Server::Crypto.sha256_hex(to_sign))
+    sig = sign_canonical(method: "POST", path: "/federation/announce", signed_at: signed_at, body_digest: Them::Server::Crypto.sha256_hex(to_sign))
     post "/federation/announce", JSON.generate({base_url: base_url, public_key_b64: remote_pub_b64, signed_at: signed_at}), {
       "CONTENT_TYPE" => "application/json",
       "HTTP_X_SIGNATURE" => sig,
@@ -71,7 +71,7 @@ RSpec.describe "Federation", type: :request do
       signed_at: signed_at,
     }
     body_str = JSON.generate(push_payload)
-    body_digest = Gem::Server::Crypto.sha256_hex(body_str)
+    body_digest = Them::Server::Crypto.sha256_hex(body_str)
     signature = sign_canonical(method: "POST", path: "/federation/push", signed_at: signed_at, body_digest: body_digest)
 
     post "/federation/push", body_str, {

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Gem
+module Them
   module Server
     class Settings < Hanami::Settings
       setting :database_url,

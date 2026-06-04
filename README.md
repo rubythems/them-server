@@ -173,7 +173,7 @@ curl http://localhost:9393/admin/known_servers | jq .
 
 Environment controls
 
-- GEM_SERVER_DB: path to the SQLite DB (default: config/db/them_server.db). Set to run multiple instances side-by-side.
+- THEM_SERVER_DB: path to the SQLite DB (default: config/db/them_server.db). Set to run multiple instances side-by-side.
 - FEDERATION_BASE_URL: the base URL this server advertises in federation payloads.
 - FEDERATION_BROADCAST: set to "1" to broadcast new gem pushes to subscribed peers.
 - FEDERATION_PRIVATE_KEY_B64/FEDERATION_PUBLIC_KEY_B64: optional Ed25519 keypair to use a stable identity.

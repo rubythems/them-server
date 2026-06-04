@@ -1,4 +1,4 @@
-# Phase 1: Basic Gem Server with Scopes and Permissions
+# Phase 1: Basic Them Server with Scopes and Permissions
 
 ## Overview
 This phase focuses on building the core gem server functionality, including support for scoped namespaces and a permissions system. The server will handle gem pushes, pulls, and management within scopes, with authentication and authorization for owners.

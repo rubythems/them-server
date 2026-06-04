@@ -25,12 +25,12 @@
     <span class="na">environment</span><span class="pi">:</span>
       <span class="na">HANAMI_PORT</span><span class="pi">:</span> <span class="m">9292</span>
       <span class="na">HANAMI_ENV</span><span class="pi">:</span> <span class="s">production</span>
-      <span class="na">GEM_SERVER_DB</span><span class="pi">:</span> <span class="s">/app/config/db/them_server_1.db</span>
+      <span class="na">THEM_SERVER_DB</span><span class="pi">:</span> <span class="s">/app/config/db/them_server_1.db</span>
       <span class="na">FEDERATION_BASE_URL</span><span class="pi">:</span> <span class="s">http://server1:9292</span>
     <span class="na">volumes</span><span class="pi">:</span>
       <span class="pi">-</span> <span class="s">./config/db:/app/config/db</span>
     <span class="na">command</span><span class="pi">:</span> <span class="pi">&gt;-</span>
-      <span class="s">sh -lc "ruby -e 'require \"./config/database\"; Gem::Server::Database.migrate' &amp;&amp; bundle exec rackup -p 9292 -E production --host 0.0.0.0"</span>
+      <span class="s">sh -lc "ruby -e 'require \"./config/database\"; Them::Server::Database.migrate' &amp;&amp; bundle exec rackup -p 9292 -E production --host 0.0.0.0"</span>
 
   <span class="na">server2</span><span class="pi">:</span>
     <span class="na">build</span><span class="pi">:</span> <span class="s">.</span>
@@ -40,12 +40,12 @@
     <span class="na">environment</span><span class="pi">:</span>
       <span class="na">HANAMI_PORT</span><span class="pi">:</span> <span class="m">9393</span>
       <span class="na">HANAMI_ENV</span><span class="pi">:</span> <span class="s">production</span>
-      <span class="na">GEM_SERVER_DB</span><span class="pi">:</span> <span class="s">/app/config/db/them_server_2.db</span>
+      <span class="na">THEM_SERVER_DB</span><span class="pi">:</span> <span class="s">/app/config/db/them_server_2.db</span>
       <span class="na">FEDERATION_BASE_URL</span><span class="pi">:</span> <span class="s">http://server2:9393</span>
     <span class="na">volumes</span><span class="pi">:</span>
       <span class="pi">-</span> <span class="s">./config/db:/app/config/db</span>
     <span class="na">command</span><span class="pi">:</span> <span class="pi">&gt;-</span>
-      <span class="s">sh -lc "ruby -e 'require \"./config/database\"; Gem::Server::Database.migrate' &amp;&amp; bundle exec rackup -p 9393 -E production --host 0.0.0.0"</span>
+      <span class="s">sh -lc "ruby -e 'require \"./config/database\"; Them::Server::Database.migrate' &amp;&amp; bundle exec rackup -p 9393 -E production --host 0.0.0.0"</span>
 
   <span class="na">wire</span><span class="pi">:</span>
     <span class="na">build</span><span class="pi">:</span> <span class="s">.</span>

@@ -2,7 +2,7 @@
 
 require "bcrypt"
 
-module Gem
+module Them
   module Server
     module Repos
       class OwnerRepository

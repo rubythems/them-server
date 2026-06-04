@@ -2,10 +2,10 @@
 
 require "json"
 require_relative "../../../config/database"
-require "gem/server/crypto"
-require "gem/server/scope_resolver"
+require "them/server/crypto"
+require "them/server/scope_resolver"
 
-module Gem
+module Them
   module Server
     module Actions
       module Federation
@@ -73,7 +73,7 @@ module Gem
         #     "scope_path": ["org", "rails"]
         #   }
         #
-        class ValidateGem < Gem::Server::Action
+        class ValidateGem < Them::Server::Action
           # Validates gem existence and returns signed metadata.
           #
           # This method performs the following operations:
@@ -142,7 +142,7 @@ module Gem
 
             # Resolve scope hierarchy (namespace)
             # This supports organization-scoped gems like @org/package in npm
-            resolver = ::Gem::Server::ScopeResolver.new(scope_path, include_gem_name: false)
+            resolver = ::Them::Server::ScopeResolver.new(scope_path, include_gem_name: false)
             scope = resolver.scope(create: false)
             scope_id = scope&.dig(:id)
 

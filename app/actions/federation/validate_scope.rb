@@ -2,10 +2,10 @@
 
 require "json"
 require_relative "../../../config/database"
-require "gem/server/crypto"
-require "gem/server/scope_resolver"
+require "them/server/crypto"
+require "them/server/scope_resolver"
 
-module Gem
+module Them
   module Server
     module Actions
       module Federation
@@ -60,7 +60,7 @@ module Gem
         #     "public_key_b64": "base64-encoded-public-key"
         #   }
         #
-        class ValidateScope < Gem::Server::Action
+        class ValidateScope < Them::Server::Action
           # Validates scope existence and returns signed metadata.
           #
           # This method performs the following operations:
@@ -121,7 +121,7 @@ module Gem
 
             # Resolve scope hierarchy in database
             # Returns nil if scope doesn't exist (non-creating lookup)
-            resolver = ::Gem::Server::ScopeResolver.new(path_parts, include_gem_name: false)
+            resolver = ::Them::Server::ScopeResolver.new(path_parts, include_gem_name: false)
             scope = resolver.scope(create: false)
             exists = !scope.nil?
 

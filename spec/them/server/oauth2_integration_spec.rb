@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
 require "spec_helper"
-require "gem/server/oauth2_config"
-require "gem/server/authenticator"
+require "them/server/oauth2_config"
+require "them/server/authenticator"
 
 RSpec.describe "OAuth2 Integration" do
   before do
     # Clear cached client between tests
-    Gem::Server::OAuth2Config.instance_variable_set(:@client, nil)
+    Them::Server::OAuth2Config.instance_variable_set(:@client, nil)
   end
 
-  describe Gem::Server::OAuth2Config do
+  describe Them::Server::OAuth2Config do
     describe ".enabled?" do
       it "returns false when OAUTH2_PROVIDER_URL is not set" do
         allow(ENV).to receive(:[]).with("OAUTH2_PROVIDER_URL").and_return(nil)
@@ -81,14 +81,14 @@ RSpec.describe "OAuth2 Integration" do
     end
   end
 
-  describe Gem::Server::Authenticator do
+  describe Them::Server::Authenticator do
     describe ".authenticate" do
       let(:env) { {} }
 
       context "with OAuth2 Bearer token" do
         before do
-          allow(Gem::Server::OAuth2Config).to receive(:enabled?).and_return(true)
-          allow(Gem::Server::OAuth2Config).to receive(:validate_token).and_return(token_info)
+          allow(Them::Server::OAuth2Config).to receive(:enabled?).and_return(true)
+          allow(Them::Server::OAuth2Config).to receive(:validate_token).and_return(token_info)
         end
 
         let(:token_info) do
@@ -114,7 +114,7 @@ RSpec.describe "OAuth2 Integration" do
         end
 
         it "handles tokens without scopes" do
-          allow(Gem::Server::OAuth2Config).to receive(:validate_token).and_return(
+          allow(Them::Server::OAuth2Config).to receive(:validate_token).and_return(
             {"active" => true, "username" => "user"}
           )
           env["HTTP_AUTHORIZATION"] = "Bearer token-no-scopes"
@@ -126,7 +126,7 @@ RSpec.describe "OAuth2 Integration" do
         end
 
         it "rejects inactive tokens" do
-          allow(Gem::Server::OAuth2Config).to receive(:validate_token).and_return(
+          allow(Them::Server::OAuth2Config).to receive(:validate_token).and_return(
             {"active" => false}
           )
           env["HTTP_AUTHORIZATION"] = "Bearer inactive-token"
@@ -137,7 +137,7 @@ RSpec.describe "OAuth2 Integration" do
         end
 
         it "rejects invalid tokens" do
-          allow(Gem::Server::OAuth2Config).to receive(:validate_token).and_return(nil)
+          allow(Them::Server::OAuth2Config).to receive(:validate_token).and_return(nil)
           env["HTTP_AUTHORIZATION"] = "Bearer invalid-token"
 
           result = described_class.authenticate(env)
@@ -146,7 +146,7 @@ RSpec.describe "OAuth2 Integration" do
         end
 
         it "fails when OAuth2 token is invalid, even with other credentials present" do
-          allow(Gem::Server::OAuth2Config).to receive(:validate_token).and_return(nil)
+          allow(Them::Server::OAuth2Config).to receive(:validate_token).and_return(nil)
           env["HTTP_AUTHORIZATION"] = "Bearer invalid-oauth-token"
           env["HTTP_X_API_KEY"] = "fallback-api-key"
 
@@ -260,8 +260,8 @@ RSpec.describe "OAuth2 Integration" do
 
       context "with multiple authentication methods" do
         before do
-          allow(Gem::Server::OAuth2Config).to receive(:enabled?).and_return(true)
-          allow(Gem::Server::OAuth2Config).to receive(:validate_token).and_return(
+          allow(Them::Server::OAuth2Config).to receive(:enabled?).and_return(true)
+          allow(Them::Server::OAuth2Config).to receive(:validate_token).and_return(
             {"active" => true, "username" => "oauth-user"}
           )
         end
@@ -277,7 +277,7 @@ RSpec.describe "OAuth2 Integration" do
         end
 
         it "falls back to API keys when OAuth2 token is invalid" do
-          allow(Gem::Server::OAuth2Config).to receive(:validate_token).and_return(nil)
+          allow(Them::Server::OAuth2Config).to receive(:validate_token).and_return(nil)
           env["HTTP_AUTHORIZATION"] = "Bearer invalid-oauth-token"
           env["HTTP_X_API_KEY"] = "fallback-api-key"
 

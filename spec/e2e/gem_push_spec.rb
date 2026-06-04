@@ -43,7 +43,7 @@ RSpec.describe "Gem push e2e", type: :e2e do
 
     # Set up test owner ONCE for all tests in this suite
     # This avoids database synchronization issues with the server process
-    db = Gem::Server::Database.db
+    db = Them::Server::Database.db
 
     # Clear database in proper order to avoid foreign key constraint violations
     db.transaction do

@@ -2,7 +2,7 @@
 
 require "oauth2"
 
-module Gem
+module Them
   module Server
     # OAuth2 configuration and client management.
     #
@@ -33,10 +33,10 @@ module Gem
     #   ENV['OAUTH2_PROVIDER_URL'] = 'https://github.com'
     #   ENV['OAUTH2_CLIENT_ID'] = 'your-client-id'
     #   ENV['OAUTH2_CLIENT_SECRET'] = 'your-client-secret'
-    #   client = Gem::Server::OAuth2Config.client
+    #   client = Them::Server::OAuth2Config.client
     #
     # @example Token validation
-    #   token = Gem::Server::OAuth2Config.validate_token('access-token-here')
+    #   token = Them::Server::OAuth2Config.validate_token('access-token-here')
     #   if token
     #     puts "Valid token for user: #{token['username']}"
     #   end

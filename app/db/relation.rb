@@ -2,7 +2,7 @@
 
 require "hanami/db/relation"
 
-module Gem
+module Them
   module Server
     module DB
       class Relation < Hanami::DB::Relation

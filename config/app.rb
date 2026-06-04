@@ -2,7 +2,7 @@
 
 require "hanami"
 
-module Gem
+module Them
   module Server
     # Middleware to handle binary gem uploads without going through Hanami router
     class DirectGemUploadHandler
@@ -16,7 +16,7 @@ module Gem
         if env["REQUEST_METHOD"] == "POST" && gem_upload_path?(env["PATH_INFO"])
           # Load the action directly and call it
           require_relative "../app/actions/gems/create"
-          action = Gem::Server::Actions::Gems::Create.new
+          action = Them::Server::Actions::Gems::Create.new
 
           # Call the action directly with a Rack request/response
           status, headers, body = action.call(env)

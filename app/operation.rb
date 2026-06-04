@@ -3,7 +3,7 @@
 
 require "dry/operation"
 
-module Gem
+module Them
   module Server
     class Operation < Dry::Operation
     end

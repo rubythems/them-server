@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-module Gem
+module Them
   module Server
     module Relations
-      class Owners < Gem::Server::DB::Relation
+      class Owners < Them::Server::DB::Relation
         schema(:owners, infer: true)
 
         def by_name(name)

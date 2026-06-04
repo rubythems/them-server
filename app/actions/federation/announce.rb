@@ -2,9 +2,9 @@
 
 require "json"
 require_relative "../../../config/database"
-require "gem/server/crypto"
+require "them/server/crypto"
 
-module Gem
+module Them
   module Server
     module Actions
       module Federation
@@ -44,7 +44,7 @@ module Gem
         #     "public_key_b64": "base64-encoded-server-public-key"
         #   }
         #
-        class Announce < Gem::Server::Action
+        class Announce < Them::Server::Action
           # Handles the server announcement request with self-authentication.
           #
           # This method performs the following operations:

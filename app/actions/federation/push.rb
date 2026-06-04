@@ -2,10 +2,10 @@
 
 require "json"
 require_relative "../../../config/database"
-require "gem/server/crypto"
-require "gem/server/scope_resolver"
+require "them/server/crypto"
+require "them/server/scope_resolver"
 
-module Gem
+module Them
   module Server
     module Actions
       module Federation
@@ -40,7 +40,7 @@ module Gem
         #   X-Signed-At: 1697123456
         #   X-Signature: base64-encoded-signature
         #
-        class Push < Gem::Server::Action
+        class Push < Them::Server::Action
           # Handles the federated push request with cryptographic verification.
           #
           # This method implements a multi-stage verification process:
@@ -159,7 +159,7 @@ module Gem
             # or NPM scoped packages (@org/package)
             scope = nil
             if scope_path.any?
-              resolver = ::Gem::Server::ScopeResolver.new(scope_path, include_gem_name: false)
+              resolver = ::Them::Server::ScopeResolver.new(scope_path, include_gem_name: false)
               scope = resolver.scope(create: true)
             end
 

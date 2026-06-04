@@ -2,16 +2,16 @@
 
 require "rubygems/package"
 require "tempfile"
-require "gem/server/scope_resolver"
+require "them/server/scope_resolver"
 require_relative "../../../config/database"
-require "gem/server/federation_broadcaster"
-require "gem/server/authenticator"
+require "them/server/federation_broadcaster"
+require "them/server/authenticator"
 
-module Gem
+module Them
   module Server
     module Actions
       module Gems
-        class Create < Gem::Server::Action
+        class Create < Them::Server::Action
           # Skip automatic parameter parsing to handle binary gem data
           # In Hanami 2.2, we handle the raw request body manually
 
@@ -79,7 +79,7 @@ module Gem
             db = Database.db
 
             # Authentication: Use unified OAuth2-enabled authenticator
-            auth_result = Gem::Server::Authenticator.authenticate(request.env)
+            auth_result = Them::Server::Authenticator.authenticate(request.env)
 
             # Allow multipart form fallback for backwards compatibility
             if !auth_result[:authenticated] && multipart_params
@@ -98,8 +98,8 @@ module Gem
 
             unless auth_result[:authenticated]
               response.headers["content-type"] = "text/plain; charset=utf-8"
-              response.headers["WWW-Authenticate"] = 'Bearer realm="them-server"' if Gem::Server::OAuth2Config.enabled?
-              response.body = Gem::Server::OAuth2Config.enabled? ? "API key or OAuth2 token required" : "API key required"
+              response.headers["WWW-Authenticate"] = 'Bearer realm="them-server"' if Them::Server::OAuth2Config.enabled?
+              response.body = Them::Server::OAuth2Config.enabled? ? "API key or OAuth2 token required" : "API key required"
               response.status = 401
               return
             end
@@ -169,7 +169,7 @@ module Gem
                 )
 
               # Optional federation broadcast
-              Gem::Server::FederationBroadcaster.broadcast_gem(
+              Them::Server::FederationBroadcaster.broadcast_gem(
                 name: name,
                 version: version,
                 scope_path: path_parts,

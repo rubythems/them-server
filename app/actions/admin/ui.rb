@@ -4,11 +4,11 @@ require "erb"
 require "json"
 require_relative "../../../config/database"
 
-module Gem
+module Them
   module Server
     module Actions
       module Admin
-        class Ui < Gem::Server::Action
+        class Ui < Them::Server::Action
           TEMPLATE_PATH = File.expand_path("../../templates/admin/ui.html.erb", __dir__)
 
           def handle(_request, response)

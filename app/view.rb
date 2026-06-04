@@ -3,7 +3,7 @@
 
 require "hanami/view"
 
-module Gem
+module Them
   module Server
     class View < Hanami::View
     end

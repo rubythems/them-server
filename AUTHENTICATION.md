@@ -81,7 +81,7 @@ require_relative "config/database"
 require "bcrypt"
 require "securerandom"
 
-db = Gem::Server::Database.db
+db = Them::Server::Database.db
 
 db[:owners].insert(
   name: "your-username",

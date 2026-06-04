@@ -4,7 +4,7 @@ require "json"
 require_relative "../../config/database"
 
 RSpec.describe "Admin Known Servers", type: :request do
-  let(:db) { Gem::Server::Database.db }
+  let(:db) { Them::Server::Database.db }
 
   it "lists known servers" do
     db[:known_servers].insert(

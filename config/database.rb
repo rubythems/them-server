@@ -4,7 +4,7 @@ require "sequel"
 require "rom"
 require "hanami/db/testing"
 
-module Gem
+module Them
   module Server
     module Database
       class << self
@@ -48,11 +48,11 @@ module Gem
           require File.join(relations_path, "scope_owners.rb")
           require File.join(relations_path, "gem_owners.rb")
 
-          config.register_relation(Gem::Server::Relations::Owners)
-          config.register_relation(Gem::Server::Relations::Gems)
-          config.register_relation(Gem::Server::Relations::Scopes)
-          config.register_relation(Gem::Server::Relations::ScopeOwners)
-          config.register_relation(Gem::Server::Relations::GemOwners)
+          config.register_relation(Them::Server::Relations::Owners)
+          config.register_relation(Them::Server::Relations::Gems)
+          config.register_relation(Them::Server::Relations::Scopes)
+          config.register_relation(Them::Server::Relations::ScopeOwners)
+          config.register_relation(Them::Server::Relations::GemOwners)
 
           @rom = ROM.container(config)
         end
@@ -67,7 +67,7 @@ module Gem
         def resolve_database_url(root, env)
           raw_url = ENV["DATABASE_URL"].to_s.strip
           if raw_url.empty?
-            db_file = ENV["GEM_SERVER_DB"].to_s.strip
+            db_file = ENV["THEM_SERVER_DB"].to_s.strip
             db_file = File.join(root, "config", "db", "them_server.sqlite") if db_file.empty?
             raw_url = "sqlite://#{db_file}"
           end

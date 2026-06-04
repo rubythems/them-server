@@ -2,7 +2,7 @@
 
 require "hanami/db/struct"
 
-module Gem
+module Them
   module Server
     module DB
       class Struct < Hanami::DB::Struct

@@ -2,9 +2,9 @@
 
 require "json"
 require_relative "../../../config/database"
-require "gem/server/crypto"
+require "them/server/crypto"
 
-module Gem
+module Them
   module Server
     module Actions
       module Federation
@@ -42,7 +42,7 @@ module Gem
         #     "status": "ok"
         #   }
         #
-        class Subscribe < Gem::Server::Action
+        class Subscribe < Them::Server::Action
           # Handles the subscription request with authentication.
           #
           # This method performs the following operations:

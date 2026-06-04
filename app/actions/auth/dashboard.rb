@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module Gem
+module Them
   module Server
     module Actions
       module Auth
-        class Dashboard < Gem::Server::Action
+        class Dashboard < Them::Server::Action
           def handle(request, response)
             # Check if logged in
             unless request.session[:user_id]
@@ -14,7 +14,7 @@ module Gem
             end
 
             user_id = request.session[:user_id]
-            db = Gem::Server::Database.db
+            db = Them::Server::Database.db
 
             # Get user info
             owner = db[:owners].where(id: user_id).first

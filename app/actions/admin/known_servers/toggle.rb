@@ -4,12 +4,12 @@ require "json"
 require "rack"
 require_relative "../../../../config/database"
 
-module Gem
+module Them
   module Server
     module Actions
       module Admin
         module KnownServers
-          class Toggle < Gem::Server::Action
+          class Toggle < Them::Server::Action
             def handle(request, response)
               db = Database.db
               payload = parse_payload(request)

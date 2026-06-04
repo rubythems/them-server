@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-module Gem
+module Them
   module Server
     module Views
       module Auth
-        class Dashboard < Gem::Server::View
+        class Dashboard < Them::Server::View
           expose :owner
           expose :gems
           expose :user_name
           expose :user_email
 
           def page_title
-            "Dashboard - Gem Server"
+            "Dashboard - Them Server"
           end
 
           def gem_count

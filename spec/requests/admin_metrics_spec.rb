@@ -3,7 +3,7 @@
 require_relative "../../config/database"
 
 RSpec.describe "Admin Federation Metrics", type: :request do
-  let(:db) { Gem::Server::Database.db }
+  let(:db) { Them::Server::Database.db }
 
   it "returns counts and timestamps" do
     t = Time.now

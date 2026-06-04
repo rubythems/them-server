@@ -13,7 +13,7 @@ use Rack::Session::Cookie,
     max_age: 86400 * 30
 
 map "/auth" do
-  run Gem::Server::AuthenticationApp.app
+  run Them::Server::AuthenticationApp.app
 end
 
 map "/" do

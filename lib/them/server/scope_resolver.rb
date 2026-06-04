@@ -2,7 +2,7 @@
 
 require_relative "../../../config/database"
 
-module Gem
+module Them
   module Server
     class ScopeResolver
       attr_reader :path_parts, :include_gem_name

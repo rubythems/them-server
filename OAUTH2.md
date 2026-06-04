@@ -99,7 +99,7 @@ curl -X POST http://localhost:9292/api/v1/gems \
 
 The OAuth2 integration consists of three main components:
 
-### 1. OAuth2Config (`lib/gem/server/oauth2_config.rb`)
+### 1. OAuth2Config (`lib/them/server/oauth2_config.rb`)
 
 Manages OAuth2 client configuration and token validation:
 
@@ -108,7 +108,7 @@ Manages OAuth2 client configuration and token validation:
 - Falls back to provider-specific token info endpoints
 - Auto-detects endpoints for GitHub and GitLab
 
-### 2. Authenticator (`lib/gem/server/authenticator.rb`)
+### 2. Authenticator (`lib/them/server/authenticator.rb`)
 
 Unified authentication handler that tries multiple schemes:
 
@@ -181,7 +181,7 @@ Never commit `OAUTH2_CLIENT_SECRET` to version control. Use:
 OAuth2 tokens include scopes that can be used for fine-grained authorization:
 
 ```ruby
-auth_result = Gem::Server::Authenticator.authenticate(env)
+auth_result = Them::Server::Authenticator.authenticate(env)
 if auth_result[:authenticated]
   scopes = auth_result[:scopes]
   if scopes.include?("write:packages")
@@ -201,7 +201,7 @@ RSpec.describe "OAuth2 authentication" do
     ENV['OAUTH2_CLIENT_ID'] = 'test-client'
     ENV['OAUTH2_CLIENT_SECRET'] = 'test-secret'
 
-    result = Gem::Server::Authenticator.authenticate({
+    result = Them::Server::Authenticator.authenticate({
       'HTTP_AUTHORIZATION' => 'Bearer valid-token'
     })
 

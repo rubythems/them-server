@@ -3,14 +3,14 @@
 require "spec_helper"
 require "rack/test"
 
-RSpec.describe Gem::Server::Actions::Gems::Yank do
+RSpec.describe Them::Server::Actions::Gems::Yank do
   include Rack::Test::Methods
 
   def app
     Hanami.app
   end
 
-  let(:db) { Gem::Server::Database.db }
+  let(:db) { Them::Server::Database.db }
   let(:owner_api_key) { "test-api-key-456" }
   let!(:owner_id) do
     db[:owners].insert(

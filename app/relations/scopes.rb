@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-module Gem
+module Them
   module Server
     module Relations
-      class Scopes < Gem::Server::DB::Relation
+      class Scopes < Them::Server::DB::Relation
         schema(:scopes, infer: true)
 
         def by_name(name)

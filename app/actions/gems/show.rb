@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 require "json"
-require "gem/server/scope_resolver"
+require "them/server/scope_resolver"
 require_relative "../../../config/database"
 
-module Gem
+module Them
   module Server
     module Actions
       module Gems
-        class Show < Gem::Server::Action
+        class Show < Them::Server::Action
           def handle(request, response)
             path_param = request.params[:path] || ""
             path_parts = path_param.split("/").reject(&:empty?)

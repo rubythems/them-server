@@ -36,7 +36,9 @@ Please file a bug if you notice a violation of semantic versioning.
 - Fixed Rack boot by loading the actual authentication app.
 - Fixed authentication app boot by not starting an undefined Hanami mail
   provider.
-- Aligned generated Hanami DB and type namespaces with `Gem::Server`.
+- Aligned generated Hanami DB and type namespaces with `Them::Server`.
+- Completed the `Them::Server` namespace and require-path migration from the
+  legacy upstream naming.
 - Configured the Hanami DB provider and legacy DB helper to share Hanami-style
   test database URL handling, including parallel worker suffixes.
 

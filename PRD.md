@@ -1,4 +1,4 @@
-# Product Requirements Document (PRD) for Federated Ruby Gem Server
+# Product Requirements Document (PRD) for Federated Ruby Them Server
 
 ## Overview
 

@@ -3,4 +3,4 @@
 
 require_relative "../config/database"
 
-Gem::Server::Database.migrate
+Them::Server::Database.migrate

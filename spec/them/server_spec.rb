@@ -2,32 +2,32 @@
 
 require "spec_helper"
 
-RSpec.describe Gem::Server do
+RSpec.describe Them::Server do
   it "has a version number" do
-    expect(Gem::Server::Version::VERSION).not_to be_nil
+    expect(Them::Server::Version::VERSION).not_to be_nil
   end
 
   describe "module structure" do
-    it "defines the Gem::Server namespace" do
-      expect(defined?(Gem::Server)).to eq("constant")
+    it "defines the Them::Server namespace" do
+      expect(defined?(Them::Server)).to eq("constant")
     end
 
     it "includes Database module" do
-      expect(Gem::Server::Database).to respond_to(:db)
-      expect(Gem::Server::Database).to respond_to(:migrate)
+      expect(Them::Server::Database).to respond_to(:db)
+      expect(Them::Server::Database).to respond_to(:migrate)
     end
 
     it "includes ScopeResolver class" do
-      expect(Gem::Server::ScopeResolver).to be_a(Class)
+      expect(Them::Server::ScopeResolver).to be_a(Class)
     end
 
     it "includes Action base class" do
-      expect(Gem::Server::Action).to be < Hanami::Action
+      expect(Them::Server::Action).to be < Hanami::Action
     end
   end
 
   describe "integration" do
-    let(:db) { Gem::Server::Database.db }
+    let(:db) { Them::Server::Database.db }
 
     it "can create a complete workflow from scope to gem" do
       # Create owner

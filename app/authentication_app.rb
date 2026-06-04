@@ -6,7 +6,7 @@ require "rodauth/hanami" # see lib/rodauth/hanami.rb
 
 require_relative "../config/database"
 
-module Gem
+module Them
   module Server
     # Provides a Roda app to be used for Rodauth-based authentication.
     #
@@ -56,7 +56,7 @@ module Gem
 
         # Use our own database connection, and simplify database operation: keep the password hash
         # column directly in the accounts table, and skip using database-level functions.
-        db Gem::Server::Database.db
+        db Them::Server::Database.db
 
         accounts_table :accounts
         account_password_hash_column :password_hash

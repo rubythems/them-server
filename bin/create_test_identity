@@ -6,7 +6,7 @@
 require_relative "../config/database"
 require "bcrypt"
 
-db = Gem::Server::Database.db
+db = Them::Server::Database.db
 
 puts "Creating Test Identity..."
 puts "=" * 60

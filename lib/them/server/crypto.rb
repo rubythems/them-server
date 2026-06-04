@@ -3,7 +3,7 @@
 require "base64"
 require "ed25519"
 
-module Gem
+module Them
   module Server
     # Cryptographic operations for federation security.
     #
