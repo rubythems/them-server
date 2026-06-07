@@ -22,6 +22,7 @@ Please file a bug if you notice a violation of semantic versioning.
 
 ### Changed
 
+- Updated the locked `auth-sanitizer` runtime dependency to v0.2.1.
 - Refreshed generated project templates with `kettle-jem`.
 - Retemplated generated project metadata and documentation links for the
   `rubythems` repository organization.
