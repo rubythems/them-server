@@ -111,7 +111,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency("hanami-utils", "~> 2.2", ">= 2.2.0")             # ruby >= 3.1.0, Hanami utilities including inflector
   spec.add_dependency("hanami-view", "~> 2.2", ">= 2.2.1")              # ruby >= 3.1.0, Full-stack web framework
   spec.add_dependency("mail", "~> 2.8", ">= 2.8.1")                     # ruby >= 2.5.0, email library
-  spec.add_dependency("oauth2", "~> 2.0", ">= 2.0.17")                  # ruby >= 2.2.0, OAuth2 client for federation
+  spec.add_dependency("oauth2", "~> 2.0", ">= 2.0.21")                  # ruby >= 2.2.0, OAuth2 client for federation
   spec.add_dependency("puma", "~> 7.2")                                  # ruby >= 2.7.0, Rack server
   spec.add_dependency("rack", "~> 3.2", ">= 3.2.3")                     # ruby >= 2.4.0, Rack web server interface
   spec.add_dependency("rack-protection", "~> 4.2", ">= 4.2.1")          # ruby >= 2.7.8, Security middleware
