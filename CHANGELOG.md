@@ -35,6 +35,7 @@ Please file a bug if you notice a violation of semantic versioning.
 
 ### Fixed
 
+- Restored `docs/CNAME` so the generated documentation site keeps its custom domain.
 - Split SQLite adapter dependencies into platform-aware appraisal gemfiles and
   route JRuby SQLite URLs through JDBC so JRuby CI does not install native
   `sqlite3`.
