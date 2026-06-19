@@ -22,16 +22,32 @@ Please file a bug if you notice a violation of semantic versioning.
 
 ### Changed
 
+- Retemplated project metadata and CI/development automation with `kettle-jem` v7.0.0.
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [0.1.0] - 2026-06-14
+
+- TAG: [v0.1.0][0.1.0t]
+- COVERAGE: 72.28% -- 777/1075 lines in 28 files
+- BRANCH COVERAGE: 51.76% -- 147/284 branches in 28 files
+- 77.50% documented
+- Initial release
+
+### Changed
+
 - Raised the runtime dependency floor for `oauth2` to `>= 2.0.21`.
 - Updated the locked `auth-sanitizer` runtime dependency to v0.2.1.
 - Updated the locked `snaky_hash` runtime dependency to v2.0.5.
 - Refreshed generated project templates with `kettle-jem`.
 - Retemplated generated project metadata and documentation links for the
   `rubythems` repository organization.
-
-### Deprecated
-
-### Removed
 
 ### Fixed
 
@@ -56,8 +72,6 @@ Please file a bug if you notice a violation of semantic versioning.
 - Configured the Hanami DB provider and legacy DB helper to share Hanami-style
   test database URL handling, including parallel worker suffixes.
 
-### Security
-
-## [0.1.0] - 2025-10-10
-
-- Initial release
+[Unreleased]: https://github.com/rubythems/them-server/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/rubythems/them-server/compare/2a13af94f52cddc9142f80fe00f66c800ad2d8eb...v0.1.0
+[0.1.0t]: https://github.com/rubythems/them-server/releases/tag/v0.1.0
