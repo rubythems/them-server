@@ -77,7 +77,12 @@ Please file a bug if you notice a violation of semantic versioning.</p>
 <h3 id="changed">Changed</h3>
 
 <ul>
+  <li>Raised the runtime dependency floor for <code>oauth2</code> to <code>&gt;= 2.0.21</code>.</li>
+  <li>Updated the locked <code>auth-sanitizer</code> runtime dependency to v0.2.1.</li>
+  <li>Updated the locked <code>snaky_hash</code> runtime dependency to v2.0.5.</li>
   <li>Refreshed generated project templates with <code>kettle-jem</code>.</li>
+  <li>Retemplated generated project metadata and documentation links for the<br>
+<code>rubythems</code> repository organization.</li>
 </ul>
 
 <h3 id="deprecated">Deprecated</h3>
@@ -87,6 +92,15 @@ Please file a bug if you notice a violation of semantic versioning.</p>
 <h3 id="fixed">Fixed</h3>
 
 <ul>
+  <li>Restored <code>docs/CNAME</code> so the generated documentation site keeps its custom domain.</li>
+  <li>Split SQLite adapter dependencies into platform-aware appraisal gemfiles and<br>
+route JRuby SQLite URLs through JDBC so JRuby CI does not install native<br>
+<code>sqlite3</code>.</li>
+  <li>Kept the MRI-only <code>debug</code> gem out of cross-platform appraisal dependency<br>
+resolution so JRuby and TruffleRuby CI do not try to install it.</li>
+  <li>Fixed remaining CI failures from E2E database cleanup, gem file fixtures, and<br>
+inherited template coverage thresholds.</li>
+  <li>Fixed CI appraisal gemfiles by declaring test dependencies in the gemspec.</li>
   <li>Restored the app-specific Rackup binstub and Rake tasks after the template<br>
 refresh.</li>
   <li>Fixed Hanami route boot by removing the missing <code>:main</code> slice mount.</li>
@@ -110,7 +124,7 @@ test database URL handling, including parallel worker suffixes.</li>
 </div></div>
 
       <div id="footer">
-  Generated on Thu Jun  4 16:16:29 2026 by
+  Generated on Sun Jun 14 02:08:47 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.44 (ruby-4.0.5).
 </div>

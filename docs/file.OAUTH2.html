@@ -270,12 +270,12 @@ curl <span class="nt">-X</span> POST http://localhost:9292/api/v1/gems <span cla
 
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="code ruby"><code class="ruby"><span class="no">RSpec</span><span class="p">.</span><span class="nf">describe</span> <span class="s2">"OAuth2 authentication"</span> <span class="k">do</span>
   <span class="n">it</span> <span class="s2">"validates tokens via introspection"</span><span class="p">,</span> <span class="ss">:vcr</span> <span class="k">do</span>
-    <span class="no">ENV</span><span class="p">[</span><span class="s1">'OAUTH2_PROVIDER_URL'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'https://oauth.example.com'</span>
-    <span class="no">ENV</span><span class="p">[</span><span class="s1">'OAUTH2_CLIENT_ID'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'test-client'</span>
-    <span class="no">ENV</span><span class="p">[</span><span class="s1">'OAUTH2_CLIENT_SECRET'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'test-secret'</span>
+    <span class="no">ENV</span><span class="p">[</span><span class="s2">"OAUTH2_PROVIDER_URL"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"https://oauth.example.com"</span>
+    <span class="no">ENV</span><span class="p">[</span><span class="s2">"OAUTH2_CLIENT_ID"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"test-client"</span>
+    <span class="no">ENV</span><span class="p">[</span><span class="s2">"OAUTH2_CLIENT_SECRET"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"test-secret"</span>
 
     <span class="n">result</span> <span class="o">=</span> <span class="no">Them</span><span class="o">::</span><span class="no">Server</span><span class="o">::</span><span class="no">Authenticator</span><span class="p">.</span><span class="nf">authenticate</span><span class="p">(</span><span class="err">{</span>
-      <span class="s1">'HTTP_AUTHORIZATION'</span> <span class="o">=&gt;</span> <span class="s1">'Bearer valid-token'</span>
+      <span class="s2">"HTTP_AUTHORIZATION"</span> <span class="o">=&gt;</span> <span class="s2">"Bearer valid-token"</span>
     <span class="err">}</span><span class="p">)</span>
 
     <span class="n">expect</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="ss">:authenticated</span><span class="p">]).</span><span class="nf">to</span> <span class="n">be</span> <span class="kp">true</span>
@@ -357,7 +357,7 @@ curl <span class="nt">-X</span> POST http://localhost:9292/api/v1/gems <span cla
 </div></div>
 
       <div id="footer">
-  Generated on Thu Jun  4 16:16:29 2026 by
+  Generated on Sun Jun 14 02:08:47 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.44 (ruby-4.0.5).
 </div>
