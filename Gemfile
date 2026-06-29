@@ -9,13 +9,7 @@
 source "https://gem.coop"
 
 git_source(:codeberg) { |repo_name| "https://codeberg.org/#{repo_name}" }
-gem "hanami", "~> 2.2"
-gem "hanami-assets", "~> 2.2"
-gem "hanami-controller", "~> 2.2"
-gem "hanami-db", "~> 2.2"
-gem "hanami-router", "~> 2.2"
 gem "hanami-validations", "~> 2.2"
-gem "hanami-view", "~> 2.2"
 
 group :development do
   gem "hanami-webconsole", "~> 2.2"
@@ -38,11 +32,12 @@ git_source(:gitlab) { |repo_name| "https://gitlab.com/#{repo_name}" }
 # Include dependencies from them-server.gemspec
 gemspec
 
+# Local workspace dependency wiring for *_local.gemfile overrides
+nomono_requirements = ["~> 1.0", ">= 1.0.6"]
 # Database adapters
 eval_gemfile "gemfiles/modular/database.gemfile"
 
-# Local workspace dependency wiring for *_local.gemfile overrides
-gem "nomono", "~> 1.0", ">= 1.0.4", require: false # ruby >= 2.2
+gem "nomono", *nomono_requirements, require: false # ruby >= 2.2
 
 # Templating (env-switched: SMORG_RB_DEV=/path/to/structuredmerge/ruby/gems for local paths)
 eval_gemfile "gemfiles/modular/templating.gemfile" if ENV.fetch("K_JEM_TEMPLATING", "false").casecmp("true").zero?

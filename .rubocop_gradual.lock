@@ -1,7 +1,4 @@
 {
-  "Rakefile:20583263": [
-    [251, 5, 19, "Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.", 2836416036]
-  ],
   "app/actions/gems/create.rb:3941528809": [
     [204, 50, 15, "Style/IfWithBooleanLiteralBranches: Remove redundant ternary operator with boolean literal branches.", 562381739]
   ],
@@ -38,8 +35,8 @@
     [87, 37, 2, "RSpec/BeEq: Prefer `be` over `eq`.", 5860785],
     [93, 35, 2, "RSpec/BeEq: Prefer `be` over `eq`.", 5860785]
   ],
-  "spec/spec_helper.rb:2762735811": [
-    [41, 1, 21, "Lint/DuplicateRequire: Duplicate `require` detected.", 257135926]
+  "spec/spec_helper.rb:1062930140": [
+    [45, 1, 21, "Lint/DuplicateRequire: Duplicate `require` detected.", 257135926]
   ],
   "spec/support/requests.rb:194965783": [
     [5, 22, 12, "RSpec/ContextWording: Context description should match /^when\\b/, /^with\\b/, or /^without\\b/.", 179097960]
