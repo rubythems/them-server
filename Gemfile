@@ -33,7 +33,7 @@ git_source(:gitlab) { |repo_name| "https://gitlab.com/#{repo_name}" }
 gemspec
 
 # Local workspace dependency wiring for *_local.gemfile overrides
-nomono_requirements = ["~> 1.0", ">= 1.0.6"]
+nomono_requirements = ["~> 1.0", ">= 1.0.7"]
 # Database adapters
 eval_gemfile "gemfiles/modular/database.gemfile"
 
