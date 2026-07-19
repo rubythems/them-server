@@ -1,10 +1,3 @@
-GIT
-  remote: https://github.com/kettle-dev/simplecov.git
-  revision: bc14cb6ef921e264332fd7b750bf6fb8916488c1
-  branch: fix-final-parallel-worker-formatting
-  specs:
-    simplecov (1.0.0.rc3)
-
 PATH
   remote: .
   specs:
@@ -297,21 +290,19 @@ GEM
     json (2.20.0)
     jwt (3.2.0)
       base64
-    kettle-dev (2.2.24)
+    kettle-dev (2.3.7)
       emoji_regex (>= 15.0)
-      kettle-rb (~> 0.1, >= 0.1.0)
+      kettle-rb (~> 0.1, >= 0.1.2)
       kettle-test (~> 2.0, >= 2.0.4)
       ruby-progressbar (~> 1.13)
-      version_gem (~> 1.1, >= 1.1.13)
-    kettle-rb (0.1.1)
-    kettle-soup-cover (3.0.0.rc5)
-      simplecov (>= 1.0.pre)
-      simplecov-cobertura (>= 4.0.pre)
+    kettle-rb (0.1.4)
+    kettle-soup-cover (3.0.1)
+      simplecov (>= 1.0)
+      simplecov-cobertura (>= 4.0)
       simplecov-console (~> 0.9, >= 0.9.5)
       simplecov-rcov (~> 0.3, >= 0.3.7)
       simplecov_lcov_formatter (~> 0.9, >= 0.9.0)
-      version_gem (~> 1.1, >= 1.1.13)
-    kettle-test (2.0.8)
+    kettle-test (2.0.10)
       appraisal2 (~> 3.0, >= 3.0.6)
       backports (~> 3.0)
       rspec (~> 3.0)
@@ -382,7 +373,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.19.4-x86_64-linux-musl)
       racc (~> 1.4)
-    nomono (1.0.6)
+    nomono (1.0.8)
     notiffany (0.1.3)
       nenv (~> 0.1)
       shellany (~> 0.0)
@@ -612,9 +603,10 @@ GEM
     silent_stream (1.0.12)
       logger (~> 1.2)
       version_gem (>= 1.1.8, < 3)
-    simplecov-cobertura (4.0.0.rc1)
+    simplecov (1.0.2)
+    simplecov-cobertura (4.0.0)
       rexml
-      simplecov (>= 1.0.0.rc2, < 2.0)
+      simplecov (~> 1.0)
     simplecov-console (0.9.5)
       ansi
       simplecov
@@ -682,7 +674,7 @@ GEM
     unicode-emoji (4.2.0)
     uri (1.1.1)
     vcr (6.4.0)
-    version_gem (1.1.13)
+    version_gem (1.1.14)
     webmock (3.26.2)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
@@ -746,14 +738,14 @@ DEPENDENCIES
   hanami-webconsole (~> 2.2)
   irb (~> 1.17)
   jdbc-sqlite3 (>= 3.46, < 3.47)
-  kettle-dev (~> 2.2, >= 2.2.24)
-  kettle-soup-cover (~> 3.0.a, >= 3.0.0.rc5)
-  kettle-test (~> 2.0, >= 2.0.8)
+  kettle-dev (~> 2.2, >= 2.2.25)
+  kettle-soup-cover (~> 3.0, >= 3.0.1)
+  kettle-test (~> 2.0, >= 2.0.9)
   kramdown (~> 2.5, >= 2.5.1)
   kramdown-parser-gfm (~> 1.1)
   launchy (~> 3.1)
   mutex_m (~> 0.2)
-  nomono (~> 1.0, >= 1.0.6)
+  nomono (~> 1.0, >= 1.0.7)
   rack-test (~> 2.2)
   rake (~> 13.0)
   rbs (>= 3.0)
@@ -770,7 +762,6 @@ DEPENDENCIES
   rubocop-packaging (~> 0.6, >= 0.6.0)
   rubocop-ruby3_2 (~> 3.0, >= 3.0.6)
   ruby-progressbar (~> 1.13)
-  simplecov!
   sqlite3 (~> 2.9)
   standard (~> 1.54, >= 1.54.0)
   stone_checksums (~> 1.0, >= 1.0.4)
