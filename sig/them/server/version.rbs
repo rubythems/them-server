@@ -1,8 +1,0 @@
-module Them
-  module Server
-    module Version
-      VERSION: String
-    end
-    VERSION: String
-  end
-end

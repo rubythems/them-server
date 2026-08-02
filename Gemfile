@@ -9,20 +9,6 @@
 source "https://gem.coop"
 
 git_source(:codeberg) { |repo_name| "https://codeberg.org/#{repo_name}" }
-gem "hanami-validations", "~> 2.2"
-
-group :development do
-  gem "hanami-webconsole", "~> 2.2"
-end
-
-group :cli, :development do
-  gem "hanami-reloader", "~> 2.2"
-end
-
-group :cli, :development, :test do
-  gem "hanami-rspec", "~> 2.2"
-end
-
 git_source(:gitlab) { |repo_name| "https://gitlab.com/#{repo_name}" }
 
 #### IMPORTANT #######################################################
@@ -32,12 +18,10 @@ git_source(:gitlab) { |repo_name| "https://gitlab.com/#{repo_name}" }
 # Include dependencies from them-server.gemspec
 gemspec
 
-# Local workspace dependency wiring for *_local.gemfile overrides
-nomono_requirements = ["~> 1.0", ">= 1.0.7"]
-# Database adapters
-eval_gemfile "gemfiles/modular/database.gemfile"
+gem "kettle-family", "~> 1.2", ">= 1.2.22"
 
-gem "nomono", *nomono_requirements, require: false # ruby >= 2.2
+# Local workspace dependency wiring for *_local.gemfile overrides
+gem "nomono", "~> 1.1", ">= 1.1.3", require: false # ruby >= 3.2.0
 
 # Templating (env-switched: STRUCTUREDMERGE_DEV=/path/to/structuredmerge/ruby/gems for local paths)
 eval_gemfile "gemfiles/modular/templating.gemfile" if ENV.fetch("K_JEM_TEMPLATING", "false").casecmp("true").zero?
