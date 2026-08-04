@@ -93,6 +93,8 @@ Please file a bug if you notice a violation of semantic versioning.
 
 - Restore project database, federation, and rackup development tasks after templating.
 
+- Preserve the Rackup binstub used by the end-to-end test server.
+
 ### Security
 
 ## [0.1.0] - 2026-06-14
