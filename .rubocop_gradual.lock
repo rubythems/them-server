@@ -12,6 +12,9 @@
     [47, 44, 4, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 2088896725],
     [70, 11, 4, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 2088896725]
   ],
+  "gemfiles/modular/templating.gemfile:3018447732": [
+    [14, 3, 47, "Bundler/DuplicatedGem: Gem `tree_sitter_language_pack` requirements already given on line 10 of the Gemfile.", 3843603197]
+  ],
   "lib/them/server/crypto.rb:1175456881": [
     [91, 9, 8, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 1700737912],
     [100, 13, 8, "Style/IdenticalConditionalBranches: Move `[sk, pk]` out of the conditional.", 863377260],
