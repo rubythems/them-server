@@ -29,6 +29,9 @@ eval_gemfile "gemfiles/modular/templating.gemfile" if ENV.fetch("K_JEM_TEMPLATIN
 # Debugging
 eval_gemfile "gemfiles/modular/debug.gemfile"
 
+# Database adapters used by the application and its test suite
+eval_gemfile "gemfiles/modular/database.gemfile"
+
 # Code Coverage (env-switched: KETTLE_DEV_DEV=true for local paths)
 eval_gemfile "gemfiles/modular/coverage.gemfile"
 
