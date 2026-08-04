@@ -24,6 +24,25 @@
       ]
     }
   ],
+  "created_at: now,\nupdated_at: now": [
+    {
+      "file": "Rakefile",
+      "lines": [
+        296,
+        377,
+        387
+      ]
+    }
+  ],
+  "db = Them::Server::Database.db\nnow = Time.now": [
+    {
+      "file": "Rakefile",
+      "lines": [
+        285,
+        366
+      ]
+    }
+  ],
   "direct: them-server.gemspec\nmodular: gemfiles/modular/injected.gemfile": [
     {
       "file": ".structuredmerge/kettle-jem.yml",
@@ -53,6 +72,33 @@
         129,
         134,
         139
+      ]
+    }
+  ],
+  "my_base = args[:my_base_url].to_s.strip\nabort \"to_base_url is required\" if to_base.empty?": [
+    {
+      "file": "Rakefile",
+      "lines": [
+        307,
+        318
+      ]
+    }
+  ],
+  "require \"them/server/federation_client\"\nto_base = args[:to_base_url].to_s.strip": [
+    {
+      "file": "Rakefile",
+      "lines": [
+        305,
+        316
+      ]
+    }
+  ],
+  "to_base = args[:to_base_url].to_s.strip\nmy_base = args[:my_base_url].to_s.strip": [
+    {
+      "file": "Rakefile",
+      "lines": [
+        306,
+        317
       ]
     }
   ]
