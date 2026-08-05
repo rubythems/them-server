@@ -95,6 +95,8 @@ Please file a bug if you notice a violation of semantic versioning.
 
 - Preserve the Rackup binstub used by the end-to-end test server.
 
+- Preserve tracked project-owned Bundler binstubs during template bootstrap.
+
 ### Security
 
 ## [0.1.0] - 2026-06-14
