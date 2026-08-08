@@ -21,6 +21,11 @@ I've summarized my thoughts in [this blog post](https://dev.to/galtzo/hostile-ta
 
 ## 🌻 Synopsis <a href="https://discord.gg/3qme4XHNKN"><img alt="Galtzo FLOSS Logo by Aboling0, CC BY-SA 4.0" src="https://logos.galtzo.com/assets/images/galtzo-floss/avatar-128px.svg" width="8%" align="right"/></a> <a href="https://ruby-toolbox.com"><img alt="ruby-lang Logo, Yukihiro Matsumoto, Ruby Visual Identity Team, CC BY-SA 2.5" src="https://logos.galtzo.com/assets/images/ruby-lang/avatar-128px.svg" width="8%" align="right"/></a>
 
+`them-server` is a Rack-based gem server application with optional OAuth2
+authentication and federation support. It provides the server-side building
+blocks and demo application used to run a private or federated RubyGems
+service.
+
 ## 💡 Info you can shake a stick at
 
 | Tokens to Remember | [![Gem name][⛳️name-img]][⛳️gem-name] [![Gem namespace][⛳️namespace-img]][⛳️gem-namespace] |
@@ -117,6 +122,17 @@ gem install them-server
 ```
 
 ## ⚙️ Configuration
+
+The server uses the application database and Rack environment configured by
+the host project. OAuth2 is optional. To enable it, set
+`OAUTH2_PROVIDER_URL`, `OAUTH2_CLIENT_ID`, and `OAUTH2_CLIENT_SECRET`; set
+`OAUTH2_INTROSPECTION_URL` when the provider supports token introspection, or
+use the default token-info fallback. Optional endpoint overrides are
+`OAUTH2_TOKEN_URL` and `OAUTH2_AUTHORIZE_URL`.
+
+Keep client secrets in the deployment environment rather than in the
+repository. Without `OAUTH2_PROVIDER_URL`, `Them::Server::OAuth2Config` stays
+disabled and the server can operate without OAuth2.
 
 ## 🔧 Basic Usage
 
