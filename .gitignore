@@ -21,6 +21,9 @@ Appraisal.*.gemfile.lock
 /results/
 .output.txt
 
+# Runtime databases created by local and parallel test runs
+/config/db/*.sqlite
+
 # Documentation
 /.yardoc/
 /_yardoc/
