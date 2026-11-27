@@ -6,7 +6,7 @@
 # kettle-jem will then preserve content between those markers across template runs.
 # kettle-jem:unfreeze
 
-# them-server Rakefile v7.1.0 - 2026-08-04
+# them-server Rakefile v7.1.44 - 2026-11-27
 # Ruby 2.3 (Safe Navigation) or higher required
 #
 # See LICENSE.md for license information.
@@ -63,6 +63,12 @@ desc "Default tasks aggregator"
 task :default do
   puts "Default task complete."
 end
+
+# Without this, a generated docs/ directory makes Rake resolve the bare
+# name `docs` as an up-to-date file task, so `rake docs` exits 0 having
+# regenerated nothing.
+desc "Generate YARD documentation"
+task docs: "yard"
 
 # simplecov:disable
 ### MONOREPO FAMILY TASKS
@@ -185,212 +191,3 @@ rescue LoadError
     warn("NOTE: stone_checksums isn't installed, or is disabled for #{RUBY_VERSION} in the current environment")
   end
 end
-
-# kettle-jem:freeze
-# App-specific Hanami, database, federation, and auth tasks retained across template refreshes.
-# kettle-jem:unfreeze
-
-require "hanami/rake_tasks"
-require_relative "config/database"
-require "sequel"
-
-Sequel.extension(:migration)
-
-namespace :db do
-  def current_migration_version(db)
-    return 0 unless db.table_exists?(:schema_info)
-
-    row = db[:schema_info].first
-    (row && row[:version].to_i) || 0
-  end
-
-  desc "Run database migrations"
-  task :migrate do
-    Them::Server::Database.migrate
-    db = Them::Server::Database.db
-    puts "Migrations complete. Current version: #{current_migration_version(db)}"
-  end
-
-  desc "Print current migration version"
-  task :version do
-    puts current_migration_version(Them::Server::Database.db)
-  end
-
-  desc "Rollback database by N steps (default 1). Usage: rake db:rollback[steps]"
-  task :rollback, [:steps] do |_task, args|
-    db = Them::Server::Database.db
-    current = current_migration_version(db)
-    steps = (args[:steps] || "1").to_i
-    target = [current - steps, 0].max
-    Sequel::Migrator.run(db, "config/db/migrate", target: target)
-    puts "Rolled back #{steps} step(s). Now at version: #{current_migration_version(db)}"
-  end
-
-  desc "Seed the database from config/db/seeds.rb"
-  task :seed do
-    seed_path = File.join(__dir__, "config/db/seeds.rb")
-    abort "No seeds file at #{seed_path}" unless File.exist?(seed_path)
-
-    require seed_path
-    puts "Seed complete."
-  end
-
-  desc "Reset the database (delete SQLite file, migrate, seed)"
-  task :reset do
-    db = Them::Server::Database.db
-    db&.disconnect
-
-    database_url = ENV["DATABASE_URL"].to_s.strip
-    sqlite_file = if database_url.start_with?("sqlite://")
-      database_url.delete_prefix("sqlite://")
-    elsif database_url.start_with?("sqlite:")
-      database_url.delete_prefix("sqlite:")
-    end
-    sqlite_file = ENV["THEM_SERVER_DB"].to_s.strip if sqlite_file.to_s.empty?
-    sqlite_file = File.join(__dir__, "config", "db", "them_server.sqlite") if sqlite_file.to_s.empty?
-
-    if sqlite_file != ":memory:" && File.exist?(sqlite_file)
-      File.delete(sqlite_file)
-      puts "Deleted #{sqlite_file}"
-    else
-      puts "No SQLite file to delete (using DATABASE_URL=#{database_url.inspect})"
-    end
-
-    Rake::Task["db:migrate"].invoke
-    Rake::Task["db:seed"].invoke if File.exist?(File.join(__dir__, "config/db/seeds.rb"))
-    puts "DB reset complete."
-  end
-end
-
-namespace :federation do
-  desc "List known servers"
-  task :list_known do
-    rows = Them::Server::Database.db[:known_servers].all
-    if rows.empty?
-      puts "No known servers"
-    else
-      rows.each do |row|
-        puts "- #{row[:base_url]} subscribed=#{row[:subscribed]} last_seen=#{row[:last_seen_at]}"
-      end
-    end
-  end
-
-  desc "Seed a known server. Usage: rake federation:seed_known[base_url,public_key_b64]"
-  task :seed_known, [:base_url, :public_key_b64] do |_task, args|
-    base_url = args[:base_url].to_s.strip
-    public_key = args[:public_key_b64].to_s.strip
-    abort "base_url is required" if base_url.empty?
-    abort "public_key_b64 is required" if public_key.empty?
-
-    db = Them::Server::Database.db
-    now = Time.now
-    row = db[:known_servers].where(base_url: base_url).first
-    if row
-      db[:known_servers].where(id: row[:id]).update(public_key_b64: public_key, updated_at: now)
-      puts "Updated known server: #{base_url}"
-    else
-      db[:known_servers].insert(
-        base_url: base_url,
-        public_key_b64: public_key,
-        subscribed: false,
-        created_at: now,
-        updated_at: now
-      )
-      puts "Added known server: #{base_url}"
-    end
-  end
-
-  desc "Announce to a remote server. Usage: rake federation:announce[to_base_url,my_base_url]"
-  task :announce, [:to_base_url, :my_base_url] do |_task, args|
-    require "them/server/federation_client"
-    to_base = args[:to_base_url].to_s.strip
-    my_base = args[:my_base_url].to_s.strip
-    abort "to_base_url is required" if to_base.empty?
-
-    Them::Server::FederationClient.new.announce(to_base_url: to_base, my_base_url: my_base)
-    puts "Announce sent to #{to_base}"
-  end
-
-  desc "Subscribe to a remote server. Usage: rake federation:subscribe[to_base_url,my_base_url]"
-  task :subscribe, [:to_base_url, :my_base_url] do |_task, args|
-    require "them/server/federation_client"
-    to_base = args[:to_base_url].to_s.strip
-    my_base = args[:my_base_url].to_s.strip
-    abort "to_base_url is required" if to_base.empty?
-
-    Them::Server::FederationClient.new.subscribe(to_base_url: to_base, my_base_url: my_base)
-    puts "Subscribe sent to #{to_base}"
-  end
-
-  desc "Broadcast a stubbed gem record to all subscribed peers. Usage: rake federation:broadcast_stub[name,version,scope_path]"
-  task :broadcast_stub, [:name, :version, :scope_path] do |_task, args|
-    require "tempfile"
-    require "them/server/federation_broadcaster"
-
-    name = (args[:name] || "demo").to_s
-    version = (args[:version] || "0.1.0").to_s
-    scope = args[:scope_path].to_s.split("/").reject(&:empty?)
-    previous = ENV["FEDERATION_BROADCAST"]
-    ENV["FEDERATION_BROADCAST"] = "1"
-
-    Tempfile.create(["stub", ".gem"]) do |tmp|
-      tmp.binmode
-      tmp.write("stubbed gem bytes for federation demo")
-      tmp.flush
-      Them::Server::FederationBroadcaster.broadcast_gem(
-        name: name,
-        version: version,
-        scope_path: scope,
-        file_path: tmp.path
-      )
-      scope_label = scope.empty? ? "(root)" : scope.join("/")
-      puts "Broadcasted stub gem #{name}-#{version} (scope: #{scope_label})"
-    end
-  ensure
-    ENV["FEDERATION_BROADCAST"] = previous
-  end
-end
-
-namespace :auth do
-  desc "Create a Rodauth account and associated owner. Usage: rake auth:create_user[email,password,name]"
-  task :create_user, [:email, :password, :name] do |_task, args|
-    require "bcrypt"
-
-    email = args[:email].to_s.strip
-    password = args[:password].to_s
-    name = args[:name].to_s.strip
-    abort "email is required" if email.empty?
-    abort "password is required" if password.empty?
-
-    name = email if name.empty?
-    db = Them::Server::Database.db
-    now = Time.now
-    existing = db[:accounts].where(email: email).first
-    if existing
-      puts "Account already exists: #{email}"
-    else
-      password_hash = BCrypt::Password.create(password)
-      account_id = db[:accounts].insert(
-        email: email,
-        status_id: 1,
-        password_hash: password_hash,
-        created_at: now,
-        updated_at: now
-      )
-      puts "Created account ##{account_id} for #{email}"
-      if db.schema(:owners).map(&:first).include?(:account_id)
-        db[:owners].insert(
-          name: name,
-          public_key: nil,
-          api_key: nil,
-          account_id: account_id,
-          created_at: now,
-          updated_at: now
-        )
-        puts "Created owner for account ##{account_id}"
-      end
-    end
-  end
-end
-
-# kettle-jem:unfreeze

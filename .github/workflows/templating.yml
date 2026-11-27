@@ -28,7 +28,7 @@ concurrency:
 
 jobs:
   test:
-    if: "!contains(github.event.commits[0].message, '[ci skip]') && !contains(github.event.commits[0].message, '[skip ci]')"
+    if: "github.event_name != 'push' || (!contains(github.event.head_commit.message, '[ci skip]') && !contains(github.event.head_commit.message, '[skip ci]'))"
     name: Specs ${{ matrix.ruby }}@${{ matrix.appraisal }}
     runs-on: ubuntu-latest
     continue-on-error: ${{ matrix.experimental || endsWith(matrix.ruby, 'head') }}
@@ -43,6 +43,7 @@ jobs:
             exec_cmd: "rake kettle:jem:selftest"
             rubygems: latest
             bundler: latest
+            experimental: false
 
     steps:
       - name: Checkout
@@ -50,16 +51,23 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Install tree-sitter library
-        uses: kettle-rb/ts-grammar-action@4b0c04d11ed5b85c67c0c60c6ecb590e81748ccb # v1.0.1
-
       - name: Setup Ruby & RubyGems
-        uses: ruby/setup-ruby@de492cf36cbab201753d720ce4f4e336cd688c94 # v1.336.0
+        uses: appraisal-rb/setup-ruby-flash@b04c0c9f2e443c909968abc828a0b53e77567cf9 # v2.15
         with:
           ruby-version: ${{ matrix.ruby }}
           rubygems: ${{ matrix.rubygems }}
           bundler: ${{ matrix.bundler }}
           bundler-cache: true
+          manual-compatibility-bundle: true
+          gem-install-retries: 7
+
+      - name: Update templating bootstrap dependencies
+        env:
+          BUNDLE_GEMFILE: ${{ github.workspace }}/Gemfile
+        # Refresh kettle-family with nomono. A just-released kettle-family can
+        # briefly be absent from the gem.coop index while the lockfile already
+        # points at it; keeping it locked makes Bundler fail before appraisal.
+        run: bundle update nomono kettle-family
 
       - name: "[Attempt 1] Appraisal for ${{ matrix.ruby }}@${{ matrix.appraisal }}"
         id: bundleAppraisalAttempt1
@@ -72,7 +80,23 @@ jobs:
         id: bundleAppraisalAttempt2
         # If bundleAppraisalAttempt1 failed, try again here; Otherwise skip.
         if: ${{ steps.bundleAppraisalAttempt1.outcome == 'failure' }}
-        run: bundle exec appraisal ${{ matrix.appraisal }} install
+        run: |
+          rm -f gemfiles/${{ matrix.appraisal }}.gemfile.lock
+          rm -rf vendor/bundle "$HOME/.bundle/cache"
+          bundle exec appraisal ${{ matrix.appraisal }} install
+
+      - name: Cache tree-sitter-language-pack grammars
+        if: "${{!env.ACT}}"
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          # TSLP hot-loads grammars on demand into a versioned cache dir.
+          # Caching it keeps the self-test off the network in the common case;
+          # a miss falls back to the in-run prefetch (kettle-jem tslp_prefetch
+          # phase) with retries and attributable diagnostics.
+          path: ~/.cache/tree-sitter-language-pack
+          key: tslp-grammars-${{runner.os}}-${{hashFiles('gemfiles/templating.gemfile.lock','Gemfile.lock')}}
+          restore-keys: |
+            tslp-grammars-${{runner.os}}-
 
       - name: Templating self-test for ${{ matrix.ruby }} via ${{ matrix.exec_cmd }}
         run: bundle exec appraisal ${{ matrix.appraisal }} bundle exec ${{ matrix.exec_cmd }}

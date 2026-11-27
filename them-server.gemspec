@@ -78,6 +78,10 @@ Gem::Specification.new do |spec|
     # Executables and executable support scripts
     *enumerate_package_files.call("exe")
   ]
+  # kettle-jem:freeze
+  # Keep locally built native binaries out of release packages.
+  spec.files.reject! { |path| path.end_with?(".bundle", ".so", ".dylib", ".dll", ".o", ".a") }
+  # kettle-jem:unfreeze
   spec.rdoc_options += [
     "--title",
     "#{spec.name} - #{spec.summary}",

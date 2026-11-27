@@ -12,9 +12,6 @@
     [47, 44, 4, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 2088896725],
     [70, 11, 4, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 2088896725]
   ],
-  "gemfiles/modular/templating.gemfile:3018447732": [
-    [14, 3, 47, "Bundler/DuplicatedGem: Gem `tree_sitter_language_pack` requirements already given on line 10 of the Gemfile.", 3843603197]
-  ],
   "lib/them/server/crypto.rb:1175456881": [
     [91, 9, 8, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 1700737912],
     [100, 13, 8, "Style/IdenticalConditionalBranches: Move `[sk, pk]` out of the conditional.", 863377260],
@@ -25,7 +22,6 @@
     [66, 11, 7, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 659483516]
   ],
   "spec/e2e/gem_push_spec.rb:1769744423": [
-    [10, 16, 14, "RSpec/DescribeClass: The first argument to describe should be the class or module being tested.", 4004177254],
     [11, 3, 21, "RSpec/LeakyLocalVariable: Do not use local variables defined outside of examples inside of them.", 1442386915],
     [12, 3, 28, "RSpec/LeakyLocalVariable: Do not use local variables defined outside of examples inside of them.", 344215532],
     [114, 3, 12, "RSpec/BeforeAfterAll: Beware of using `before(:all)` as it may cause state to leak between tests. If you are using `rspec-rails`, and `use_transactional_fixtures` is enabled, then records created in `before(:all)` are not automatically rolled back.", 86334566],

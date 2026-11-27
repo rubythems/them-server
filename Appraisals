@@ -57,6 +57,10 @@ appraise "unlocked_deps" do
   eval_gemfile "modular/database.gemfile"
   eval_gemfile "modular/documentation.gemfile"
   eval_gemfile "modular/optional.gemfile"
+  # Development dependencies shunted out of the gemspec - see
+  # gemfiles/modular/shunted.gemfile's own header for exactly which ones
+  # and why.
+  eval_gemfile "modular/shunted.gemfile"
   eval_gemfile "modular/style.gemfile"
   eval_gemfile "modular/x_std_libs.gemfile"
 end
@@ -64,11 +68,13 @@ end
 appraise "head" do
   eval_gemfile "modular/database.gemfile"
   eval_gemfile "modular/x_std_libs.gemfile"
+  eval_gemfile "modular/rspec.gemfile"
 end
 
 appraise "current" do
   eval_gemfile "modular/database.gemfile"
   eval_gemfile "modular/x_std_libs.gemfile"
+  eval_gemfile "modular/rspec.gemfile"
 end
 
 appraise "dep-heads" do
@@ -80,16 +86,19 @@ appraise "ruby-3-2" do
   eval_gemfile "modular/json/truffleruby_23_1.gemfile"
   eval_gemfile "modular/database.gemfile"
   eval_gemfile "modular/x_std_libs/r3/libs.gemfile"
+  eval_gemfile "modular/rspec_junit_formatter/r3.2/v0.6.gemfile"
 end
 
 appraise "ruby-3-3" do
   eval_gemfile "modular/database.gemfile"
   eval_gemfile "modular/x_std_libs/r3/libs.gemfile"
+  eval_gemfile "modular/rspec_junit_formatter/r3/v0.8.gemfile"
 end
 
 appraise "ruby-3-4" do
   eval_gemfile "modular/database.gemfile"
   eval_gemfile "modular/x_std_libs/r3/libs.gemfile"
+  eval_gemfile "modular/rspec_junit_formatter/r3/v0.8.gemfile"
 end
 
 appraise "audit" do

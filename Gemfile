@@ -18,19 +18,28 @@ git_source(:gitlab) { |repo_name| "https://gitlab.com/#{repo_name}" }
 # Include dependencies from them-server.gemspec
 gemspec
 
-gem 'kettle-family', '~> 1.2', '>= 1.2.97'
+gem "kettle-family", "~> 1.3", ">= 1.3.52"
 
 # Local workspace dependency wiring for *_local.gemfile overrides
 gem "nomono", "~> 1.1", ">= 1.1.18", require: false # ruby >= 3.2.0
 
-# Templating (env-switched: STRUCTUREDMERGE_DEV=/path/to/structuredmerge/ruby/gems for local paths)
-eval_gemfile "gemfiles/modular/templating.gemfile" if ENV.fetch("K_JEM_TEMPLATING", "false").casecmp("true").zero?
+# Templating and the StructuredMerge family share this modular Gemfile.
+# kettle-jem needs StructuredMerge to template, and kettle-changelog needs it at
+# runtime (ast-crispr-markdown-markly -> markdown-merge -> tree_haver), so the
+# test, lint, and release bundles resolve the family too. While the family is
+# only partially released, registry copies pin the last published version exactly
+# and cannot be satisfied alongside a local lockstep version, so a partial local
+# wiring fails version solving for every command in the bundle.
+#
+# (env-switched: STRUCTUREDMERGE_DEV=/path/to/structuredmerge/ruby/gems for local paths)
+
+eval_gemfile "gemfiles/modular/templating.gemfile" if
+  ENV.fetch("K_JEM_TEMPLATING", "false").casecmp("true").zero? ||
+    ENV.fetch("STRUCTUREDMERGE_DEV", "false").casecmp("false") != 0 ||
+    ENV.fetch("STRUCTUREDMERGE_CORE_DEV", "false").casecmp("false") != 0
 
 # Debugging
 eval_gemfile "gemfiles/modular/debug.gemfile"
-
-# Database adapters used by the application and its test suite
-eval_gemfile "gemfiles/modular/database.gemfile"
 
 # Code Coverage (env-switched: KETTLE_DEV_DEV=true for local paths)
 eval_gemfile "gemfiles/modular/coverage.gemfile"
@@ -40,6 +49,9 @@ eval_gemfile "gemfiles/modular/style.gemfile"
 
 # Documentation
 eval_gemfile "gemfiles/modular/documentation.gemfile"
+
+# Changelog release tooling (available on Ruby versions supported by kettle-changelog)
+eval_gemfile "gemfiles/modular/changelog.gemfile"
 
 # Optional
 eval_gemfile "gemfiles/modular/optional.gemfile"
