@@ -472,7 +472,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.19.7-x86_64-linux-musl)
       racc (~> 1.4)
-    nomono (1.1.18)
+    nomono (1.1.19)
       version_gem (~> 1.1, >= 1.1.17)
     oauth2 (2.1.0)
       anonymous_loader (~> 0.1, >= 0.1.5)
@@ -898,7 +898,7 @@ DEPENDENCIES
   kramdown-parser-gfm (~> 1.1)
   launchy (~> 3.1)
   mutex_m (~> 0.2)
-  nomono (~> 1.1, >= 1.1.18)
+  nomono (~> 1.1, >= 1.1.19)
   ostruct (~> 0.6, >= 0.6.1)
   rack-test (~> 2.2)
   rake (~> 13.0)
@@ -1067,7 +1067,7 @@ CHECKSUMS
   nokogiri (1.19.7-arm64-darwin) sha256=f27d7f25f4873fbc3aa35a2cc2fb680c98555fec1925348da439d0869d541142
   nokogiri (1.19.7-x86_64-linux-gnu) sha256=25865ccb462f714e712fdf8906fde07849cb6704a808e3d629d75baa5af5dd3b
   nokogiri (1.19.7-x86_64-linux-musl) sha256=464d1f3dfb0d53cf54c0c6a7e23e8e91cf68ec3cafc2b27dc4a7682f2d9bf546
-  nomono (1.1.18) sha256=e685e9519143bebabfbcbca3cb32dfbe377a33a3118347240516eb300e4c7385
+  nomono (1.1.19) sha256=bbfe8ed35e7caad79791221981a7918882fd37d4b487d61dc5308052856d312e
   oauth2 (2.1.0) sha256=69925a45030c231cdca3ef4a54a8e848e5319f12c3fdbbfa5065dfbeb4efe835
   openssl (4.0.2) sha256=1037ad2868ae58df9ad917891c0c0f9815a1172f6846d4bcdd508e4c2ee747c2
   ostruct (0.6.3) sha256=95a2ed4a4bd1d190784e666b47b2d3f078e4a9efda2fccf18f84ddc6538ed912
