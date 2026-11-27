@@ -653,7 +653,7 @@ files:
   CHANGELOG.md:
     recipe: template_source_application_CHANGELOG_md
     action: write
-    dest_sha256: 273e1fcbddd484d3469fbfdeaef867859691267d006a1b562e92d643ff6b189e
+    dest_sha256: 7950815ab5b32e2f09c18f8d9127a80697ef7bf8e81c8614bf48034f7175776a
     input_fingerprint: 8890ca705caf5c6dea48b9e613a58cc5495c16a9c6ff0e427f415af3181d7a35
     template_sources:
     - CHANGELOG.md.example
@@ -1079,7 +1079,7 @@ files:
   mise.toml:
     recipe: template_source_application_mise_toml
     action: write
-    dest_sha256: a573bdef3ca78fcd9a43537a0ea61ce9c887f7d219413dcd9c87c45820185570
+    dest_sha256: 8f1d554ee38719a421bab96ec9f0723ad238837f0410ab61081627fa9a749288
     input_fingerprint: d3a8c7e5847dfa662d556cc48b4183e4da1eb6681c5919999a6c9e181134bc97
     template_sources:
     - mise.toml.example

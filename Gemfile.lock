@@ -898,7 +898,7 @@ DEPENDENCIES
   kramdown-parser-gfm (~> 1.1)
   launchy (~> 3.1)
   mutex_m (~> 0.2)
-  nomono (~> 1.1, >= 1.1.19)
+  nomono (~> 1.1, >= 1.1.18)
   ostruct (~> 0.6, >= 0.6.1)
   rack-test (~> 2.2)
   rake (~> 13.0)
