@@ -102,30 +102,30 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   # Utilities
-  spec.add_dependency("bcrypt", "~> 3.1", ">= 3.1.20")                  # ruby >= 2.3.0, password hashing
+  spec.add_dependency("bcrypt", "~> 3.1", ">= 3.1.22")                  # ruby >= 2.3.0, password hashing
   spec.add_dependency("dry-operation", "~> 1.1")                         # ruby >= 3.1.0, Railway-oriented operation objects
   spec.add_dependency("dry-struct", "~> 1.8")                           # ruby >= 3.1.0, Typed structs and value objects
-  spec.add_dependency("dry-types", "~> 1.8", ">= 1.8.3")                # ruby >= 3.1.0, Type system for Ruby
+  spec.add_dependency("dry-types", "~> 1.9", ">= 1.9.2")                # ruby >= 3.1.0, Type system for Ruby
   spec.add_dependency("ed25519", "~> 1.4", ">= 1.4.0")                  # ruby >= 3.0.0, signing & verification for federation
   spec.add_dependency("erubi", "~> 1.13")                                # ruby >= 2.5.0, ERB renderer used by Roda/Tilt
-  spec.add_dependency("faraday", "~> 2.14", ">= 2.14.0")                # ruby >= 3.0.0, HTTP client wrapper library
+  spec.add_dependency("faraday", "~> 2.15", ">= 2.15.1")                # ruby >= 3.0.0, HTTP client wrapper library
   spec.add_dependency("hanami", "~> 2.2", ">= 2.2.1")                   # ruby >= 3.1.0, Full-stack web framework
   spec.add_dependency("hanami-assets", "~> 2.2", ">= 2.2.1")            # ruby >= 3.1.0, Full-stack web framework
   spec.add_dependency("hanami-cli", "~> 2.2", ">= 2.2.1")               # ruby >= 3.1.0, Full-stack web framework
-  spec.add_dependency("hanami-controller", "~> 2.2", ">= 2.2.1")        # ruby >= 3.1.0, Full-stack web framework
+  spec.add_dependency("hanami-controller", "~> 2.3", ">= 2.3.2")        # ruby >= 3.1.0, Full-stack web framework
   spec.add_dependency("hanami-db", "~> 2.2", ">= 2.2.1")                # ruby >= 3.1.0, Full-stack web framework
   spec.add_dependency("hanami-router", "~> 2.2", ">= 2.2.1")            # ruby >= 3.1.0, Full-stack web framework
   spec.add_dependency("hanami-utils", "~> 2.2", ">= 2.2.0")             # ruby >= 3.1.0, Hanami utilities including inflector
   spec.add_dependency("hanami-view", "~> 2.2", ">= 2.2.1")              # ruby >= 3.1.0, Full-stack web framework
-  spec.add_dependency("mail", "~> 2.8", ">= 2.8.1")                     # ruby >= 2.5.0, email library
-  spec.add_dependency("oauth2", "~> 2.0", ">= 2.0.21")                  # ruby >= 2.2.0, OAuth2 client for federation
+  spec.add_dependency("mail", "~> 2.9", ">= 2.9.1")                     # ruby >= 2.5.0, email library
+  spec.add_dependency("oauth2", "~> 2.1", ">= 2.1.0")                  # ruby >= 2.2.0, OAuth2 client for federation
   spec.add_dependency("puma", "~> 7.2")                                  # ruby >= 2.7.0, Rack server
-  spec.add_dependency("rack", "~> 3.2", ">= 3.2.3")                     # ruby >= 2.4.0, Rack web server interface
-  spec.add_dependency("rack-protection", "~> 4.2", ">= 4.2.1")          # ruby >= 2.7.8, Security middleware
-  spec.add_dependency("rackup", "~> 2.2", ">= 2.2.1")                   # ruby >= 2.5.0, Rackup command is separate dependency in rack >= v3
-  spec.add_dependency("rodauth", "~> 2.41", ">= 2.41.0")                # ruby >= 1.9.2, Rodauth authentication framework
-  spec.add_dependency("rom-sql", "~> 3.7", ">= 3.7.0")                  # ruby >= 3.1.0, Database toolkit
-  spec.add_dependency("version_gem", "~> 1.1", ">= 1.1.15")              # ruby >= 2.2.0
+  spec.add_dependency("rack", "~> 3.2", ">= 3.2.9")                     # ruby >= 2.4.0, Rack web server interface
+  spec.add_dependency("rack-protection", "~> 4.2", ">= 4.2.2")          # ruby >= 2.7.8, Security middleware
+  spec.add_dependency("rackup", "~> 2.3", ">= 2.3.1")                   # ruby >= 2.5.0, Rackup command is separate dependency in rack >= v3
+  spec.add_dependency("rodauth", "~> 2.51", ">= 2.51.0")                # ruby >= 1.9.2, Rodauth authentication framework
+  spec.add_dependency("rom-sql", "~> 3.8", ">= 3.8.0")                  # ruby >= 3.1.0, Database toolkit
+  spec.add_dependency("version_gem", "~> 1.1", ">= 1.1.17")              # ruby >= 2.2.0
 
   # NOTE: It is preferable to list development dependencies in the gemspec due to increased
   #       visibility and discoverability.
@@ -141,7 +141,7 @@ Gem::Specification.new do |spec|
   #       and preferably a modular one (see gemfiles/modular/*.gemfile).
 
   # Dev, Test, & Release Tasks
-  spec.add_development_dependency("kettle-dev", "~> 3.0", ">= 3.0.6")             # ruby >= 3.2.0
+  spec.add_development_dependency("kettle-dev", "~> 3.1", ">= 3.1.33")             # ruby >= 3.2.0
 
   # Security
   spec.add_development_dependency("bundler-audit", "~> 0.9.3")                      # ruby >= 2.0.0
@@ -150,25 +150,25 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency("rake", "~> 13.0")                                # ruby >= 2.2.0
 
   # Debugging
-  spec.add_development_dependency("require_bench", "~> 1.0", ">= 1.0.4")            # ruby >= 2.2.0
+  spec.add_development_dependency("require_bench", "~> 1.0", ">= 1.0.5")            # ruby >= 2.2.0
 
   # Testing
   # Loads version files in anonymous namespaces for coverage without constant redefinition warnings.
-  spec.add_development_dependency("anonymous_loader", "~> 0.1", ">= 0.1.3")         # ruby >= 2.2.0
-  spec.add_development_dependency("appraisal2", "~> 3.2", ">= 3.2.0")               # ruby >= 1.8.7, for testing against multiple versions of dependencies
-  spec.add_development_dependency("kettle-test", "~> 2.0", ">= 2.0.19")            # ruby >= 3.2.0
+  spec.add_development_dependency("anonymous_loader", "~> 0.1", ">= 0.1.5")         # ruby >= 2.2.0
+  spec.add_development_dependency("appraisal2", "~> 3.2", ">= 3.2.6")               # ruby >= 1.8.7, for testing against multiple versions of dependencies
+  spec.add_development_dependency("kettle-test", "~> 2.0", ">= 2.0.30")            # ruby >= 3.2.0
   spec.add_development_dependency("turbo_tests2", "~> 4.0", ">= 4.0.2")           # ruby >= 2.4.0, default kettle-test runner
 
   # Releasing
   spec.add_development_dependency("ruby-progressbar", "~> 1.13")                    # ruby >= 0
-  spec.add_development_dependency("stone_checksums", "~> 1.0", ">= 1.0.8")          # ruby >= 2.2.0
+  spec.add_development_dependency("stone_checksums", "~> 1.0", ">= 1.0.11")          # ruby >= 2.2.0
 
   # Development tasks
   # The cake is a lie. erb v2.2, the oldest release, was never compatible with Ruby 2.3.
   # This means we have no choice but to use the erb that shipped with Ruby 2.3
   # /opt/hostedtoolcache/Ruby/2.3.8/x64/lib/ruby/gems/2.3.0/gems/erb-2.2.2/lib/erb.rb:670:in `prepare_trim_mode': undefined method `match?' for "-":String (NoMethodError)
   # spec.add_development_dependency("erb", ">= 2.2")                                  # ruby >= 2.3.0, not SemVer, old rubies get dropped in a patch.
-  spec.add_development_dependency("gitmoji-regex", "~> 2.0", ">= 2.0.11")            # ruby >= 2.4
+  spec.add_development_dependency("gitmoji-regex", "~> 2.0", ">= 2.0.17")            # ruby >= 2.4
 
   # HTTP recording for deterministic specs
   # In Ruby 3.5 (HEAD) the CGI library has been pared down, so we also need to depend on gem "cgi" for ruby@head
@@ -183,7 +183,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency("launchy", "~> 3.1")                             # ruby >= 2.7.0, browser launch helper
   spec.add_development_dependency("rack-test", "~> 2.2")                           # ruby >= 2.7.0, Rack integration testing
   spec.add_development_dependency("rom-factory", "~> 0.13")                        # ruby >= 3.1.0, ROM test factories
-  spec.add_development_dependency("rspec-pending_for", "~> 0.0", ">= 0.0.17")       # ruby >= 2.3, used to skip specs on incompatible Rubies
-  spec.add_development_dependency("vcr", ">= 4")                        # 6.0 claims to support ruby >= 2.3, but fails on ruby 2.4
-  spec.add_development_dependency("webmock", ">= 3")                    # Last version to support ruby >= 2.3
+  spec.add_development_dependency("rspec-pending_for", "~> 0.1", ">= 0.1.29")       # ruby >= 2.3, used to skip specs on incompatible Rubies
+  spec.add_development_dependency("vcr", ">= 6.4.1")                        # 6.0 claims to support ruby >= 2.3, but fails on ruby 2.4
+  spec.add_development_dependency("webmock", ">= 3.42.0")                    # Last version to support ruby >= 2.3
 end

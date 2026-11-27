@@ -47,6 +47,30 @@ Please file a bug if you notice a violation of semantic versioning.
 - kettle-jem-template-20260801-001 - Generated README gem dashboard links now
   use ClickGems instead of BestGems.
 
+- [kc] kettle-deps-floor: Update dependency floors:
+  - anonymous_loader (>= 0.1.3 -> >= 0.1.5)
+  - appraisal2 (>= 3.2.0 -> >= 3.2.6)
+  - bcrypt (>= 3.1.20 -> >= 3.1.22)
+  - dry-types (>= 1.8.3 -> >= 1.9.2)
+  - faraday (>= 2.14.0 -> >= 2.15.1)
+  - gitmoji-regex (>= 2.0.11 -> >= 2.0.17)
+  - hanami-controller (>= 2.2.1 -> >= 2.3.2)
+  - kettle-dev (>= 3.0.6 -> >= 3.1.33)
+  - kettle-test (>= 2.0.19 -> >= 2.0.30)
+  - mail (>= 2.8.1 -> >= 2.9.1)
+  - oauth2 (>= 2.0.21 -> >= 2.1.0)
+  - rack (>= 3.2.3 -> >= 3.2.9)
+  - rack-protection (>= 4.2.1 -> >= 4.2.2)
+  - rackup (>= 2.2.1 -> >= 2.3.1)
+  - require_bench (>= 1.0.4 -> >= 1.0.5)
+  - rodauth (>= 2.41.0 -> >= 2.51.0)
+  - rom-sql (>= 3.7.0 -> >= 3.8.0)
+  - rspec-pending_for (>= 0.0.17 -> >= 0.1.29)
+  - stone_checksums (>= 1.0.8 -> >= 1.0.11)
+  - vcr (>= 4 -> >= 6.4.1)
+  - version_gem (>= 1.1.15 -> >= 1.1.17)
+  - webmock (>= 3 -> >= 3.42.0)
+
 ### Deprecated
 
 ### Removed
